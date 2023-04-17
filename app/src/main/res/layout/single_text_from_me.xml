@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_messageFromMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_send_message"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:maxWidth="260dp"
+        android:text="a;sdklas;lkdfj"
+        android:padding="12sp"
+        android:layout_margin="10sp"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_messageFromMeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20:35"
+        android:textSize="11sp"
+        android:layout_toLeftOf="@+id/tv_messageFromMe"
+        android:layout_marginTop="30sp"
+        android:layout_marginRight="3sp"/>
+
+
+
+</RelativeLayout>

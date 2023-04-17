@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivityPackage.FriendsPackage.FriendFragment">
+
+    <TextView
+        android:id="@+id/tv_emptyFriendsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Здесь будут отображаться ваши друзья"
+        android:gravity="center_horizontal"
+        android:textSize="17sp"
+        android:layout_marginTop="20sp"
+        android:visibility="gone"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb_addNewFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/avatar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10sp"
+        android:layout_marginRight="10sp"
+        android:contentDescription="@string/no_image_found"
+        android:visibility="invisible"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_allFriendsDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <ProgressBar
+        android:id="@+id/pb_loadingFriendsList"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:layout_centerInParent="true">
+    </ProgressBar>
+</RelativeLayout>

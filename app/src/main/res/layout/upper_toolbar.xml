@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/purple_200"
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageButton
+            android:id="@+id/ib_settings"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_alignParentRight="true"
+            android:background="@color/purple_200"
+            android:src="@android:drawable/btn_star_big_on"
+            android:layout_marginTop="5sp"
+            android:contentDescription="Пока хз"
+            />
+
+        <ImageButton
+            android:id="@+id/ib_profile"
+            android:layout_width="48sp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_with_border_image_button"
+            android:contentDescription="@string/no_image_found"
+            android:scaleType="centerInside"
+            android:src="@drawable/avatar" />
+
+        <TextView
+            android:id="@+id/tv_pageDefiner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="20sp"
+            android:text="@string/page_definer_text"
+            android:layout_toRightOf="@+id/ib_profile"
+            />
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "930180071314",
+    "firebase_url": "https://friendsorganiser-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "friendsorganiser",
+    "storage_bucket": "friendsorganiser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930180071314:android:a2719f6eddd1168cc00b4b",
+        "android_client_info": {
+          "package_name": "com.example.friendsorganiser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930180071314-c6j49rqo8e3bkors231ks86dqth2d9lo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa810OzR7bNrLNfrx8tf5RqVQ8nvcOoN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930180071314-c6j49rqo8e3bkors231ks86dqth2d9lo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

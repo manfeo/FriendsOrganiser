@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_messageSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Message sender"
+        android:layout_marginLeft="10sp"
+        android:textSize="11sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_messageFromOthers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_recieve_message"
+        android:text="Sample text"
+        android:layout_marginBottom="8dp"
+        android:maxWidth="260dp"
+        android:padding="12sp"
+        android:layout_marginLeft="10sp"
+        android:textSize="13sp"
+        android:layout_below="@+id/tv_messageSender" />
+
+    <TextView
+        android:id="@+id/tv_messageFromOtherTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20:38"
+        android:layout_toRightOf="@+id/tv_messageFromOthers"
+        android:layout_marginTop="35sp"
+        android:layout_marginLeft="8sp"
+        android:textSize="11sp"/>
+
+
+</RelativeLayout>

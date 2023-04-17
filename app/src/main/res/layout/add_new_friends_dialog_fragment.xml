@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/ib_cancelAddNewFriends"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/avatar"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/no_image_found"/>
+
+    <FrameLayout
+        android:id="@+id/fl_sendButtonHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20sp">
+
+        <Button
+            android:id="@+id/bt_sendFriendsRequests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить" />
+
+        <ProgressBar
+            android:id="@+id/pb_loadingFriendsRequests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible">
+        </ProgressBar>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_addNewFriendsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Кому отправить завявку?"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25sp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_addNewFriendsText"
+        android:layout_above="@+id/fl_sendButtonHolder"
+        android:layout_marginHorizontal="25sp">
+
+        <TextView
+            android:id="@+id/tv_noUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Нет пользователей для отправки заявки"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:visibility="invisible">
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_allUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/pb_loadingAllUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </ProgressBar>
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10sp">
+
+    <TextView
+        android:id="@+id/tv_chatName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jenna Ortega"
+        android:layout_toRightOf="@+id/iv_chatPhoto"
+        android:layout_marginLeft="3sp"/>
+
+    <TextView
+        android:id="@+id/tv_chatLastMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Can we hang out sometime?"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/iv_chatPhoto"
+        android:layout_marginTop="30sp"/>
+
+    <TextView
+        android:id="@+id/tv_chatSentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18:43"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="33sp"
+        android:layout_marginRight="7sp"/>
+
+    <ImageView
+        android:id="@+id/iv_chatPhoto"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        app:srcCompat="@drawable/avatar" />
+
+</RelativeLayout>

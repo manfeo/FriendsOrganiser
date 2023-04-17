@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivityPackage.MainActivity.ProfileActivity">
+
+    <include
+        android:id="@+id/toolbar_profile"
+        layout="@layout/upper_toolbar">
+    </include>
+
+    <LinearLayout
+        android:id="@+id/ll_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar_profile"
+        android:layout_marginHorizontal="35sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50sp">
+
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:src="@drawable/avatar"
+            />
+
+        <TextView
+            android:id="@+id/tv_profileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Имя"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="15sp"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <TextView
+            android:id="@+id/tv_profileSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Фамилия"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="15sp"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <TextView
+            android:id="@+id/tv_profileBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Дата рождения"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="15sp"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    </LinearLayout>
+
+</RelativeLayout>

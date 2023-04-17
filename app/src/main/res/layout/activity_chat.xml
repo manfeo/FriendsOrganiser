@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".MainActivityPackage.ChatsPackage.ChattingActivity">
+
+    <include
+        android:id="@+id/toolbar_chatToolbar"
+        layout="@layout/upper_toolbar">
+    </include>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chatDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15sp"
+        android:layout_below="@+id/toolbar_chatToolbar"
+        app:stackFromEnd="true"
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:visibility="gone"
+        android:layout_above="@+id/rl_sendMessageLayout"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/pb_loadingChatMessages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+    </ProgressBar>
+
+    <RelativeLayout
+        android:id="@+id/rl_sendMessageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16sp"
+        android:layout_marginBottom="10sp">
+
+        <EditText
+            android:id="@+id/et_chatInputText"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:inputType="textMultiLine"
+            android:hint="@string/chat_input_message"
+            android:background="@drawable/background_chat_input"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:paddingStart="15sp"
+            android:layout_marginRight="10sp"
+            android:layout_toLeftOf="@+id/ib_chatSendMessage"/>
+
+        <ImageButton
+            android:id="@+id/ib_chatSendMessage"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            app:srcCompat="@drawable/avatar"
+            android:scaleType="fitCenter"
+            android:background="@drawable/background_chat_input"
+            android:contentDescription="Нет кнопки..."
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

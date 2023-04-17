@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationLogin.RegisterLoginActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_movingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_marginTop="13sp"
+        android:background="@color/purple_200">
+
+        <TextView
+            android:id="@+id/tv_alreadyHaveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="48sp"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:layout_marginTop="8sp"
+            android:layout_marginBottom="-10sp"
+            android:text="Ещё нет аккаунта\nв приложении?" />
+
+        <Button
+            android:id="@+id/bt_movingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Регистрация"
+            android:layout_marginBottom="8sp"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_registerLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</RelativeLayout>

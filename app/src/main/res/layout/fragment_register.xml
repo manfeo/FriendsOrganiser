@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myFragment"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationLogin.RegisterFragment">
+
+    <LinearLayout
+        android:id="@+id/user_info_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="35sp"
+        android:layout_marginTop="115sp"
+        >
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Регистрация"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_marginBottom="15sp"
+            />
+
+        <EditText
+            android:id="@+id/et_registerName"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Введите своё имя"
+            android:drawableLeft="@drawable/edit_text_icon_size"
+            />
+
+        <EditText
+            android:id="@+id/et_registerSurname"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Введите свою фамилию"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <EditText
+            android:id="@+id/et_registerBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:inputType="date"
+            android:hint="Введите дату рождения"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <EditText
+            android:id="@+id/et_registerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Введите email"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <EditText
+            android:id="@+id/et_registerPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:inputType="numberPassword|textPassword"
+            android:hint="Введите пароль"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <EditText
+            android:id="@+id/et_registerRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:inputType="numberPassword|textPassword"
+            android:hint="Повторите пароль"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <FrameLayout
+            android:id="@+id/fl_registerButtonHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginHorizontal="30sp">
+
+            <Button
+                android:id="@+id/bt_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Зарегестрироваться" />
+
+            <ProgressBar
+                android:id="@+id/pb_loadingRegistration"
+                android:layout_width="25sp"
+                android:layout_height="25sp"
+                android:layout_gravity="center"
+                android:visibility="invisible">
+            </ProgressBar>
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

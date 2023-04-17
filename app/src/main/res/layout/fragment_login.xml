@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationLogin.LoginFragment">
+
+
+    <LinearLayout
+        android:id="@+id/ll_loginArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35sp"
+        android:orientation="vertical"
+        android:layout_marginTop="190sp">
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Вход"
+            android:textSize="25sp"
+            android:layout_marginBottom="30sp"/>
+
+        <EditText
+            android:id="@+id/et_loginEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:hint="Введите email"
+            android:inputType="textEmailAddress"
+            android:drawableLeft="@drawable/edit_text_icon_size"
+            android:layout_marginBottom="20sp"/>
+
+        <EditText
+            android:id="@+id/et_loginPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:ems="10"
+            android:hint="Введите пароль"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <CheckBox
+            android:id="@+id/cb_rememberMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Запомнить пароль" />
+
+        <FrameLayout
+            android:id="@+id/fl_loginButtonHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginHorizontal="30sp">
+
+            <ProgressBar
+                android:id="@+id/pb_loadingLogin"
+                android:layout_width="25sp"
+                android:layout_height="25sp"
+                android:layout_gravity="center"
+                android:visibility="invisible">
+            </ProgressBar>
+
+            <Button
+                android:id="@+id/bt_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Войти" />
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>
