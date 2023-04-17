@@ -22,12 +22,14 @@ public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding binding;
     private DatabaseReference databaseReference;
     private PreferenceManager preferenceManager;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
         setContentView(binding.getRoot());
         setBinding();
     }
@@ -43,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.toolbarSettings.ibProfile.setOnClickListener(view -> {
             Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra(Constants.KEY_USER_ID, currentUserId);
             startActivity(intent);
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

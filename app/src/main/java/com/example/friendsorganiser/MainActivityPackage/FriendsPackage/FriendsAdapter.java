@@ -15,9 +15,11 @@ import java.util.List;
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsHolder> {
 
     private final List<UserInfo> friends;
+    private OnFriendClickedListener onFriendClickedListener;
 
-    public FriendsAdapter(List<UserInfo> friends){
+    public FriendsAdapter(List<UserInfo> friends, OnFriendClickedListener onFriendClickedListener){
         this.friends = friends;
+        this.onFriendClickedListener = onFriendClickedListener;
     }
 
     class FriendsHolder extends RecyclerView.ViewHolder{
@@ -31,6 +33,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
         private void setBinding(UserInfo userInfo) {
             String fullName = userInfo.getName() + userInfo.getSurname();
             binding.tvFriendName.setText(fullName);
+            binding.getRoot().setOnClickListener(v -> {
+                String friendId = userInfo.getId();
+                onFriendClickedListener.onFriendCLicked(friendId);
+            });
         }
     }
 

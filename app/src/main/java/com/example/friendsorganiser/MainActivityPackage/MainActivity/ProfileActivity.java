@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.friendsorganiser.R;
+import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.example.friendsorganiser.databinding.ActivityProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,28 +26,28 @@ public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;
 
     private DatabaseReference databaseReference;
-    private String currentUserId;
-    private PreferenceManager preferenceManager;
+    private String userToShowId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
-        preferenceManager = new PreferenceManager(getApplicationContext());
         setContentView(binding.getRoot());
+        loadReceivedData();
         setBinding();
 
+    }
+
+    private void loadReceivedData(){
+        userToShowId = getIntent().getStringExtra(Constants.KEY_USER_ID);
     }
 
     private void setBinding(){
         androidx.appcompat.widget.Toolbar toolbarProfile = findViewById(R.id.toolbar_profile);
         setSupportActionBar(toolbarProfile);
 
-        FirebaseAuth currentAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = currentAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        currentUserId = currentUser.getUid();
 
         setDataToProfile();
 
@@ -58,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setDataToProfile() {
-        databaseReference.child("Users").child(currentUserId)
+        databaseReference.child("Users").child(userToShowId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -1,6 +1,7 @@
 package com.example.friendsorganiser.MainActivityPackage.MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.Utilities.Constants;
+import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.example.friendsorganiser.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,20 +28,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        PreferenceManager preferenceManager = new PreferenceManager(getApplicationContext());
+        currentUId = preferenceManager.getString(Constants.KEY_USER_ID);
         setContentView(binding.getRoot());
         setBindings();
     }
 
     private void setBindings(){
-        FirebaseAuth currentAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = currentAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        currentUId = currentUser.getUid();
         getToken();
 
         //Setting listener to profile activity
         binding.toolbarMainPage.ibProfile.setOnClickListener(view -> {
             Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra(Constants.KEY_USER_ID, currentUId);
             startActivity(intent);
         });
         //Setting listener to settings activity

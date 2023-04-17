@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.FriendsPackage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.friendsorganiser.MainActivityPackage.MainActivity.ProfileActivity;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
@@ -25,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendFragment extends Fragment {
+public class FriendFragment extends Fragment implements OnFriendClickedListener{
     private FragmentFriendBinding binding;
     private String currentUserId;
     private DatabaseReference databaseReference;
@@ -107,7 +109,7 @@ public class FriendFragment extends Fragment {
             }
         }
         loading(false);
-        friendsAdapter = new FriendsAdapter(friends);
+        friendsAdapter = new FriendsAdapter(friends, this);
         if (friends.size() > 0) {
             binding.rvAllFriendsDisplay.setAdapter(friendsAdapter);
             binding.rvAllFriendsDisplay.setVisibility(View.VISIBLE);
@@ -124,5 +126,12 @@ public class FriendFragment extends Fragment {
         } else {
             binding.pbLoadingFriendsList.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onFriendCLicked(String friendId) {
+        Intent friendProfile = new Intent(getActivity(), ProfileActivity.class);
+        friendProfile.putExtra(Constants.KEY_USER_ID, friendId);
+        startActivity(friendProfile);
     }
 }
