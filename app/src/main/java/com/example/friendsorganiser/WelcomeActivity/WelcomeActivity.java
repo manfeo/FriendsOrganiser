@@ -1,6 +1,8 @@
 package com.example.friendsorganiser.WelcomeActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,36 +19,25 @@ import com.google.firebase.auth.FirebaseUser;
 public class WelcomeActivity extends AppCompatActivity {
 
     private ActivityWelcomeBinding binding;
-    private FirebaseAuth currentUserAuth;
-    private FirebaseUser currentUser;
-    private PreferenceManager preferenceManager;
+    private WelcomeActivityViewModel welcomeActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityWelcomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        preferenceManager = new PreferenceManager(getApplicationContext());
-
-        currentUserAuth = FirebaseAuth.getInstance();
-        currentUser = currentUserAuth.getCurrentUser();
+        welcomeActivityViewModel = new ViewModelProvider(this).get(WelcomeActivityViewModel.class);
+        welcomeActivityViewModel.init();
+        setObservers();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new Handler().postDelayed(this::handleCurrentUser, 4000);
-    }
-
-    private void handleCurrentUser() {
-        if (currentUser == null) {
-            startRegisterLoginActivity();
-        } else if (preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
-            startMainActivity();
-        } else {
-            startRegisterLoginActivity();
-        }
+    private void setObservers(){
+        welcomeActivityViewModel.getIsSignedIn().observe(this, isSignedIn -> {
+            if (isSignedIn)
+                startMainActivity();
+            else
+                startRegisterLoginActivity();
+        });
     }
 
     private void startRegisterLoginActivity(){

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.friendsorganiser.MainActivityPackage.MainActivity.ProfileActivity;
+import com.example.friendsorganiser.MainActivityPackage.Profile.ProfileActivity;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
@@ -37,7 +37,7 @@ public class FriendFragment extends Fragment implements OnFriendClickedListener{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferenceManager preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        PreferenceManager preferenceManager = PreferenceManager.getInstance();
         currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }

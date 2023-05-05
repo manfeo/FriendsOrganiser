@@ -1,4 +1,4 @@
-package com.example.friendsorganiser.MainActivityPackage.ChatsPackage;
+package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog;
 
 import android.content.Intent;
 import android.graphics.Point;
@@ -16,21 +16,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.Chatting.ChattingActivity;
+import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.example.friendsorganiser.databinding.CreateNewChatBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,7 +51,7 @@ public class NewChat extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        PreferenceManager preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        PreferenceManager preferenceManager = PreferenceManager.getInstance();
         currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
 
         setListeners();

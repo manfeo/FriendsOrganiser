@@ -1,4 +1,4 @@
-package com.example.friendsorganiser.MainActivityPackage.ChatsPackage;
+package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

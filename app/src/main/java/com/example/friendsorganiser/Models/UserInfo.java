@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable {
 
-    private String name, surname, image, token, id;
+    private String name, surname, image, token, id, dateOfBirth;
 
     //For different choosing activities(e.g. Add new friends)
     private boolean isChecked;
@@ -14,6 +14,13 @@ public class UserInfo implements Serializable {
         this.surname = surname;
         this.image = image;
         this.token = token;
+        this.id = id;
+    }
+
+    public UserInfo(String name, String surname, String dateOfBirth, String id){
+        this.name = name;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
         this.id = id;
     }
 
@@ -37,6 +44,10 @@ public class UserInfo implements Serializable {
         return id;
     }
 
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -55,6 +66,10 @@ public class UserInfo implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public void setChecked(boolean isChecked){

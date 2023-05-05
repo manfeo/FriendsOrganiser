@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,14 +15,14 @@
         android:theme="@style/Theme.FriendsOrganiser"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivityPackage.ChatsPackage.ChattingActivity"
+            android:name=".MainActivityPackage.ChatsPackage.Chatting.ChattingActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivityPackage.MainActivity.SettingsActivity"
+            android:name=".MainActivityPackage.Settings.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".MainActivityPackage.MainActivity.ProfileActivity"
+            android:name=".MainActivityPackage.Profile.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivityPackage.MainActivity.MainActivity"

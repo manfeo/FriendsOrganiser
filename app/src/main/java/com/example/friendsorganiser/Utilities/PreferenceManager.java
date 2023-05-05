@@ -4,15 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PreferenceManager {
-    private final SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
+    private static PreferenceManager instance;
 
-    public PreferenceManager(Context context) {
-        this.sharedPreferences = context.getSharedPreferences(Constants.KEY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+    public static PreferenceManager getInstance(){
+        if (instance == null){
+            instance = new PreferenceManager();
+        }
+        return instance;
+    }
+
+    public void init(Context context){
+        sharedPreferences = context.getSharedPreferences(Constants.KEY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     public void putBoolean(String key, boolean value){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
@@ -22,7 +31,6 @@ public class PreferenceManager {
     }
 
     public void putString(String key, String value){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();
     }
@@ -32,7 +40,6 @@ public class PreferenceManager {
     }
 
     public void clear(){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
     }

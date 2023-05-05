@@ -1,4 +1,4 @@
-package com.example.friendsorganiser.MainActivityPackage.ChatsPackage;
+package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.AllChats;
 
 import com.example.friendsorganiser.Models.RecentChat;
 

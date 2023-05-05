@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AppointmentFragment;
-import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.RecentChats;
+import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.AllChats.RecentChats;
 import com.example.friendsorganiser.MainActivityPackage.FriendsPackage.FriendFragment;
 
 public class BottomNavigationFragmentsAdapter extends FragmentStateAdapter {

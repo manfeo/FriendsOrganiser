@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16sp">
+
+    <TextView
+        android:id="@+id/tv_appointmentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="35sp"
+        android:layout_marginRight="10sp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tv_appointmentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_appointmentPhoto"
+
+        android:text="Праздник)" />
+
+    <ImageView
+        android:id="@+id/iv_appointmentPhoto"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        app:srcCompat="@drawable/avatar" />
+</RelativeLayout>

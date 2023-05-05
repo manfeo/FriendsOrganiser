@@ -1,7 +1,6 @@
-package com.example.friendsorganiser.MainActivityPackage.ChatsPackage;
+package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.AllChats;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import com.example.friendsorganiser.Models.RecentChat;
 import com.example.friendsorganiser.databinding.ItemRecentConversationBinding;
 
 import java.util.List;
-import java.util.Objects;
 
 public class RecentChatsAdapter extends RecyclerView.Adapter<RecentChatsAdapter.AllChatsHolder> {
 

@@ -1,18 +1,15 @@
-package com.example.friendsorganiser.MainActivityPackage.ChatsPackage;
+package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.Chatting;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.friendsorganiser.MainActivityPackage.MainActivity.MainActivity;
 import com.example.friendsorganiser.Models.ChatMessage;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.Utilities.Constants;
@@ -58,7 +55,7 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        preferenceManager = new PreferenceManager(getApplicationContext());
+        preferenceManager = PreferenceManager.getInstance();
         messages = new ArrayList<>();
         participants = new ArrayList<>();
         chattingAdapter = new ChattingAdapter(messages, preferenceManager.getString(Constants.KEY_USER_ID));

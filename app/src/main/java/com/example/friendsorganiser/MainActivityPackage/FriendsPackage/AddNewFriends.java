@@ -51,7 +51,7 @@ public class AddNewFriends extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        PreferenceManager preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        PreferenceManager preferenceManager = PreferenceManager.getInstance();
         currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
         databaseReference = FirebaseDatabase.getInstance().getReference();
 

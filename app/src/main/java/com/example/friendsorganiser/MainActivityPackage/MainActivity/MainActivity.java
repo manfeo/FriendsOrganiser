@@ -1,54 +1,37 @@
 package com.example.friendsorganiser.MainActivityPackage.MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.Preference;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
+import com.example.friendsorganiser.MainActivityPackage.Profile.ProfileActivity;
+import com.example.friendsorganiser.MainActivityPackage.Settings.SettingsActivity;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.Utilities.Constants;
-import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.example.friendsorganiser.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
-    private DatabaseReference databaseReference;
-    private String currentUId;
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        PreferenceManager preferenceManager = new PreferenceManager(getApplicationContext());
-        currentUId = preferenceManager.getString(Constants.KEY_USER_ID);
         setContentView(binding.getRoot());
+
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mainActivityViewModel.init();
+
         setBindings();
+        setListeners();
     }
 
     private void setBindings(){
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        getToken();
-
-        //Setting listener to profile activity
-        binding.toolbarMainPage.ibProfile.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra(Constants.KEY_USER_ID, currentUId);
-            startActivity(intent);
-        });
-        //Setting listener to settings activity
-        binding.toolbarMainPage.ibSettings.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        });
+        mainActivityViewModel.setToken();
 
         androidx.appcompat.widget.Toolbar toolbarMainPage = findViewById(R.id.toolbar_mainPage);
         setSupportActionBar(toolbarMainPage);
@@ -59,6 +42,21 @@ public class MainActivity extends AppCompatActivity {
         //Setting adapter to bottom navigation bar
         binding.viewPagerMainFragmentPager.setAdapter(new BottomNavigationFragmentsAdapter(this));
         setUpNavigationBar();
+    }
+
+    private void setListeners(){
+        //Setting listener to profile activity
+        binding.toolbarMainPage.ibProfile.setOnClickListener(view -> {
+            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            profileIntent.putExtra(Constants.KEY_USER_ID, mainActivityViewModel.getCurrentUserId().getValue());
+            startActivity(profileIntent);
+        });
+
+        //Setting listener to settings activity
+        binding.toolbarMainPage.ibSettings.setOnClickListener(view -> {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+        });
     }
 
     private void setUpNavigationBar() {
@@ -83,22 +81,4 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
-
-    private void getToken(){
-        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
-    }
-
-    private void updateToken(String token){
-        databaseReference.child(Constants.KEY_DATABASE_USERS).child(currentUId).
-                child(Constants.KEY_FCM_TOKEN).setValue(token).
-                addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "Токен успешно загружен", Toast.LENGTH_SHORT).show();
-                    } else {
-                        String errorMessage = task.getException().toString();
-                        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
 }
