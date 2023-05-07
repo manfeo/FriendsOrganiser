@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.Chatting.ChattingActivity;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
@@ -33,10 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class NewChat extends DialogFragment {
-    public List<UserInfo> friends;
     private CreateNewChatBinding binding;
-    private DatabaseReference databaseReference;
-    private String currentUserId;
+    private NewChatDialogViewModel newChatDialogViewModel;
     private FriendsPickerAdapter friendsPickerAdapter;
 
     @Nullable
@@ -50,52 +50,35 @@ public class NewChat extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        PreferenceManager preferenceManager = PreferenceManager.getInstance();
-        currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
+        newChatDialogViewModel = new ViewModelProvider(requireActivity()).get(NewChatDialogViewModel.class);
+        newChatDialogViewModel.init();
+        newChatDialogViewModel.loadFriends();
 
         setListeners();
-        getFriends();
+        setObservers();
     }
 
     private void setListeners() {
-        binding.btNewChatCreate.setOnClickListener(v -> openCreatedChat());
+        binding.btNewChatCreate.setOnClickListener(v -> newChatDialogViewModel.
+                createNewChat(binding.etNewChatName.getText().toString()));
+
         binding.ibNewChatCloseDialog.setOnClickListener(v -> dismiss());
     }
 
-    private void openCreatedChat() {
-        ArrayList<String> chatParticipants = new ArrayList<>();
-        for (UserInfo friend : friends){
-            if (friend.getIsChecked())
-                chatParticipants.add(friend.getId());
-        }
-        chatParticipants.add(currentUserId);
+    private void setObservers(){
+        newChatDialogViewModel.isFriendsLoading().observe(getViewLifecycleOwner(), this::loading);
 
-        String chatName = binding.etNewChatName.getText().toString();
+        newChatDialogViewModel.getChatId().observe(getViewLifecycleOwner(), this::loadChattingActivity);
 
-        HashMap<String, Object> newChatInfo = new HashMap<>();
-        newChatInfo.put(Constants.KEY_CHAT_NAME, chatName);
-        newChatInfo.put(Constants.KEY_CHAT_PARTICIPANTS, chatParticipants);
-
-        String chatId = databaseReference.child(Constants.KEY_DATABASE_CHATS).push().getKey();
-
-        HashMap<String, Object> newChatInfoForParticipants = new HashMap<>();
-        newChatInfoForParticipants.put(Constants.KEY_CHAT_NAME, chatName);
-        newChatInfoForParticipants.put(Constants.KEY_TIMESTAMP, 0);
-        newChatInfoForParticipants.put(Constants.KEY_LAST_MESSAGE, "");
-
-        chatParticipants.forEach((currentParticipantId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
-                child(currentParticipantId).child(Constants.KEY_RECENT_CHATS).child(chatId).setValue(newChatInfoForParticipants));
-
-        databaseReference.child(Constants.KEY_DATABASE_CHATS).child(chatId).setValue(newChatInfo).
-                addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        Toast.makeText(getContext(), "New chat created", Toast.LENGTH_SHORT).show();
-                        loadChattingActivity(chatId);
-                    } else {
-                        Toast.makeText(getContext(), "Unable to create chat", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        newChatDialogViewModel.getFriendsList().observe(getViewLifecycleOwner(), friendsList -> {
+            friendsPickerAdapter = new FriendsPickerAdapter(friendsList);
+            if (friendsList.size() > 0) {
+                binding.rvNewChatDisplayFriends.setAdapter(friendsPickerAdapter);
+                binding.rvNewChatDisplayFriends.setVisibility(View.VISIBLE);
+            } else {
+                binding.tvNewChatNoFriends.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void loadChattingActivity(String chatId){
@@ -103,59 +86,6 @@ public class NewChat extends DialogFragment {
         chat.putExtra(Constants.KEY_CHAT_ID, chatId);
         startActivity(chat);
         dismiss();
-    }
-
-    private void getFriends() {
-        loading(true);
-        databaseReference.child(Constants.KEY_DATABASE_USERS).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                loadFriends(snapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Unable to load users", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void loadFriends(DataSnapshot friendsDataSnapshot){
-        friends = new ArrayList<>();
-
-        if (friendsDataSnapshot.child(currentUserId).hasChild(Constants.KEY_FRIENDS)) {
-
-            //Looping through list of IDs of current user friends list
-            for (DataSnapshot anotherSnapshot : friendsDataSnapshot.child(currentUserId).
-                    child(Constants.KEY_FRIENDS).getChildren()) {
-
-                String anotherFriendId = anotherSnapshot.getValue().toString();
-                if (currentUserId.equals(anotherFriendId))
-                    continue;
-
-                String name = friendsDataSnapshot.child(anotherFriendId).child(Constants.KEY_NAME).getValue().toString();
-                String surname = friendsDataSnapshot.child(anotherFriendId).child(Constants.KEY_SURNAME).getValue().toString();
-                String image = "";
-                if (friendsDataSnapshot.child(anotherFriendId).hasChild(Constants.KEY_IMAGE)) {
-                    image = friendsDataSnapshot.child(anotherFriendId).child(Constants.KEY_IMAGE).getValue().toString();
-                }
-                String token = "";
-                if (friendsDataSnapshot.child(anotherFriendId).hasChild(Constants.KEY_FCM_TOKEN)) {
-                    token = friendsDataSnapshot.child(anotherFriendId).child(Constants.KEY_FCM_TOKEN).getValue().toString();
-                }
-                String id = friendsDataSnapshot.child(anotherFriendId).getKey();
-                UserInfo anotherUser = new UserInfo(name, surname, "", token, id);
-                friends.add(anotherUser);
-            }
-        }
-        loading(false);
-        friendsPickerAdapter = new FriendsPickerAdapter(friends);
-        if (friends.size() > 0) {
-            binding.rvNewChatDisplayFriends.setAdapter(friendsPickerAdapter);
-            binding.rvNewChatDisplayFriends.setVisibility(View.VISIBLE);
-        } else {
-            binding.tvNewChatNoFriends.setVisibility(View.VISIBLE);
-        }
     }
 
     private void loading(boolean isLoading){
