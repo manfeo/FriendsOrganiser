@@ -54,6 +54,15 @@
             android:layout_marginTop="30sp"
             android:layout_marginLeft="15sp"
             android:drawableLeft="@drawable/edit_text_icon_size"/>
+
+        <TextView
+            android:id="@+id/tv_profileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Почта"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="15sp"
+            android:drawableLeft="@drawable/edit_text_icon_size" />
     </LinearLayout>
 
 </RelativeLayout>

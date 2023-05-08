@@ -1,16 +1,13 @@
-package com.example.friendsorganiser.MainActivityPackage.FriendsPackage;
+package com.example.friendsorganiser.MainActivityPackage.FriendsPackage.AddNewFriendsDialog;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.R;
-import com.example.friendsorganiser.databinding.AddNewFriendsDialogFragmentBinding;
-import com.example.friendsorganiser.databinding.ItemFriendBinding;
 import com.example.friendsorganiser.databinding.ItemUserBinding;
 
 import java.util.List;

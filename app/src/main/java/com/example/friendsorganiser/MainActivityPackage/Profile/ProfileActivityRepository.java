@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.friendsorganiser.Models.UserInfo;
+import com.example.friendsorganiser.Models.UserProfileInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,13 +36,14 @@ public class ProfileActivityRepository {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String userName = snapshot.child("name").getValue().toString();
-                        String userSurname = snapshot.child("surname").getValue().toString();
-                        String userBirthDate = snapshot.child("dateOfBirth").getValue().toString();
+                        String userName = snapshot.child(Constants.KEY_NAME).getValue().toString();
+                        String userSurname = snapshot.child(Constants.KEY_SURNAME).getValue().toString();
+                        String userBirthDate = snapshot.child(Constants.KEY_DATE_OF_BIRTH).getValue().toString();
+                        String userEmail = snapshot.child(Constants.KEY_EMAIL).getValue().toString();
 
-                        UserInfo userInfo = new UserInfo(userName, userSurname, userBirthDate, userId);
+                        UserProfileInfo profileInfo = new UserProfileInfo(userName, userSurname, userEmail, userBirthDate, userId);
 
-                        onUserLoadedCallback.onUserLoadedCallback(userInfo);
+                        onUserLoadedCallback.onUserLoadedCallback(profileInfo);
                     }
 
                     @Override

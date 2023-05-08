@@ -4,6 +4,7 @@ public class Constants {
     public static final String KEY_DATABASE_USERS = "Users";
     public static final String KEY_NAME = "name";
     public static final String KEY_SURNAME = "surname";
+    public static final String KEY_FULL_NAME = "fullName";
     public static final String KEY_DATE_OF_BIRTH = "dateOfBirth";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";

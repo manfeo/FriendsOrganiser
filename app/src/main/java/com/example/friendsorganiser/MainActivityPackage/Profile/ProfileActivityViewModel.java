@@ -5,20 +5,22 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.friendsorganiser.Models.UserInfo;
+import com.example.friendsorganiser.Models.UserProfileInfo;
 
 public class ProfileActivityViewModel extends ViewModel implements OnUserLoadedCallback {
 
     private ProfileActivityRepository profileActivityRepository;
 
-    private MutableLiveData<UserInfo> userInfo;
+    private MutableLiveData<UserProfileInfo> userInfo;
 
 
-    public LiveData<UserInfo> getUserInfo(){
+    public LiveData<UserProfileInfo> getUserInfo(){
         return userInfo;
     }
 
     public void init(){
         profileActivityRepository = ProfileActivityRepository.getInstance();
+        profileActivityRepository.init();
         userInfo = new MutableLiveData<>();
     }
 
@@ -27,7 +29,7 @@ public class ProfileActivityViewModel extends ViewModel implements OnUserLoadedC
     }
 
     @Override
-    public void onUserLoadedCallback(UserInfo loadedUserInfo) {
+    public void onUserLoadedCallback(UserProfileInfo loadedUserInfo) {
         userInfo.setValue(loadedUserInfo);
     }
 }

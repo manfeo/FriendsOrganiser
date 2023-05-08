@@ -17,7 +17,7 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
-    public UserInfo(String name, String surname, String dateOfBirth, String id){
+    public UserInfo(String name, String surname, String dateOfBirth, String id) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
@@ -68,9 +68,7 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+    public void setDateOfBirth(String dateOfBirth) {this.dateOfBirth = dateOfBirth;}
 
     public void setChecked(boolean isChecked){
         this.isChecked = isChecked;

@@ -61,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
             binding.tvProfileName.setText(userInfo.getName());
             binding.tvProfileSurname.setText(userInfo.getSurname());
             binding.tvProfileBirthDate.setText(userInfo.getDateOfBirth());
+            binding.tvProfileEmail.setText(userInfo.getEmail());
         });
     }
 

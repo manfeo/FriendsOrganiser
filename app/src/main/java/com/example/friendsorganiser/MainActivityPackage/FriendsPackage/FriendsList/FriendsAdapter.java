@@ -1,4 +1,4 @@
-package com.example.friendsorganiser.MainActivityPackage.FriendsPackage;
+package com.example.friendsorganiser.MainActivityPackage.FriendsPackage.FriendsList;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.databinding.ItemFriendBinding;
-import com.example.friendsorganiser.databinding.ItemUserBinding;
 
 import java.util.List;
 

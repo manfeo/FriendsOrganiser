@@ -12,7 +12,8 @@ public class MainActivityViewModel extends ViewModel {
     public void init(){
         mainActivityRepository = MainActivityRepository.getRepoInstance();
         mainActivityRepository.init();
-        currentUserId = new MutableLiveData<>(mainActivityRepository.getCurrentUserId());
+        currentUserId = new MutableLiveData<>();
+        currentUserId.setValue(mainActivityRepository.getCurrentUserId());
     }
 
     public void setToken(){

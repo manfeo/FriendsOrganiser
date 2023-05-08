@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MainActivityViewModel mainActivityViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
