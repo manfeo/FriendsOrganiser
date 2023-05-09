@@ -36,6 +36,7 @@ public class RecentChatsAdapter extends RecyclerView.Adapter<RecentChatsAdapter.
                 binding.tvChatSentTime.setText(null);
             else
                 binding.tvChatSentTime.setText(recentChat.getMessageSentTime());
+
             binding.getRoot().setOnClickListener(v -> {
                 String recentChatId = recentChat.getChatId();
                 onChatClickedListener.onChatCLicked(recentChatId);

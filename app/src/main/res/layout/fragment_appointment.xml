@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivityPackage.AppointmentsPackage.AppointmentFragment">
 
+
     <TextView
-        android:id="@+id/ll"
+        android:id="@+id/tv_noAppointments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Мероприятия"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:text="Здесь будут отображаться ваши встречи"
+        android:gravity="center_horizontal"
+        android:textSize="17sp"
+        android:layout_marginTop="20sp"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_allAppointments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:padding="20sp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/pb_loadingAppointments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb_createNewAppointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10sp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:src="@drawable/avatar" />
 
 </RelativeLayout>

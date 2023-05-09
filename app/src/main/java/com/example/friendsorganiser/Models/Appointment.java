@@ -3,7 +3,7 @@ package com.example.friendsorganiser.Models;
 import java.time.LocalDateTime;
 
 public class Appointment {
-    private String appointmentTitle, appointmentDate, appointmentPhoto;
+    private String appointmentTitle, appointmentDate, appointmentPhoto, appointmentId;
     private LocalDateTime appointmentDateObject;
 
     public Appointment(String appointmentTitle, String appointmentDate, String appointmentPhoto, LocalDateTime appointmentDateObject) {
@@ -29,6 +29,10 @@ public class Appointment {
         this.appointmentDateObject = appointmentDateObject;
     }
 
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
     public String getAppointmentTitle() {
         return appointmentTitle;
     }
@@ -43,5 +47,9 @@ public class Appointment {
 
     public LocalDateTime getAppointmentDateObject() {
         return appointmentDateObject;
+    }
+
+    public String getAppointmentId() {
+        return appointmentId;
     }
 }
