@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.friendsorganiser.Models.Appointment;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.FragmentAppointmentBinding;
+
+import java.util.List;
 
 public class AppointmentFragment extends Fragment implements OnAppointmentClick{
 
@@ -49,7 +53,24 @@ public class AppointmentFragment extends Fragment implements OnAppointmentClick{
     }
 
     private void setListeners(){
+        appointmentFragmentViewModel.getAppointmentsList().observe(getViewLifecycleOwner(), appointmentList -> {
+            if (appointmentList.size() == 0){
+                binding.tvNoAppointments.setVisibility(View.VISIBLE);
+                binding.rvAllAppointments.setVisibility(View.GONE);
+            } else {
+                binding.tvNoAppointments.setVisibility(View .GONE);
+                appointmentsAdapter.notifyDataSetChanged();
+            }
+            binding.fbCreateNewAppointment.setVisibility(View.VISIBLE);
+        });
+        appointmentFragmentViewModel.isAppointmentListLoading().observe(getViewLifecycleOwner(), this::appointmentListLoading);
+    }
 
+    private void appointmentListLoading(boolean isLoading){
+        if (isLoading)
+            binding.pbLoadingAppointments.setVisibility(View.VISIBLE);
+        else
+            binding.pbLoadingAppointments.setVisibility(View.GONE);
     }
 
     @Override

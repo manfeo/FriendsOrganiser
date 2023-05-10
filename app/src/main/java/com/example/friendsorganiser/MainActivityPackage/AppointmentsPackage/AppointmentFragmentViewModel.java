@@ -14,6 +14,7 @@ public class AppointmentFragmentViewModel extends ViewModel implements OnAppoint
     private AppointmentFragmentRepository appointmentFragmentRepository;
     private MutableLiveData<List<Appointment>> appointmentsList;
     private List<Appointment> allAppointments;
+    private MutableLiveData<Boolean> appointmentListIsLoading;
 
 
     public void init(){
@@ -23,14 +24,28 @@ public class AppointmentFragmentViewModel extends ViewModel implements OnAppoint
         allAppointments = new ArrayList<>();
         appointmentsList = new MutableLiveData<>();
         appointmentsList.setValue(allAppointments);
+
+        appointmentListIsLoading = new MutableLiveData<>();
+
+        loadAppointments();
+    }
+
+    private void loadAppointments(){
+        appointmentListIsLoading.setValue(true);
+        appointmentFragmentRepository.loadAppointments(allAppointments, this);
     }
 
     public LiveData<List<Appointment>> getAppointmentsList(){
         return appointmentsList;
     }
 
+    public LiveData<Boolean> isAppointmentListLoading(){
+        return appointmentListIsLoading;
+    }
+
     @Override
     public void onAppointmentsLoaded(List<Appointment> allAppointments) {
+        appointmentListIsLoading.setValue(false);
         appointmentsList.setValue(allAppointments);
     }
 }

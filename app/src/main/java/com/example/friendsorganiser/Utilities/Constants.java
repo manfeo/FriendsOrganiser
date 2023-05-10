@@ -15,8 +15,10 @@ public class Constants {
     public static final String KEY_FCM_TOKEN = "FCMToken";
     public static final String KEY_FRIENDS = "friends";
     public static final String KEY_DATABASE_CHATS = "Chats";
+    public static final String KEY_RECENT_APPOINTMENTS = "recentAppointments";
+    public static final String KEY_APPOINTMENT_TITLE = "appointmentTitle";
+    public static final String KEY_APPOINTMENT_DATE = "appointmentDate";
     public static final String KEY_SENDER_ID = "senderId";
-    public static final String KEY_RECEIVERS_IDS = "receiversIds";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_TIMESTAMP = "timestamp";
     public static final String KEY_CHAT_NAME = "chatName";

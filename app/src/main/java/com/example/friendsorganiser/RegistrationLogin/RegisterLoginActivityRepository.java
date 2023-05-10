@@ -84,8 +84,7 @@ public class RegisterLoginActivityRepository {
                 addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         String uriToLogin = task.getResult().getUser().getUid();
-                        handleLogin(loginModel, uriToLogin);
-                        onLoginCallback.onLoginCallback(loginModel);
+                        handleLogin(loginModel, uriToLogin, onLoginCallback);
                     } else{
                         Log.d("login", task.getException().toString());
                         onLoginCallback.onLoginCallback(loginModel);
@@ -93,7 +92,7 @@ public class RegisterLoginActivityRepository {
                 });
     }
 
-    private void handleLogin(LoginModel loginModel, String uriToLogin){
+    private void handleLogin(LoginModel loginModel, String uriToLogin, OnLoginCallback onLoginCallback){
         loginModel.setLoginValid(true);
         if (loginModel.isRememberMe()) {
             preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
@@ -109,6 +108,7 @@ public class RegisterLoginActivityRepository {
                         preferenceManager.putString(Constants.KEY_USER_ID, uriToLogin);
                         preferenceManager.putString(Constants.KEY_NAME, userName);
                         preferenceManager.putString(Constants.KEY_SURNAME, userSurname);
+                        onLoginCallback.onLoginCallback(loginModel);
                     }
 
                     @Override
