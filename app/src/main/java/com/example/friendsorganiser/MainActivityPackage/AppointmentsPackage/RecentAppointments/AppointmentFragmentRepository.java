@@ -1,4 +1,4 @@
-package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage;
+package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.RecentAppointments;
 
 import android.util.Log;
 
