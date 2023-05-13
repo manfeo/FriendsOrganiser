@@ -53,7 +53,7 @@
             android:id="@+id/et_newAppointmentManualAddress"
             android:layout_width="wrap_content"
             android:layout_height="48sp"
-            android:inputType="textPersonName"
+            android:inputType="textPostalAddress"
             android:textSize="15sp"
             android:background="@android:color/transparent"
             android:hint="Введите адрес встречи" />
@@ -94,10 +94,28 @@
             android:id="@+id/et_newAppointmentDate"
             android:layout_width="wrap_content"
             android:layout_height="48sp"
-            android:inputType="textPersonName"
+            android:minWidth="48sp"
+            android:inputType="date"
             android:textSize="15sp"
+            android:textAlignment="center"
             android:background="@android:color/transparent"
-            android:hint="Введите дату встречи" />
+            android:hint="Дата" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/et_newAppointmentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="48sp"
+            android:minWidth="48sp"
+            android:inputType="time"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:background="@android:color/transparent"
+            android:hint="Время" />
 
         <Space
             android:layout_width="wrap_content"
@@ -122,7 +140,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_newAppointmentDateHolder"
-        android:layout_above="@+id/bt_newAppointmentCreate">
+        android:layout_above="@+id/fl_newAppointmentCreateHolder">
+
+        <TextView
+            android:id="@+id/tv_newAppointmentNoFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:text="У вас нет друзей("
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_newAppointmentFriends"
@@ -149,13 +176,28 @@
         android:layout_height="200sp"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/bt_newAppointmentCreate"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/fl_newAppointmentCreateHolder"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Создать"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10sp"/>
+        android:layout_marginBottom="10sp">
+
+        <ProgressBar
+            android:id="@+id/pb_newAppointmentCreateLoading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/bt_newAppointmentCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Создать"
+            android:layout_gravity="center_horizontal" />
+
+    </FrameLayout>
 
 </RelativeLayout>

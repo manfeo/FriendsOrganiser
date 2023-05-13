@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AppointmentFragmentRepository {
@@ -63,22 +64,13 @@ public class AppointmentFragmentRepository {
             String appointmentId = anotherSnapshot.getKey();
 
             Appointment anotherAppointment = new Appointment(appointmentTitle, dateBeautifulizer(localDateTime),
-                    " ", localDateTime, appointmentId);
+                     " ", localDateTime, appointmentId);
             appointmentList.add(anotherAppointment);
         }
     }
 
     private String dateBeautifulizer(LocalDateTime localDateTime){
-        String beautifulAppointmentDate = "";
-        beautifulAppointmentDate += localDateTime.getDayOfYear() >= 10 ? localDateTime.getDayOfYear() : "0" + localDateTime.getDayOfYear();
-        beautifulAppointmentDate += "/";
-        beautifulAppointmentDate += localDateTime.getDayOfMonth() >= 10 ? localDateTime.getDayOfMonth() : "0" + localDateTime.getDayOfMonth();
-        beautifulAppointmentDate += "/";
-        beautifulAppointmentDate += localDateTime.getYear();
-        beautifulAppointmentDate += " ";
-        beautifulAppointmentDate += localDateTime.getHour() >= 10 ? localDateTime.getHour() : "0" + localDateTime.getHour();
-        beautifulAppointmentDate += ":";
-        beautifulAppointmentDate += localDateTime.getMinute() >= 10 ? localDateTime.getMinute() : "0" + localDateTime.getMinute();
-        return beautifulAppointmentDate;
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return localDateTime.format(dateTimeFormatter);
     }
 }

@@ -2,9 +2,10 @@ package com.example.friendsorganiser.Utilities;
 
 public class Constants {
     public static final String KEY_DATABASE_USERS = "Users";
+    public static final String KEY_DATABASE_CHATS = "Chats";
+    public static final String KEY_DATABASE_APPOINTMENTS = "Appointments";
     public static final String KEY_NAME = "name";
     public static final String KEY_SURNAME = "surname";
-    public static final String KEY_FULL_NAME = "fullName";
     public static final String KEY_DATE_OF_BIRTH = "dateOfBirth";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
@@ -14,10 +15,11 @@ public class Constants {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_FCM_TOKEN = "FCMToken";
     public static final String KEY_FRIENDS = "friends";
-    public static final String KEY_DATABASE_CHATS = "Chats";
     public static final String KEY_RECENT_APPOINTMENTS = "recentAppointments";
-    public static final String KEY_APPOINTMENT_TITLE = "appointmentTitle";
-    public static final String KEY_APPOINTMENT_DATE = "appointmentDate";
+    public static final String KEY_APPOINTMENT_TITLE = "title";
+    public static final String KEY_APPOINTMENT_DATE = "date";
+    public static final String KEY_APPOINTMENT_ADDRESS = "address";
+    public static final String KEY_APPOINTMENT_PARTICIPANTS = "participants";
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_TIMESTAMP = "timestamp";

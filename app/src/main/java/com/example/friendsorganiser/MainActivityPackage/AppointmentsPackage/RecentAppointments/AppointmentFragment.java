@@ -54,8 +54,9 @@ public class AppointmentFragment extends Fragment implements OnAppointmentClick{
                 binding.tvNoAppointments.setVisibility(View.VISIBLE);
                 binding.rvAllAppointments.setVisibility(View.GONE);
             } else {
-                binding.tvNoAppointments.setVisibility(View .GONE);
+                binding.tvNoAppointments.setVisibility(View.GONE);
                 appointmentsAdapter.notifyDataSetChanged();
+                binding.rvAllAppointments.setVisibility(View.VISIBLE);
             }
             binding.fbCreateNewAppointment.setVisibility(View.VISIBLE);
         });
@@ -63,7 +64,7 @@ public class AppointmentFragment extends Fragment implements OnAppointmentClick{
         binding.fbCreateNewAppointment.setOnClickListener(v -> {
             FragmentManager manager = getActivity().getSupportFragmentManager();
             NewAppointmentDialog appointmentDialog = new NewAppointmentDialog();
-            appointmentDialog.show(manager, "newChatCreation");
+            appointmentDialog.show(manager, "newAppointmentCreation");
         });
     }
 

@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 
@@ -77,11 +78,8 @@ public class RecentChatsRepository {
     }
 
     private String dateBeautifulizer(LocalDateTime localDateTime){
-        String beautifulMessageSentTime = "";
-        beautifulMessageSentTime += localDateTime.getHour() >= 10 ? localDateTime.getHour() : "0" + localDateTime.getHour();
-        beautifulMessageSentTime += ":";
-        beautifulMessageSentTime += localDateTime.getMinute() >= 10 ? localDateTime.getMinute() : "0" + localDateTime.getMinute();
-        return beautifulMessageSentTime;
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        return localDateTime.format(dateTimeFormatter);
     }
 
 }

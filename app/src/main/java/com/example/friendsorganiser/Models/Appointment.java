@@ -7,8 +7,7 @@ public class Appointment {
     private LocalDateTime appointmentDateObject;
 
     public Appointment(String appointmentTitle, String appointmentDate,
-                       String appointmentPhoto, LocalDateTime appointmentDateObject,
-                       String appointmentId) {
+                       String appointmentPhoto, LocalDateTime appointmentDateObject, String appointmentId) {
         this.appointmentTitle = appointmentTitle;
         this.appointmentDate = appointmentDate;
         this.appointmentPhoto = appointmentPhoto;

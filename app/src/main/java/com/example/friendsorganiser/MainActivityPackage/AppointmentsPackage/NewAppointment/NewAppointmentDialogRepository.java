@@ -7,13 +7,21 @@ import androidx.annotation.NonNull;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewAppointmentDialogRepository {
     private static NewAppointmentDialogRepository instance;
@@ -68,4 +76,42 @@ public class NewAppointmentDialogRepository {
         }
     }
 
+    public void createNewAppointment(String appointmentTitle, String appointmentAddress,
+                                      String appointmentDate, String appointmentTime,
+                                     List<UserInfo> friends, OnAppointmentCreatedCallback onAppointmentCreatedCallback) {
+        ArrayList<String> appointmentParticipants = new ArrayList<>();
+        for (UserInfo friend : friends){
+            if (friend.getIsChecked())
+                appointmentParticipants.add(friend.getId());
+        }
+        appointmentParticipants.add(currentUserId);
+
+        String fullTime = appointmentDate + " " + appointmentTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(fullTime, formatter);
+        long appointmentMillis = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+        Map<String, Object> dataForParticipants = new HashMap<>();
+        Map<String, Object> newAppointment = new HashMap<>();
+
+        String appointmentId = databaseReference.child(Constants.KEY_DATABASE_APPOINTMENTS).push().getKey();
+
+        dataForParticipants.put(Constants.KEY_APPOINTMENT_TITLE, appointmentTitle);
+        dataForParticipants.put(Constants.KEY_APPOINTMENT_DATE, appointmentMillis);
+
+        newAppointment.put(Constants.KEY_APPOINTMENT_TITLE, appointmentTitle);
+        newAppointment.put(Constants.KEY_APPOINTMENT_DATE, appointmentMillis);
+        newAppointment.put(Constants.KEY_APPOINTMENT_ADDRESS, appointmentAddress);
+        newAppointment.put(Constants.KEY_APPOINTMENT_PARTICIPANTS, appointmentParticipants);
+
+        appointmentParticipants.forEach((currentParticipantId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
+                child(currentParticipantId).child(Constants.KEY_RECENT_APPOINTMENTS).child(appointmentId).setValue(dataForParticipants));
+
+        databaseReference.child(Constants.KEY_DATABASE_APPOINTMENTS).child(appointmentId).setValue(newAppointment).
+                addOnCompleteListener(task -> {
+                    if (!task.isSuccessful())
+                        Log.d("newAppointment", "Unable to create appointment");
+                    onAppointmentCreatedCallback.onAppointmentCreatedCallback(false);
+                });
+    }
 }

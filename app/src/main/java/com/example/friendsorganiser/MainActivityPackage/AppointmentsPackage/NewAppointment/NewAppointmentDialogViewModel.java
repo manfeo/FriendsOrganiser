@@ -30,6 +30,8 @@ public class NewAppointmentDialogViewModel extends ViewModel implements OnFriend
 
         friendsListLoading = new MutableLiveData<>();
         newAppointmentLoading = new MutableLiveData<>();
+
+        loadFriends();
     }
 
     public LiveData<List<UserInfo>> getFriends(){
@@ -42,9 +44,17 @@ public class NewAppointmentDialogViewModel extends ViewModel implements OnFriend
         newAppointmentDialogRepository.getFriends(allFriends, this);
     }
 
-    public void createNewAppointment(String appointmentTitle, String appointmentAddress, String appointmentDate){
-        //newAppointmentDialogRepository.createNewApppointment(newAppointment);
-        Log.d("a;skldj", "a;sdlkfjalk;");
+    public LiveData<Boolean> isFriendsListLoading(){
+        return friendsListLoading;
+    }
+
+    public LiveData<Boolean> isNewAppointmentLoading(){
+        return newAppointmentLoading;
+    }
+
+    public void createNewAppointment(String appointmentTitle, String appointmentAddress, String appointmentDate, String appointmentTime){
+        newAppointmentDialogRepository.createNewAppointment(appointmentTitle, appointmentAddress, appointmentDate,
+                appointmentTime, allFriends, this);
     }
 
     @Override
@@ -55,6 +65,6 @@ public class NewAppointmentDialogViewModel extends ViewModel implements OnFriend
 
     @Override
     public void onAppointmentCreatedCallback(boolean isLoading) {
-        newAppointmentLoading.setValue(false);
+        newAppointmentLoading.setValue(isLoading);
     }
 }
