@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FriendsOrganiser"
         tools:targetApi="31">
+        <activity
+            android:name=".MainActivityPackage.AppointmentsPackage.NewAppointment.AddressPickerActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivityPackage.ChatsPackage.Chatting.ChattingActivity"
             android:exported="false" />
@@ -44,8 +47,9 @@
             android:name=".MainActivityPackage.Messager.MessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
     </application>
+
 </manifest>

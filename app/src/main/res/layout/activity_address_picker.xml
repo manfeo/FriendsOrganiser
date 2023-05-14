@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivityPackage.AppointmentsPackage.NewAppointment.AddressPickerActivity">
+
+    <ImageButton
+        android:id="@+id/ib_newAppointmentCancelMap"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/no_image_found"
+        app:srcCompat="@drawable/avatar" />
+
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/mv_newAppointmentMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ib_newAppointmentCancelMap"
+        android:layout_above="@+id/bt_newAppointmentConfirmAddress"/>
+
+    <Button
+        android:id="@+id/bt_newAppointmentConfirmAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Задать" />
+
+</RelativeLayout>

@@ -20,6 +20,7 @@ public class Constants {
     public static final String KEY_APPOINTMENT_DATE = "date";
     public static final String KEY_APPOINTMENT_ADDRESS = "address";
     public static final String KEY_APPOINTMENT_PARTICIPANTS = "participants";
+    public static final String KEY_API_MAPS = "fda829b4-1849-46f8-8426-9a422901a950";
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_TIMESTAMP = "timestamp";

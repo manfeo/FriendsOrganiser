@@ -1,5 +1,7 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,18 +10,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
-import com.example.friendsorganiser.Models.Appointment;
-import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.databinding.CreateNewAppointmentBinding;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 public class NewAppointmentDialog extends DialogFragment {
-
     private CreateNewAppointmentBinding binding;
     private NewAppointmentDialogViewModel newAppointmentDialogViewModel;
     private FriendsPickerAdapter friendsPickerAdapter;
@@ -51,6 +49,13 @@ public class NewAppointmentDialog extends DialogFragment {
         binding.etNewAppointmentDate.addTextChangedListener(new DateTextWatcher(binding.etNewAppointmentDate));
         binding.etNewAppointmentTime.addTextChangedListener(new TimeTextWatcher(binding.etNewAppointmentTime));
 
+        binding.btNewAppointmentOpenMap.setOnClickListener(v -> {
+            Intent openMapIntent = new Intent(getActivity(), AddressPickerActivity.class);
+            startActivity(openMapIntent);
+        });
+
+        binding.btNewAppointmentDateDialog.setOnClickListener(v -> createDatePickerDialog());
+
         binding.ibNewAppointmentCancel.setOnClickListener(v -> dismiss());
 
         binding.btNewAppointmentCreate.setOnClickListener(v -> {
@@ -78,7 +83,21 @@ public class NewAppointmentDialog extends DialogFragment {
             newAppointmentLoading(isNewAppointmentLoading);
             dismiss();
         });
+    }
 
+    private void createDatePickerDialog(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        int currentYear = currentTime.getYear();
+        int currentMonth = currentTime.getMonth().getValue() - 1;
+        int currentDay = currentTime.getDayOfMonth();
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
+            String setDate = String.format("%02d/%02d/%02d", dayOfMonth, month, year);
+            binding.etNewAppointmentDate.setText(setDate);
+        }, currentYear, currentMonth, currentDay);
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() -1000);
+        datePickerDialog.show();
     }
 
     private void friendsLoading(boolean isLoading){
