@@ -48,7 +48,11 @@ public class NewAppointmentDialog extends DialogFragment {
     }
 
     private void setListeners(){
+        binding.etNewAppointmentDate.addTextChangedListener(new DateTextWatcher(binding.etNewAppointmentDate));
+        binding.etNewAppointmentTime.addTextChangedListener(new TimeTextWatcher(binding.etNewAppointmentTime));
+
         binding.ibNewAppointmentCancel.setOnClickListener(v -> dismiss());
+
         binding.btNewAppointmentCreate.setOnClickListener(v -> {
             String appointmentTitle = binding.etNewAppointmentTitle.getText().toString();
             String appointmentAddress = binding.etNewAppointmentManualAddress.getText().toString();
@@ -57,6 +61,7 @@ public class NewAppointmentDialog extends DialogFragment {
 
             newAppointmentDialogViewModel.createNewAppointment(appointmentTitle, appointmentAddress, appointmentDate, appointmentTime);
         });
+
         newAppointmentDialogViewModel.getFriends().observe(getViewLifecycleOwner(), friends -> {
             if (friends.size() == 0){
                 binding.rvNewAppointmentFriends.setVisibility(View.GONE);
@@ -67,6 +72,7 @@ public class NewAppointmentDialog extends DialogFragment {
                 binding.tvNewAppointmentNoFriends.setVisibility(View.GONE);
             }
         });
+
         newAppointmentDialogViewModel.isFriendsListLoading().observe(getViewLifecycleOwner(), this::friendsLoading);
         newAppointmentDialogViewModel.isNewAppointmentLoading().observe(getViewLifecycleOwner(), isNewAppointmentLoading -> {
             newAppointmentLoading(isNewAppointmentLoading);
