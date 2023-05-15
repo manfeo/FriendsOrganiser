@@ -13,5 +13,6 @@ public class App extends Application {
         super.onCreate();
         PreferenceManager.getInstance().init(getApplicationContext());
         MapKitFactory.setApiKey(Constants.KEY_API_MAPS);
+
     }
 }
