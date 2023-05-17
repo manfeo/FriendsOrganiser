@@ -1,10 +1,7 @@
 package com.example.friendsorganiser;
 
 import android.app.Application;
-
-import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
-import com.yandex.mapkit.MapKitFactory;
 
 public class App extends Application {
 
@@ -12,7 +9,5 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         PreferenceManager.getInstance().init(getApplicationContext());
-        MapKitFactory.setApiKey(Constants.KEY_API_MAPS);
-
     }
 }
