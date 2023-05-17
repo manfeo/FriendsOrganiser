@@ -17,7 +17,7 @@
         android:theme="@style/Theme.FriendsOrganiser"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivityPackage.AppointmentsPackage.NewAppointment.AddressPickerActivity"
+            android:name=".MainActivityPackage.AppointmentsPackage.AddressPicker.AddressPickerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivityPackage.ChatsPackage.Chatting.ChattingActivity"

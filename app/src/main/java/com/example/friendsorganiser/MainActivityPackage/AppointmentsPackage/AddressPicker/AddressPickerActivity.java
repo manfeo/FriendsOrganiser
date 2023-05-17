@@ -1,4 +1,4 @@
-package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
+package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AddressPicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,27 +15,36 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
+import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment.NewAppointmentDialogViewModel;
+import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ActivityAddressPickerBinding;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.Projection;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.io.IOException;
+
 public class AddressPickerActivity extends AppCompatActivity{
     private ActivityAddressPickerBinding binding;
     private NewAppointmentDialogViewModel newAppointmentDialogViewModel;
-    private float ZOOM_LEVEL = 18f;
-    private double DESIRED_ACCURACY = 0, MINIMAL_DISTANCE = 1;
-    private long MINIMAL_TIME = 1000;
-    private boolean USE_IN_BACKGROUND = false;
+    private AddressPickerActivityViewModel addressPickerActivityViewModel;
     private IMapController iMapController;
     private MyLocationNewOverlay myLocationNewOverlay;
     private GeoPoint defaultGeoPoint = new GeoPoint(55.7438, 37.6199);
+    private GeoPoint selectedGeoPoint;
+    private Marker selectedMarker;
     private boolean statusOfGPS;
 
     @Override
@@ -47,6 +56,9 @@ public class AddressPickerActivity extends AppCompatActivity{
 
         binding = ActivityAddressPickerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        addressPickerActivityViewModel = new ViewModelProvider(this).get(AddressPickerActivityViewModel.class);
+        addressPickerActivityViewModel.init();
 
         newAppointmentDialogViewModel = new ViewModelProvider(this).get(NewAppointmentDialogViewModel.class);
 
@@ -100,14 +112,9 @@ public class AddressPickerActivity extends AppCompatActivity{
         RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(binding.mvMap);
         mRotationGestureOverlay.setEnabled(true);
         binding.mvMap.getOverlays().add(mRotationGestureOverlay);
+        //Creating marker for place selection
+        selectedMarker = new Marker(binding.mvMap);
     }
-
-    private Runnable moveCameraRunnable = new Runnable() {
-        @Override
-        public void run() {
-            moveCamera(myLocationNewOverlay.getMyLocation());
-        }
-    };
 
     private void initUserLocation(){
         myLocationNewOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), binding.mvMap);
@@ -121,6 +128,37 @@ public class AddressPickerActivity extends AppCompatActivity{
 
     private void setListeners(){
         binding.ibNewAppointmentCancelMap.setOnClickListener(v -> finish());
+        binding.mvMap.getOverlays().add(new Overlay() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent event, MapView mapView) {
+                try {
+                    handleTap(event, mapView);
+                } catch (Exception e){
+                    Toast.makeText(AddressPickerActivity.this, "Unable to get address", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+    }
+
+    private void handleTap(MotionEvent event, MapView mapView){
+        int coordinateX = (int) event.getX();
+        int coordinateY = (int) event.getY();
+        Projection projection = mapView.getProjection();
+        selectedGeoPoint = (GeoPoint) projection.fromPixels(coordinateX, coordinateY);
+
+        addressPickerActivityViewModel.loadAddress(selectedGeoPoint);
+
+        addressPickerActivityViewModel.getAddress().observe(this, fullAddress -> {
+            selectedMarker.setPosition(selectedGeoPoint);
+            selectedMarker.setInfoWindow(new CustomMarkerInfoWindow(
+                    R.layout.marker_info_window,
+                    binding.mvMap,
+                    fullAddress));
+            selectedMarker.setAnchor(Marker.ANCHOR_BOTTOM, Marker.ANCHOR_CENTER);
+            binding.mvMap.getOverlays().add(selectedMarker);
+            binding.mvMap.invalidate();
+        });
     }
 
     private void moveCamera(GeoPoint geoPoint){
@@ -144,7 +182,6 @@ public class AddressPickerActivity extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();
-
         unregisterReceiver(gpsSwitchStateReceiver);
     }
 }

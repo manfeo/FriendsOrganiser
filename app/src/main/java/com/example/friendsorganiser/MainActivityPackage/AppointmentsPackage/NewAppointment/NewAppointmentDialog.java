@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AddressPicker.AddressPickerActivity;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
 import com.example.friendsorganiser.databinding.CreateNewAppointmentBinding;
 
