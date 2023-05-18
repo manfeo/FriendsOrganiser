@@ -32,7 +32,7 @@
         android:imeOptions="actionSearch"
         android:background="@drawable/map_search"
         android:inputType="text"
-        android:text="Поиск..." />
+        android:hint="Поиск..." />
 
     <Button
         android:id="@+id/bt_newAppointmentConfirmAddress"
