@@ -53,7 +53,8 @@
             android:id="@+id/et_newAppointmentManualAddress"
             android:layout_width="wrap_content"
             android:layout_height="48sp"
-            android:inputType="textPostalAddress"
+            android:maxWidth="130sp"
+            android:inputType="text"
             android:textSize="15sp"
             android:background="@android:color/transparent"
             android:hint="Место встречи" />

@@ -1,6 +1,8 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AddressPicker;
 
 import android.location.Address;
+
+import com.example.friendsorganiser.Models.AddressModel;
 import com.example.friendsorganiser.Utilities.Constants;
 
 import org.osmdroid.bonuspack.location.GeocoderNominatim;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -52,17 +55,47 @@ public class AddressPickerActivityRepository {
         });
     }
 
-    public void getGeoPointsFromQuery(String query, GeoPoint startPoint, OnPOILoadedCallback onPOILoadedCallback){
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
-            ArrayList<POI> foundedPlaces;
-            try {
-                NominatimPOIProvider nominatimPOIProvider = new NominatimPOIProvider(userAgent);
-                foundedPlaces = nominatimPOIProvider.getPOICloseTo(startPoint, query, 50, 0.1);
-            } catch (Exception e) {
-                foundedPlaces = null;
-            }
-            onPOILoadedCallback.onPOILoadedCallback(foundedPlaces);
-        });
+    public void getGeoPointsFromQuery(String query, GeoPoint startPoint, OnPOILoadedCallback onPOILoadedCallback, OnAddressesLoadedCallback onAddressesLoadedCallback){
+        if (!SpecialPhrasesProvider.isPOI(query)) {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                GeocoderNominatim geocoder = new GeocoderNominatim(userAgent);
+                List<AddressModel> foundedAddresses = new ArrayList<>();
+                try {
+                    List<Address> foundedPlaces = geocoder.getFromLocationName(query, 20,
+                            (startPoint.getLatitude() - 0.2), startPoint.getLongitude() - 0.2,
+                            startPoint.getLatitude() + 0.2, startPoint.getLongitude() + 0.2);
+                    if (foundedPlaces.size() > 0) {
+                        for (Address anotherAddress : foundedPlaces){
+                            String[] rawAddress = anotherAddress.getExtras().getString(Constants.KEY_FULL_ADDRESS).split(",");
+                            String title = rawAddress[0];
+                            String astest = "asdfklfjkd".replaceAll("[a-zA-Z]", "");
+                            String fullAddress = (rawAddress[2].replaceAll("[a-zA-Z]", "") + " " + rawAddress[1]).trim();
+                            AddressModel addressModel = new AddressModel(title, fullAddress,
+                                    anotherAddress.getLongitude(), anotherAddress.getLatitude());
+                            foundedAddresses.add(addressModel);
+                        }
+
+                    } else {
+                        foundedAddresses = null;
+                    }
+                } catch (IOException e) {
+                    foundedAddresses = null;
+                }
+                onAddressesLoadedCallback.onAddressesLoadedCallback(foundedAddresses);
+            });
+        } else {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                ArrayList<POI> foundedPlaces;
+                try {
+                    NominatimPOIProvider nominatimPOIProvider = new NominatimPOIProvider(userAgent);
+                    foundedPlaces = nominatimPOIProvider.getPOICloseTo(startPoint, query, 50, 0.1);
+                } catch (Exception e) {
+                    foundedPlaces = null;
+                }
+                onPOILoadedCallback.onPOILoadedCallback(foundedPlaces);
+            });
+        }
     }
 }

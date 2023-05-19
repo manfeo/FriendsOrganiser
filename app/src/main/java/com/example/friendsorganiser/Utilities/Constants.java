@@ -21,6 +21,8 @@ public class Constants {
     public static final String KEY_APPOINTMENT_ADDRESS = "address";
     public static final String KEY_APPOINTMENT_PARTICIPANTS = "participants";
     public static final String KEY_FULL_ADDRESS = "display_name";
+    public static final String KEY_SET_ADDRESS = "setAddress";
+    public static final String KEY_EDIT_TEXT_SET_ADDRESS = "Адрес задан";
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_TIMESTAMP = "timestamp";

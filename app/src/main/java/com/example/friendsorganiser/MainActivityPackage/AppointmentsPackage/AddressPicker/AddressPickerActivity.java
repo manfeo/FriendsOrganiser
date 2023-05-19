@@ -4,30 +4,30 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment.NewAppointmentDialogViewModel;
+import com.example.friendsorganiser.Models.AddressModel;
 import com.example.friendsorganiser.R;
+import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.ActivityAddressPickerBinding;
 
 import org.osmdroid.api.IMapController;
@@ -38,14 +38,18 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.FolderOverlay;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddressPickerActivity extends AppCompatActivity{
     private ActivityAddressPickerBinding binding;
@@ -55,6 +59,9 @@ public class AddressPickerActivity extends AppCompatActivity{
     private final GeoPoint defaultGeoPoint = new GeoPoint(55.7438, 37.6199);
     private GeoPoint selectedGeoPoint;
     private Marker selectedMarker;
+    private AddressModel selectedAddress;
+    private FolderOverlay folderOverlay;
+    private FolderOverlay selectedPositionOverlay;
     private boolean statusOfGPS;
 
     @Override
@@ -114,6 +121,10 @@ public class AddressPickerActivity extends AppCompatActivity{
         binding.mvMap.setMultiTouchControls(true);
         iMapController = binding.mvMap.getController();
         iMapController.setZoom(10.0);
+        //Overlay for markers
+        folderOverlay = new FolderOverlay();
+        selectedPositionOverlay = new FolderOverlay();
+        //Moving do default position
         moveCamera(defaultGeoPoint);
 
         //Adding rotation opportunity to map
@@ -156,13 +167,17 @@ public class AddressPickerActivity extends AppCompatActivity{
             if (actionId == EditorInfo.IME_ACTION_SEARCH){
                 String query = binding.etSearchAddress.getText().toString();
                 addressPickerActivityViewModel.searchAddress(query, myLocationNewOverlay.getMyLocation());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                binding.etSearchAddress.setText(null);
             }
             return true;
         });
         addressPickerActivityViewModel.getPOIs().observe(this, pois -> {
             Drawable markerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.search_result, null);
-            FolderOverlay folderOverlay = new FolderOverlay();
-            binding.mvMap.getOverlays().add(folderOverlay);
+            binding.mvMap.getOverlays().remove(folderOverlay);
+            binding.mvMap.invalidate();
+            folderOverlay = new FolderOverlay();
             for (POI poi : pois){
                 Marker poiMarker = new Marker(binding.mvMap);
                 poiMarker.setTitle(poi.mType);
@@ -171,7 +186,40 @@ public class AddressPickerActivity extends AppCompatActivity{
                 poiMarker.setIcon(markerIcon);
                 folderOverlay.add(poiMarker);
             }
+            binding.mvMap.getOverlays().add(folderOverlay);
             binding.mvMap.invalidate();
+        });
+        addressPickerActivityViewModel.getAddresses().observe(this, addressModels -> {
+            Drawable markerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.search_result, null);
+            binding.mvMap.getOverlays().remove(folderOverlay);
+            binding.mvMap.invalidate();
+            folderOverlay = new FolderOverlay();
+            if (addressModels != null) {
+                for (AddressModel anotherAddress : addressModels) {
+                    Marker poiMarker = new Marker(binding.mvMap);
+                    poiMarker.setTitle(anotherAddress.getTitle());
+                    poiMarker.setSnippet(anotherAddress.getAddress());
+                    GeoPoint markerGeoPoint = new GeoPoint(anotherAddress.getLatitude(), anotherAddress.getLongitude());
+                    poiMarker.setPosition(markerGeoPoint);
+                    poiMarker.setIcon(markerIcon);
+                    folderOverlay.add(poiMarker);
+                }
+                binding.mvMap.getOverlays().add(folderOverlay);
+                binding.mvMap.invalidate();
+            }
+        });
+        binding.btClearAllMarkers.setOnClickListener(v -> {
+            binding.mvMap.getOverlays().remove(folderOverlay);
+            binding.mvMap.getOverlays().remove(selectedPositionOverlay);
+            binding.mvMap.invalidate();
+        });
+        binding.btNewAppointmentConfirmAddress.setOnClickListener(v -> {
+            if (selectedGeoPoint != null) {
+                Intent resultingIntent = new Intent();
+                resultingIntent.putExtra(Constants.KEY_SET_ADDRESS, selectedAddress);
+                setResult(Activity.RESULT_OK, resultingIntent);
+                finish();
+            }
         });
     }
 
@@ -179,20 +227,24 @@ public class AddressPickerActivity extends AppCompatActivity{
         int coordinateX = (int) event.getX();
         int coordinateY = (int) event.getY();
         Projection projection = mapView.getProjection();
-        Drawable markerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.search_result, null);
+        Drawable markerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.selected_address, null);
         selectedGeoPoint = (GeoPoint) projection.fromPixels(coordinateX, coordinateY);
 
         addressPickerActivityViewModel.loadAddress(selectedGeoPoint);
 
         addressPickerActivityViewModel.getAddress().observe(this, fullAddress -> {
+            selectedAddress = new AddressModel(fullAddress, selectedGeoPoint.getLongitude(), selectedGeoPoint.getLatitude());
+            binding.mvMap.getOverlays().remove(selectedPositionOverlay);
+            selectedPositionOverlay = new FolderOverlay();
             selectedMarker.setPosition(selectedGeoPoint);
             selectedMarker.setIcon(markerIcon);
             selectedMarker.setInfoWindow(new CustomMarkerInfoWindow(
                     R.layout.marker_info_window,
                     binding.mvMap,
                     fullAddress));
-            selectedMarker.setAnchor(Marker.ANCHOR_BOTTOM, Marker.ANCHOR_CENTER);
-            binding.mvMap.getOverlays().add(selectedMarker);
+            selectedMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            selectedPositionOverlay.add(selectedMarker);
+            binding.mvMap.getOverlays().add(selectedPositionOverlay);
             binding.mvMap.invalidate();
         });
     }

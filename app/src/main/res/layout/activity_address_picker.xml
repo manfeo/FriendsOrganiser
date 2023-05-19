@@ -43,4 +43,15 @@
         android:layout_margin="10sp"
         android:text="Задать" />
 
+    <ImageButton
+        android:id="@+id/bt_clearAllMarkers"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:scaleType="fitCenter"
+        android:layout_toLeftOf="@+id/et_searchAddress"
+        android:contentDescription="@string/no_image_found"
+        android:layout_margin="10sp"
+        app:srcCompat="@drawable/search_result" />
+
+
 </RelativeLayout>

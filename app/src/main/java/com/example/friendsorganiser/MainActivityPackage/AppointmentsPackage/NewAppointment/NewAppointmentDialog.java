@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -14,7 +19,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AddressPicker.AddressPickerActivity;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
+import com.example.friendsorganiser.Models.AddressModel;
+import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.CreateNewAppointmentBinding;
+
+import org.osmdroid.util.GeoPoint;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +31,7 @@ public class NewAppointmentDialog extends DialogFragment {
     private CreateNewAppointmentBinding binding;
     private NewAppointmentDialogViewModel newAppointmentDialogViewModel;
     private FriendsPickerAdapter friendsPickerAdapter;
+    private AddressModel setAddress;
 
     @Nullable
     @Override
@@ -29,6 +39,17 @@ public class NewAppointmentDialog extends DialogFragment {
         binding = CreateNewAppointmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
+    ActivityResultLauncher<Intent> startActivityForResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    Bundle extras = data.getExtras();
+                    setAddress = (AddressModel) extras.get(Constants.KEY_SET_ADDRESS);
+                    binding.etNewAppointmentManualAddress.setText(Constants.KEY_EDIT_TEXT_SET_ADDRESS);
+                }
+            });
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -47,12 +68,12 @@ public class NewAppointmentDialog extends DialogFragment {
     }
 
     private void setListeners(){
-        binding.etNewAppointmentDate.addTextChangedListener(new DateTextWatcher(binding.etNewAppointmentDate));
+        binding.etNewAppointmentDate.addTextChangedListener(new DateTextWatcher(binding.etNewAppointmentDate, binding.etNewAppointmentTime));
         binding.etNewAppointmentTime.addTextChangedListener(new TimeTextWatcher(binding.etNewAppointmentTime));
 
         binding.btNewAppointmentOpenMap.setOnClickListener(v -> {
             Intent openMapIntent = new Intent(getActivity(), AddressPickerActivity.class);
-            startActivity(openMapIntent);
+            startActivityForResultLauncher.launch(openMapIntent);
         });
 
         binding.btNewAppointmentDateDialog.setOnClickListener(v -> createDatePickerDialog());
