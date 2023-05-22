@@ -2,17 +2,28 @@ package com.example.friendsorganiser.Models;
 
 import java.time.LocalDateTime;
 
-public class Appointment {
-    private String appointmentTitle, appointmentDate, appointmentPhoto, appointmentId;
+public class AppointmentModel {
+    private String appointmentTitle, appointmentDate, appointmentPhoto, appointmentId, appointmentAddress;
     private LocalDateTime appointmentDateObject;
+    private double latitude, longitude;
 
-    public Appointment(String appointmentTitle, String appointmentDate,
-                       String appointmentPhoto, LocalDateTime appointmentDateObject, String appointmentId) {
+    public AppointmentModel(String appointmentTitle, String appointmentDate,
+                            String appointmentPhoto, LocalDateTime appointmentDateObject, String appointmentId) {
         this.appointmentTitle = appointmentTitle;
         this.appointmentDate = appointmentDate;
         this.appointmentPhoto = appointmentPhoto;
         this.appointmentDateObject = appointmentDateObject;
         this.appointmentId = appointmentId;
+    }
+
+    public AppointmentModel(String appointmentTitle, String appointmentDate, String appointmentPhoto,
+                            String appointmentAddress, double latitude, double longitude){
+        this.appointmentTitle = appointmentTitle;
+        this.appointmentDate = appointmentDate;
+        this.appointmentPhoto = appointmentPhoto;
+        this.appointmentAddress = appointmentAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void setAppointmentTitle(String appointmentTitle) {
@@ -53,5 +64,17 @@ public class Appointment {
 
     public String getAppointmentId() {
         return appointmentId;
+    }
+
+    public String getAppointmentAddress() {
+        return appointmentAddress;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }

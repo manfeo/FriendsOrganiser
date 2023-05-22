@@ -19,6 +19,10 @@ public class Constants {
     public static final String KEY_APPOINTMENT_TITLE = "title";
     public static final String KEY_APPOINTMENT_DATE = "date";
     public static final String KEY_APPOINTMENT_ADDRESS = "address";
+    public static final String KEY_APPOINTMENT_ID = "appointmentId";
+    public static final String KEY_APPOINTMENT_GEO_POINT = "geoPoint";
+    public static final String KEY_APPOINTMENT_LATITUDE = "latitude";
+    public static final String KEY_APPOINTMENT_LONGITUDE = "longitude";
     public static final String KEY_APPOINTMENT_PARTICIPANTS = "participants";
     public static final String KEY_FULL_ADDRESS = "display_name";
     public static final String KEY_SET_ADDRESS = "setAddress";

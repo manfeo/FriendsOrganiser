@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.RecentAppointments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.Appointment.Appointment;
 import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment.NewAppointmentDialog;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.NewChat;
+import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.FragmentAppointmentBinding;
 
 public class AppointmentFragment extends Fragment implements OnAppointmentClick{
@@ -77,6 +80,8 @@ public class AppointmentFragment extends Fragment implements OnAppointmentClick{
 
     @Override
     public void onAppointmentClick(String appointmentId) {
-
+        Intent appointmentIntent = new Intent(getActivity(), Appointment.class);
+        appointmentIntent.putExtra(Constants.KEY_APPOINTMENT_ID, appointmentId);
+        startActivity(appointmentIntent);
     }
 }

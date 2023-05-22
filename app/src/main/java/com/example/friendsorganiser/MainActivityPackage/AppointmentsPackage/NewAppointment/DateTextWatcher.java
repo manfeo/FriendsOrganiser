@@ -66,7 +66,7 @@ public class DateTextWatcher implements TextWatcher {
 
                 if (year == currentTime.getYear() && mon == currentTime.getMonth().getValue() && day == currentTime.getDayOfMonth()){
                     if (!timeEditText.getText().toString().equals("")){
-                        int hour = 0, minute = 0;
+                        int hour, minute;
                         String[] rawTime = timeEditText.getText().toString().split(":");
                         int checkHour = Integer.parseInt(rawTime[0]);
                         int checkMinute = Integer.parseInt(rawTime[1]);

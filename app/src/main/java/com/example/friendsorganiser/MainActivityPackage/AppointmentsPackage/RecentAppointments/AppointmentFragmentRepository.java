@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.friendsorganiser.Models.Appointment;
+import com.example.friendsorganiser.Models.AppointmentModel;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.google.firebase.database.DataSnapshot;
@@ -38,13 +38,13 @@ public class AppointmentFragmentRepository {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void loadAppointments(List<Appointment> appointmentList, OnAppointmentsLoaded onAppointmentsLoaded){
+    public void loadAppointments(List<AppointmentModel> appointmentModelList, OnAppointmentsLoaded onAppointmentsLoaded){
         databaseReference.child(Constants.KEY_DATABASE_USERS).child(currentUserId).child(Constants.KEY_RECENT_APPOINTMENTS).
                 addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                getAppointments(snapshot, appointmentList);
-                onAppointmentsLoaded.onAppointmentsLoaded(appointmentList);
+                getAppointments(snapshot, appointmentModelList);
+                onAppointmentsLoaded.onAppointmentsLoaded(appointmentModelList);
             }
 
             @Override
@@ -54,18 +54,17 @@ public class AppointmentFragmentRepository {
         });
     }
 
-    private void getAppointments(DataSnapshot snapshot, List<Appointment> appointmentList){
-        appointmentList.clear();
+    private void getAppointments(DataSnapshot snapshot, List<AppointmentModel> appointmentModelList){
+        appointmentModelList.clear();
         for (DataSnapshot anotherSnapshot : snapshot.getChildren()){
             String appointmentTitle = anotherSnapshot.child(Constants.KEY_APPOINTMENT_TITLE).getValue().toString();
             long appointmentDateMillis = anotherSnapshot.child(Constants.KEY_APPOINTMENT_DATE).getValue(Long.class);
             LocalDateTime localDateTime = Instant.ofEpochMilli(appointmentDateMillis).
                     atZone(ZoneId.systemDefault()).toLocalDateTime();
             String appointmentId = anotherSnapshot.getKey();
-
-            Appointment anotherAppointment = new Appointment(appointmentTitle, dateBeautifulizer(localDateTime),
+            AppointmentModel anotherAppointmentModel = new AppointmentModel(appointmentTitle, dateBeautifulizer(localDateTime),
                      " ", localDateTime, appointmentId);
-            appointmentList.add(anotherAppointment);
+            appointmentModelList.add(anotherAppointmentModel);
         }
     }
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivityPackage.AppointmentsPackage.Appointment.Appointment">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mv_appointmentPlace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_appointmentData"/>
+
+    <ImageButton
+        android:id="@+id/ib_createdAppointmentClose"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10sp"
+        android:contentDescription="@string/no_image_found"
+        app:srcCompat="@drawable/avatar" />
+
+    <LinearLayout
+        android:id="@+id/ll_appointmentData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_createdAppointmentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Title" />
+
+        <TextView
+            android:id="@+id/tv_createdAppointmentAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Address" />
+
+        <TextView
+            android:id="@+id/tv_createdAppointmentTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Time" />
+
+        <TextView
+            android:id="@+id/tv_createdAppointmentParticipantsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Участники" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_createdAppointmentParticipants"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:padding="10sp"/>
+    </LinearLayout>
+</RelativeLayout>

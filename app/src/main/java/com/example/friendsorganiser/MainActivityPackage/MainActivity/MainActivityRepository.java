@@ -11,7 +11,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class MainActivityRepository {
 
     private static MainActivityRepository instance;
-
     private DatabaseReference databaseReference;
     private String currentUserId;
 

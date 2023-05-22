@@ -47,7 +47,7 @@ public class NewAppointmentDialog extends DialogFragment {
                     Intent data = result.getData();
                     Bundle extras = data.getExtras();
                     setAddress = (AddressModel) extras.get(Constants.KEY_SET_ADDRESS);
-                    binding.etNewAppointmentManualAddress.setText(Constants.KEY_EDIT_TEXT_SET_ADDRESS);
+                    binding.etNewAppointmentManualAddress.setText(setAddress.getAddress());
                 }
             });
 
@@ -69,7 +69,7 @@ public class NewAppointmentDialog extends DialogFragment {
 
     private void setListeners(){
         binding.etNewAppointmentDate.addTextChangedListener(new DateTextWatcher(binding.etNewAppointmentDate, binding.etNewAppointmentTime));
-        binding.etNewAppointmentTime.addTextChangedListener(new TimeTextWatcher(binding.etNewAppointmentTime));
+        binding.etNewAppointmentTime.addTextChangedListener(new TimeTextWatcher(binding.etNewAppointmentTime, binding.etNewAppointmentDate));
 
         binding.btNewAppointmentOpenMap.setOnClickListener(v -> {
             Intent openMapIntent = new Intent(getActivity(), AddressPickerActivity.class);
@@ -82,11 +82,14 @@ public class NewAppointmentDialog extends DialogFragment {
 
         binding.btNewAppointmentCreate.setOnClickListener(v -> {
             String appointmentTitle = binding.etNewAppointmentTitle.getText().toString();
-            String appointmentAddress = binding.etNewAppointmentManualAddress.getText().toString();
+            String appointmentAddress = setAddress.getAddress();
             String appointmentDate = binding.etNewAppointmentDate.getText().toString();
             String appointmentTime = binding.etNewAppointmentTime.getText().toString();
+            double latitude = setAddress.getLatitude();
+            double longitude = setAddress.getLongitude();
 
-            newAppointmentDialogViewModel.createNewAppointment(appointmentTitle, appointmentAddress, appointmentDate, appointmentTime);
+            newAppointmentDialogViewModel.createNewAppointment(appointmentTitle, appointmentAddress,
+                    appointmentDate, appointmentTime, latitude, longitude);
         });
 
         newAppointmentDialogViewModel.getFriends().observe(getViewLifecycleOwner(), friends -> {

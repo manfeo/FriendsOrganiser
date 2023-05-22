@@ -6,18 +6,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.friendsorganiser.Models.Appointment;
+import com.example.friendsorganiser.Models.AppointmentModel;
 import com.example.friendsorganiser.databinding.ItemAppointmentBinding;
 
 import java.util.List;
 
 public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapter.AppointmentsViewHolder> {
 
-    private List<Appointment> appointmentList;
+    private List<AppointmentModel> appointmentModelList;
     private OnAppointmentClick onAppointmentClick;
 
-    public AppointmentsAdapter(List<Appointment> appointments, OnAppointmentClick onAppointmentClick){
-        this.appointmentList = appointments;
+    public AppointmentsAdapter(List<AppointmentModel> appointmentModels, OnAppointmentClick onAppointmentClick){
+        this.appointmentModelList = appointmentModels;
         this.onAppointmentClick = onAppointmentClick;
     }
 
@@ -30,12 +30,12 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
             binding = itemAppointmentBinding;
         }
 
-        public void setBinding(Appointment appointment){
-            binding.tvAppointmentTitle.setText(appointment.getAppointmentTitle());
-            binding.tvAppointmentDate.setText(appointment.getAppointmentDate());
+        public void setBinding(AppointmentModel appointmentModel){
+            binding.tvAppointmentTitle.setText(appointmentModel.getAppointmentTitle());
+            binding.tvAppointmentDate.setText(appointmentModel.getAppointmentDate());
 
             binding.getRoot().setOnClickListener(v -> {
-                String appointmentId = appointment.getAppointmentId();
+                String appointmentId = appointmentModel.getAppointmentId();
                 onAppointmentClick.onAppointmentClick(appointmentId);
             });
         }
@@ -55,11 +55,11 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentsViewHolder holder, int position) {
-        holder.setBinding(appointmentList.get(position));
+        holder.setBinding(appointmentModelList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return appointmentList.size();
+        return appointmentModelList.size();
     }
 }

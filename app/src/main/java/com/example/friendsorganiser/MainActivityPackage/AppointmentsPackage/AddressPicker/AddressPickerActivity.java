@@ -30,6 +30,7 @@ import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.ActivityAddressPickerBinding;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.location.POI;
 import org.osmdroid.config.Configuration;
@@ -166,7 +167,14 @@ public class AddressPickerActivity extends AppCompatActivity{
         binding.etSearchAddress.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH){
                 String query = binding.etSearchAddress.getText().toString();
-                addressPickerActivityViewModel.searchAddress(query, myLocationNewOverlay.getMyLocation());
+                GeoPoint searchLocation;
+                if (myLocationNewOverlay == null) {
+                    IGeoPoint mapCenter = binding.mvMap.getMapCenter();
+                    searchLocation = new GeoPoint(mapCenter.getLatitude(), mapCenter.getLongitude());
+                } else {
+                    searchLocation = myLocationNewOverlay.getMyLocation();
+                }
+                addressPickerActivityViewModel.searchAddress(query, searchLocation);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 binding.etSearchAddress.setText(null);

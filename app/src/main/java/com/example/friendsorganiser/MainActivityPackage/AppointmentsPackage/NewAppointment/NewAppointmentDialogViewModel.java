@@ -1,12 +1,9 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.friendsorganiser.Models.Appointment;
 import com.example.friendsorganiser.Models.UserInfo;
 
 import java.util.ArrayList;
@@ -52,9 +49,10 @@ public class NewAppointmentDialogViewModel extends ViewModel implements OnFriend
         return newAppointmentLoading;
     }
 
-    public void createNewAppointment(String appointmentTitle, String appointmentAddress, String appointmentDate, String appointmentTime){
+    public void createNewAppointment(String appointmentTitle, String appointmentAddress, String appointmentDate,
+                                     String appointmentTime, double latitude, double longitude){
         newAppointmentDialogRepository.createNewAppointment(appointmentTitle, appointmentAddress, appointmentDate,
-                appointmentTime, allFriends, this);
+                appointmentTime, latitude, longitude, allFriends, this);
     }
 
     @Override

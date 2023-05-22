@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.friendsorganiser.Models.Appointment;
+import com.example.friendsorganiser.Models.AppointmentModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
 public class AppointmentFragmentViewModel extends ViewModel implements OnAppointmentsLoaded{
 
     private AppointmentFragmentRepository appointmentFragmentRepository;
-    private MutableLiveData<List<Appointment>> appointmentsList;
-    private List<Appointment> allAppointments;
+    private MutableLiveData<List<AppointmentModel>> appointmentsList;
+    private List<AppointmentModel> allAppointmentModels;
     private MutableLiveData<Boolean> appointmentListIsLoading;
 
 
@@ -21,9 +21,9 @@ public class AppointmentFragmentViewModel extends ViewModel implements OnAppoint
         appointmentFragmentRepository = AppointmentFragmentRepository.getInstance();
         appointmentFragmentRepository.init();
 
-        allAppointments = new ArrayList<>();
+        allAppointmentModels = new ArrayList<>();
         appointmentsList = new MutableLiveData<>();
-        appointmentsList.setValue(allAppointments);
+        appointmentsList.setValue(allAppointmentModels);
 
         appointmentListIsLoading = new MutableLiveData<>();
 
@@ -32,10 +32,10 @@ public class AppointmentFragmentViewModel extends ViewModel implements OnAppoint
 
     private void loadAppointments(){
         appointmentListIsLoading.setValue(true);
-        appointmentFragmentRepository.loadAppointments(allAppointments, this);
+        appointmentFragmentRepository.loadAppointments(allAppointmentModels, this);
     }
 
-    public LiveData<List<Appointment>> getAppointmentsList(){
+    public LiveData<List<AppointmentModel>> getAppointmentsList(){
         return appointmentsList;
     }
 
@@ -44,8 +44,8 @@ public class AppointmentFragmentViewModel extends ViewModel implements OnAppoint
     }
 
     @Override
-    public void onAppointmentsLoaded(List<Appointment> allAppointments) {
+    public void onAppointmentsLoaded(List<AppointmentModel> allAppointmentModels) {
         appointmentListIsLoading.setValue(false);
-        appointmentsList.setValue(allAppointments);
+        appointmentsList.setValue(allAppointmentModels);
     }
 }

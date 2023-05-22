@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/purple_200"
@@ -12,17 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-
-        <ImageButton
-            android:id="@+id/ib_settings"
-            android:layout_width="48sp"
-            android:layout_height="48sp"
-            android:layout_alignParentRight="true"
-            android:background="@color/purple_200"
-            android:src="@android:drawable/btn_star_big_on"
-            android:layout_marginTop="5sp"
-            android:contentDescription="Пока хз"
-            />
 
         <ImageButton
             android:id="@+id/ib_profile"
@@ -41,6 +31,26 @@
             android:layout_marginTop="20sp"
             android:text="@string/page_definer_text"
             android:layout_toRightOf="@+id/ib_profile"
+            />
+
+        <ImageButton
+            android:id="@+id/ib_friendsRequest"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_toLeftOf="@+id/ib_settings"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/no_image_found"
+            app:srcCompat="@drawable/avatar" />
+
+        <ImageButton
+            android:id="@+id/ib_settings"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_alignParentRight="true"
+            android:background="@color/purple_200"
+            android:src="@android:drawable/btn_star_big_on"
+            android:layout_marginTop="5sp"
+            android:contentDescription="Пока хз"
             />
 
     </RelativeLayout>

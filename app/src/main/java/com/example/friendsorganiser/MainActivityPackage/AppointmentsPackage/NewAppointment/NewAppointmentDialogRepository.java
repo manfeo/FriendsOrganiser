@@ -28,6 +28,7 @@ public class NewAppointmentDialogRepository {
     private DatabaseReference databaseReference;
     private PreferenceManager preferenceManager;
     private String currentUserId;
+    private String currentUserFullName;
 
     public static NewAppointmentDialogRepository getInstance(){
         if (instance == null)
@@ -39,6 +40,7 @@ public class NewAppointmentDialogRepository {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         preferenceManager = PreferenceManager.getInstance();
         currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
+        currentUserFullName = preferenceManager.getString(Constants.KEY_NAME) + " " + preferenceManager.getString(Constants.KEY_SURNAME);
     }
 
     public void getFriends(List<UserInfo> friendsList, OnFriendsLoadedCallback onFriendsLoadedCallback) {
@@ -76,15 +78,17 @@ public class NewAppointmentDialogRepository {
         }
     }
 
-    public void createNewAppointment(String appointmentTitle, String appointmentAddress,
-                                      String appointmentDate, String appointmentTime,
+    public void createNewAppointment(String appointmentTitle, String appointmentAddress, String appointmentDate,
+                                     String appointmentTime, double latitude, double longitude,
                                      List<UserInfo> friends, OnAppointmentCreatedCallback onAppointmentCreatedCallback) {
-        ArrayList<String> appointmentParticipants = new ArrayList<>();
+        Map<String, Object> appointmentParticipants = new HashMap<>();
         for (UserInfo friend : friends){
-            if (friend.getIsChecked())
-                appointmentParticipants.add(friend.getId());
+            if (friend.getIsChecked()) {
+                String friendFullName = friend.getName() + " " + friend.getSurname();
+                appointmentParticipants.put(friend.getId(), friendFullName);
+            }
         }
-        appointmentParticipants.add(currentUserId);
+        appointmentParticipants.put(currentUserId, currentUserFullName);
 
         String fullTime = appointmentDate + " " + appointmentTime;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -104,8 +108,14 @@ public class NewAppointmentDialogRepository {
         newAppointment.put(Constants.KEY_APPOINTMENT_ADDRESS, appointmentAddress);
         newAppointment.put(Constants.KEY_APPOINTMENT_PARTICIPANTS, appointmentParticipants);
 
-        appointmentParticipants.forEach((currentParticipantId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
-                child(currentParticipantId).child(Constants.KEY_RECENT_APPOINTMENTS).child(appointmentId).setValue(dataForParticipants));
+        Map<String, Object> geoPointMap = new HashMap<>();
+        geoPointMap.put(Constants.KEY_APPOINTMENT_LATITUDE, latitude);
+        geoPointMap.put(Constants.KEY_APPOINTMENT_LONGITUDE, longitude);
+        newAppointment.put(Constants.KEY_APPOINTMENT_GEO_POINT, geoPointMap);
+
+        appointmentParticipants.forEach((currentParticipantId, currentParticipantFullName) -> databaseReference.
+                child(Constants.KEY_DATABASE_USERS).child(currentParticipantId).
+                child(Constants.KEY_RECENT_APPOINTMENTS).child(appointmentId).setValue(dataForParticipants));
 
         databaseReference.child(Constants.KEY_DATABASE_APPOINTMENTS).child(appointmentId).setValue(newAppointment).
                 addOnCompleteListener(task -> {
