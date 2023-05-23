@@ -87,20 +87,15 @@ public class AddNewFriendsRepository {
             if (user.getIsChecked()){
                 String anotherFriendUserId = user.getId();
 
-                Map<String, Object> mapForMe = new HashMap<>();
                 Map<String, Object> mapForFriend = new HashMap<>();
 
-                mapForMe.put(Constants.KEY_NAME, user.getName());
-                mapForMe.put(Constants.KEY_SURNAME, user.getSurname());
+                String myName = preferenceManager.getString(Constants.KEY_NAME);
+                String mySurname = preferenceManager.getString(Constants.KEY_SURNAME);
+                mapForFriend.put(Constants.KEY_NAME, myName);
+                mapForFriend.put(Constants.KEY_SURNAME, mySurname);
 
-                mapForFriend.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
-                mapForFriend.put(Constants.KEY_SURNAME, preferenceManager.getString(Constants.KEY_SURNAME));
-
-                databaseReference.child(Constants.KEY_DATABASE_USERS).child(currentUserId).
-                        child(Constants.KEY_FRIENDS).child(anotherFriendUserId).setValue(mapForMe);
-
-                databaseReference.child(Constants.KEY_DATABASE_USERS).child(anotherFriendUserId).
-                        child(Constants.KEY_FRIENDS).child(currentUserId).setValue(mapForFriend);
+                databaseReference.child(Constants.KEY_DATABASE_NOTIFICATIONS).child(anotherFriendUserId).
+                        child(currentUserId).setValue(mapForFriend);
             }
         }
     }

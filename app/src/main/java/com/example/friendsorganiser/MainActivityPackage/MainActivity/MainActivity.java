@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.friendsorganiser.MainActivityPackage.Notifications.NotificationsActivity;
 import com.example.friendsorganiser.MainActivityPackage.Profile.ProfileActivity;
 import com.example.friendsorganiser.MainActivityPackage.Settings.SettingsActivity;
 import com.example.friendsorganiser.R;
@@ -55,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         binding.toolbarMainPage.ibSettings.setOnClickListener(view -> {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
+        });
+        //Setting listener to notifications activity
+        binding.toolbarMainPage.ibFriendsRequest.setOnClickListener(view -> {
+            Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
+            startActivity(notificationsIntent);
         });
     }
 

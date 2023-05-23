@@ -4,6 +4,7 @@ public class Constants {
     public static final String KEY_DATABASE_USERS = "Users";
     public static final String KEY_DATABASE_CHATS = "Chats";
     public static final String KEY_DATABASE_APPOINTMENTS = "Appointments";
+    public static final String KEY_DATABASE_NOTIFICATIONS = "Notifications";
     public static final String KEY_NAME = "name";
     public static final String KEY_SURNAME = "surname";
     public static final String KEY_DATE_OF_BIRTH = "dateOfBirth";
@@ -15,6 +16,8 @@ public class Constants {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_FCM_TOKEN = "FCMToken";
     public static final String KEY_FRIENDS = "friends";
+    public static final String KEY_ACCEPT_FRIENDSHIP = "accept";
+    public static final String KEY_REJECT_FRIENDSHIP = "reject";
     public static final String KEY_RECENT_APPOINTMENTS = "recentAppointments";
     public static final String KEY_APPOINTMENT_TITLE = "title";
     public static final String KEY_APPOINTMENT_DATE = "date";
