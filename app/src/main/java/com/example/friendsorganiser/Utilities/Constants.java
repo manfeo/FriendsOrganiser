@@ -5,6 +5,9 @@ public class Constants {
     public static final String KEY_DATABASE_CHATS = "Chats";
     public static final String KEY_DATABASE_APPOINTMENTS = "Appointments";
     public static final String KEY_DATABASE_NOTIFICATIONS = "Notifications";
+    public static final String KEY_FIRESTORE_PROFILE_IMAGES = "ProfileImages";
+    public static final String KEY_FIRESTORE_APPOINTMENTS_IMAGES = "AppointmentsImages";
+    public static final String KEY_FIRESTORE_CHATS_IMAGES = "ChatsImages";
     public static final String KEY_NAME = "name";
     public static final String KEY_SURNAME = "surname";
     public static final String KEY_DATE_OF_BIRTH = "dateOfBirth";
@@ -29,7 +32,6 @@ public class Constants {
     public static final String KEY_APPOINTMENT_PARTICIPANTS = "participants";
     public static final String KEY_FULL_ADDRESS = "display_name";
     public static final String KEY_SET_ADDRESS = "setAddress";
-    public static final String KEY_EDIT_TEXT_SET_ADDRESS = "Адрес задан";
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_TIMESTAMP = "timestamp";

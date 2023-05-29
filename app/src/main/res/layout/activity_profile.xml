@@ -21,12 +21,12 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="50sp">
 
-        <ImageView
-            android:id="@+id/iv_profile"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ci_profileImage"
             android:layout_width="200sp"
             android:layout_height="200sp"
             android:src="@drawable/avatar"
-            />
+            android:contentDescription="@string/no_image_found" />
 
         <TextView
             android:id="@+id/tv_profileName"

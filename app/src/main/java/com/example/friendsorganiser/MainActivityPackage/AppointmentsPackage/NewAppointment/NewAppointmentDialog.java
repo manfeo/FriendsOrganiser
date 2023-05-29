@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -22,8 +20,6 @@ import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDial
 import com.example.friendsorganiser.Models.AddressModel;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.CreateNewAppointmentBinding;
-
-import org.osmdroid.util.GeoPoint;
 
 import java.time.LocalDateTime;
 

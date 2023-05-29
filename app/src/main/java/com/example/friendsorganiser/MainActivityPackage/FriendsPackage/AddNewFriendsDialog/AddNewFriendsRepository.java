@@ -67,7 +67,7 @@ public class AddNewFriendsRepository {
                 token = dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString();
             }
             String id = dataSnapshot.getKey();
-            UserInfo anotherUser = new UserInfo(name, surname, image, token, id);
+            UserInfo anotherUser = new UserInfo(name, surname, null, token, id);
             users.add(anotherUser);
         }
     }

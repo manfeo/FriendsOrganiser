@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.FriendsPackage.FriendsList;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -61,12 +62,12 @@ public class FriendFragmentRepository {
 
             String name = anotherSnapshot.child(Constants.KEY_NAME).getValue().toString();
             String surname = anotherSnapshot.child(Constants.KEY_SURNAME).getValue().toString();
-            String image = "";
+            Uri friendPhoto;
             if (anotherSnapshot.hasChild(Constants.KEY_IMAGE)) {
-                image = anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString();
-            }
-
-            UserInfo anotherUser = new UserInfo(name, surname, image, anotherFriendId);
+                friendPhoto = Uri.parse(anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
+            } else
+                friendPhoto = null;
+            UserInfo anotherUser = new UserInfo(name, surname, friendPhoto, anotherFriendId);
             friendsList.add(anotherUser);
         }
     }

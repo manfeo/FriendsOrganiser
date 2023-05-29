@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.FriendsPackage.FriendsList;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.databinding.ItemFriendBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,6 +34,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
         private void setBinding(UserInfo userInfo) {
             String fullName = userInfo.getName() + userInfo.getSurname();
             binding.tvFriendName.setText(fullName);
+            Uri friendPhoto = userInfo.getPhoto();
+            if (friendPhoto != null)
+                Picasso.get().load(friendPhoto).noFade().into(binding.ivFriendPhoto);
             binding.getRoot().setOnClickListener(v -> {
                 String friendId = userInfo.getId();
                 onFriendClickedListener.onFriendCLicked(friendId);

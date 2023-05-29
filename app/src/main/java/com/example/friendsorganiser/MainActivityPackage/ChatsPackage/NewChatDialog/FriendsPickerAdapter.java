@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemUserBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,6 +33,9 @@ public class FriendsPickerAdapter extends RecyclerView.Adapter<FriendsPickerAdap
         private void setBinding(UserInfo userInfo){
             String fullName = userInfo.getName() + " " + userInfo.getSurname();
             binding.tvUserName.setText(fullName);
+            Uri userPhoto = userInfo.getPhoto();
+            if (userPhoto != null)
+                Picasso.get().load(userPhoto).noFade().into(binding.ivUserPhoto);
         }
     }
 

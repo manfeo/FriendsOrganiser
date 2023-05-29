@@ -17,6 +17,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class RecentChatsRepository {
     static class RecentChatsSort implements Comparator<RecentChat> {
         @Override
         public int compare(RecentChat o1, RecentChat o2) {
-            return o1.getMessageSentTimeDate().isBefore(o2.getMessageSentTimeDate()) ? 1 : 0;
+            return o1.getMessageSentTimeDate().compareTo(o2.getMessageSentTimeDate());
         }
     }
 
@@ -51,12 +52,8 @@ public class RecentChatsRepository {
                 addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        recentChatsList.clear();
-                        for (DataSnapshot recentChatSnapshot : snapshot.getChildren()){
-                            RecentChat anotherRecentChat = collectRecentChat(recentChatSnapshot);
-                            recentChatsList.add(anotherRecentChat);
-                        }
-                        recentChatsList.sort(new RecentChatsSort());
+                        collectRecentChat(snapshot, recentChatsList);
+                        recentChatsList.sort((new RecentChatsSort()).reversed());
                         onRecentChatsChangedCallback.onRecentChatsChangedCallback(recentChatsList);
                     }
 
@@ -67,14 +64,18 @@ public class RecentChatsRepository {
                 });
     }
 
-    private RecentChat collectRecentChat(DataSnapshot dataSnapshot){
-        String chatId = dataSnapshot.getKey();
-        long lastMessageMillis = dataSnapshot.child(Constants.KEY_TIMESTAMP).getValue(Long.class);
-        LocalDateTime localDateTime = Instant.ofEpochMilli(lastMessageMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
-        String lastMessage = dataSnapshot.child(Constants.KEY_LAST_MESSAGE).getValue().toString();
-        String chatName = dataSnapshot.child(Constants.KEY_CHAT_NAME).getValue().toString();
-        RecentChat recentChat = new RecentChat(chatId, chatName, lastMessage, dateBeautifulizer(localDateTime), localDateTime);
-        return recentChat;
+    private List<RecentChat> collectRecentChat(DataSnapshot dataSnapshot, List<RecentChat> recentChatList){
+        recentChatList.clear();
+        for (DataSnapshot anotherDataSnapshot : dataSnapshot.getChildren()){
+            String chatId = anotherDataSnapshot.getKey();
+            long lastMessageMillis = anotherDataSnapshot.child(Constants.KEY_TIMESTAMP).getValue(Long.class);
+            LocalDateTime localDateTime = Instant.ofEpochMilli(lastMessageMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
+            String lastMessage = anotherDataSnapshot.child(Constants.KEY_LAST_MESSAGE).getValue().toString();
+            String chatName = anotherDataSnapshot.child(Constants.KEY_CHAT_NAME).getValue().toString();
+            RecentChat recentChat = new RecentChat(chatId, chatName, lastMessage, dateBeautifulizer(localDateTime), localDateTime);
+            recentChatList.add(recentChat);
+        }
+        return recentChatList;
     }
 
     private String dateBeautifulizer(LocalDateTime localDateTime){

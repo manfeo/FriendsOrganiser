@@ -1,5 +1,8 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,6 +30,7 @@ import java.util.Map;
 public class NewAppointmentDialogRepository {
     private static NewAppointmentDialogRepository instance;
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
     private PreferenceManager preferenceManager;
     private String currentUserId;
     private String currentUserFullName;

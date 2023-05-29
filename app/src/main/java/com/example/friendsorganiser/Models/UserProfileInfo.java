@@ -1,14 +1,18 @@
 package com.example.friendsorganiser.Models;
 
+import android.net.Uri;
+
 public class UserProfileInfo {
     private String name, surname, email, dateOfBirth, id;
+    private Uri photo;
 
-    public UserProfileInfo(String name, String surname, String email, String dateOfBirth, String id) {
+    public UserProfileInfo(String name, String surname, String email, String dateOfBirth, String id, Uri photo) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.id = id;
+        this.photo = photo;
     }
 
     public String getName() {
@@ -31,23 +35,7 @@ public class UserProfileInfo {
         return dateOfBirth;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public Uri getPhoto() {
+        return photo;
     }
 }
