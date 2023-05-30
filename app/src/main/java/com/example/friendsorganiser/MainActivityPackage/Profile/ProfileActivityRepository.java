@@ -1,21 +1,13 @@
 package com.example.friendsorganiser.MainActivityPackage.Profile;
 
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Models.UserProfileInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
-import com.google.android.gms.auth.api.signin.internal.Storage;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +18,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ConcurrentModificationException;
-import java.util.Objects;
-
 public class ProfileActivityRepository {
-
     private static ProfileActivityRepository instance;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -64,6 +50,8 @@ public class ProfileActivityRepository {
             if (task.isSuccessful()) {
                 Uri downloadUri = task.getResult();
                 String stringUri = downloadUri.toString();
+                //Updating preference manager
+                preferenceManager.putString(Constants.KEY_IMAGE, stringUri);
                 //Updating current user image
                 databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
                 //Updating all friends' "image" field

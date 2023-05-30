@@ -39,9 +39,9 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
-    public UserInfo(String name, String surname){
-        this.name = name;
-        this.surname = surname;
+    public UserInfo(String fullName, Uri photo){
+        this.fullName = fullName;
+        this.photo = photo;
     }
     public UserInfo(String fullName){
         this.fullName = fullName;

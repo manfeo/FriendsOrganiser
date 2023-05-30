@@ -5,12 +5,12 @@
     android:layout_height="wrap_content"
     android:padding="10sp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_newFriendPhoto"
         android:layout_width="48sp"
         android:layout_height="48sp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/avatar" />
+        android:src="@drawable/avatar"
+        android:contentDescription="@string/no_image_found" />
 
     <TextView
         android:id="@+id/tv_newFriendName"

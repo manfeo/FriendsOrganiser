@@ -93,6 +93,10 @@ public class AddNewFriendsRepository {
                 String mySurname = preferenceManager.getString(Constants.KEY_SURNAME);
                 mapForFriend.put(Constants.KEY_NAME, myName);
                 mapForFriend.put(Constants.KEY_SURNAME, mySurname);
+                if (preferenceManager.contains(Constants.KEY_IMAGE)) {
+                    String myPhotoUri = preferenceManager.getString(Constants.KEY_IMAGE);
+                    mapForFriend.put(Constants.KEY_IMAGE, myPhotoUri);
+                }
 
                 databaseReference.child(Constants.KEY_DATABASE_NOTIFICATIONS).child(anotherFriendUserId).
                         child(currentUserId).setValue(mapForFriend);

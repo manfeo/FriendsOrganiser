@@ -69,9 +69,6 @@ public class RegisterLoginActivityRepository {
                         preferenceManager.putString(Constants.KEY_USER_ID, uriToSetData);
                         preferenceManager.putString(Constants.KEY_NAME, registerModel.getName());
                         preferenceManager.putString(Constants.KEY_SURNAME, registerModel.getSurname());
-
-                        //Add image adding
-
                     } else {
                         String errorMessage = task.getException().toString();
                         Log.d("register", errorMessage);
@@ -108,6 +105,10 @@ public class RegisterLoginActivityRepository {
                         preferenceManager.putString(Constants.KEY_USER_ID, uriToLogin);
                         preferenceManager.putString(Constants.KEY_NAME, userName);
                         preferenceManager.putString(Constants.KEY_SURNAME, userSurname);
+                        if (snapshot.hasChild(Constants.KEY_IMAGE)) {
+                            String photoUri = snapshot.child(Constants.KEY_IMAGE).getValue().toString();
+                            preferenceManager.putString(Constants.KEY_IMAGE, photoUri);
+                        }
                         onLoginCallback.onLoginCallback(loginModel);
                     }
 

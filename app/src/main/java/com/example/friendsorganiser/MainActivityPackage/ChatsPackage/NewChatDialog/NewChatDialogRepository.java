@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -9,11 +10,15 @@ import androidx.annotation.NonNull;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +27,7 @@ import java.util.List;
 public class NewChatDialogRepository {
     private static NewChatDialogRepository instance;
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
     private PreferenceManager preferenceManager;
     private String currentUserId;
 
@@ -34,12 +40,14 @@ public class NewChatDialogRepository {
     public void init(){
         databaseReference = FirebaseDatabase.getInstance().getReference();
         preferenceManager = PreferenceManager.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
         currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
     }
 
-    public void createNewChat(List<UserInfo> friends, String chatName, OnChatCreatedCallback onChatCreatedCallback) {
+    public void createNewChat(List<UserInfo> friends, String chatName, Uri chatPhoto, OnChatCreatedCallback onChatCreatedCallback) {
+        String chatId = databaseReference.child(Constants.KEY_DATABASE_CHATS).push().getKey();
         ArrayList<String> chatParticipants = new ArrayList<>();
-        for (UserInfo friend : friends){
+        for (UserInfo friend : friends) {
             if (friend.getIsChecked())
                 chatParticipants.add(friend.getId());
         }
@@ -49,23 +57,50 @@ public class NewChatDialogRepository {
         newChatInfo.put(Constants.KEY_CHAT_NAME, chatName);
         newChatInfo.put(Constants.KEY_CHAT_PARTICIPANTS, chatParticipants);
 
-        String chatId = databaseReference.child(Constants.KEY_DATABASE_CHATS).push().getKey();
-
         HashMap<String, Object> newChatInfoForParticipants = new HashMap<>();
         newChatInfoForParticipants.put(Constants.KEY_CHAT_NAME, chatName);
         newChatInfoForParticipants.put(Constants.KEY_TIMESTAMP, 0);
         newChatInfoForParticipants.put(Constants.KEY_LAST_MESSAGE, "");
 
-        chatParticipants.forEach((currentParticipantId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
-                child(currentParticipantId).child(Constants.KEY_RECENT_CHATS).child(chatId).setValue(newChatInfoForParticipants));
+        if (chatPhoto != null) {
+            StorageReference ref = storageReference.child(Constants.KEY_FIRESTORE_CHATS_IMAGES).child(chatId);
+            UploadTask uploadTask = ref.putFile(chatPhoto);
+            Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
+                if (!task.isSuccessful())
+                    Log.d("image", "Unable to load profile image");
+                return ref.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadedChatPhoto = task.getResult();
+                    String chatString = downloadedChatPhoto.toString();
 
-        databaseReference.child(Constants.KEY_DATABASE_CHATS).child(chatId).setValue(newChatInfo).
-                addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.d("newChat", "Unable to create new chat");
-                    }
-                    onChatCreatedCallback.onChatCreatedCallback(chatId);
-                });
+                    newChatInfo.put(Constants.KEY_IMAGE, chatString);
+                    newChatInfoForParticipants.put(Constants.KEY_IMAGE, chatString);
+
+                    chatParticipants.forEach((currentParticipantId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
+                            child(currentParticipantId).child(Constants.KEY_RECENT_CHATS).child(chatId).setValue(newChatInfoForParticipants));
+
+                    databaseReference.child(Constants.KEY_DATABASE_CHATS).child(chatId).setValue(newChatInfo).
+                            addOnCompleteListener(chatTask -> {
+                                if (!task.isSuccessful()) {
+                                    Log.d("newChat", "Unable to create new chat");
+                                }
+                                onChatCreatedCallback.onChatCreatedCallback(chatId);
+                            });
+                }
+            });
+        } else {
+            chatParticipants.forEach((currentParticipantId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
+                    child(currentParticipantId).child(Constants.KEY_RECENT_CHATS).child(chatId).setValue(newChatInfoForParticipants));
+
+            databaseReference.child(Constants.KEY_DATABASE_CHATS).child(chatId).setValue(newChatInfo).
+                    addOnCompleteListener(chatTask -> {
+                        if (!chatTask.isSuccessful()) {
+                            Log.d("newChat", "Unable to create new chat");
+                        }
+                        onChatCreatedCallback.onChatCreatedCallback(chatId);
+                    });
+        }
     }
 
     public void getFriends(List<UserInfo> friendsList, OnFriendsLoadedCallback onFriendsLoadedCallback) {

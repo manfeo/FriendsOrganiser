@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.AllChats;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -72,7 +73,11 @@ public class RecentChatsRepository {
             LocalDateTime localDateTime = Instant.ofEpochMilli(lastMessageMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
             String lastMessage = anotherDataSnapshot.child(Constants.KEY_LAST_MESSAGE).getValue().toString();
             String chatName = anotherDataSnapshot.child(Constants.KEY_CHAT_NAME).getValue().toString();
-            RecentChat recentChat = new RecentChat(chatId, chatName, lastMessage, dateBeautifulizer(localDateTime), localDateTime);
+            Uri chatPhoto = null;
+            if (anotherDataSnapshot.hasChild(Constants.KEY_IMAGE))
+                chatPhoto = Uri.parse(anotherDataSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
+            RecentChat recentChat = new RecentChat(chatId, chatName, lastMessage,
+                    dateBeautifulizer(localDateTime), localDateTime, chatPhoto);
             recentChatList.add(recentChat);
         }
         return recentChatList;

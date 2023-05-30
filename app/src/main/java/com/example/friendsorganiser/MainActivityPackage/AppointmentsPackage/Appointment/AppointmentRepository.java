@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.Appointment;
 
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -56,7 +57,10 @@ public class AppointmentRepository {
         List<UserInfo> participants = new ArrayList<>();
         for (DataSnapshot anotherSnapshot : snapshot.child(Constants.KEY_APPOINTMENT_PARTICIPANTS).getChildren()){
             String fullName = anotherSnapshot.getValue().toString();
-            UserInfo anotherParticipant = new UserInfo(fullName);
+            Uri friendPhoto = null;
+            if (anotherSnapshot.hasChild(Constants.KEY_IMAGE))
+                friendPhoto = Uri.parse(anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
+            UserInfo anotherParticipant = new UserInfo(fullName, friendPhoto);
             participants.add(anotherParticipant);
         }
         return participants;

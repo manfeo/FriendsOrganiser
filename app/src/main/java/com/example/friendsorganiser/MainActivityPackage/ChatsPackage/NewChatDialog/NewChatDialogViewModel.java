@@ -1,5 +1,7 @@
 package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -45,8 +47,8 @@ public class NewChatDialogViewModel extends ViewModel implements OnFriendsLoaded
         newChatDialogRepository.getFriends(allFriendsList, this);
     }
 
-    public void createNewChat(String chatName){
-        newChatDialogRepository.createNewChat(allFriendsList, chatName, this);
+    public void createNewChat(String chatName, Uri chatPhoto){
+        newChatDialogRepository.createNewChat(allFriendsList, chatName, chatPhoto,  this);
     }
 
     @Override

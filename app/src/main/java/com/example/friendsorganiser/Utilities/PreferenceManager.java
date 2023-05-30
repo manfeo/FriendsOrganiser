@@ -30,6 +30,10 @@ public class PreferenceManager {
         return sharedPreferences.getBoolean(key, false);
     }
 
+    public boolean contains(String key){
+        return sharedPreferences.contains(key);
+    }
+
     public void putString(String key, String value){
         editor.putString(key, value);
         editor.apply();

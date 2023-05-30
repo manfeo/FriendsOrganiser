@@ -140,7 +140,7 @@ public class ChattingActivityRepository {
 
         //Setting last messageTime for each participant to sort all chats in chats fragment
         participants.forEach((currentId) -> databaseReference.child(Constants.KEY_DATABASE_USERS).
-                child(currentId).child(Constants.KEY_RECENT_CHATS).child(chatId).setValue(lastMessageInfo));
+                child(currentId).child(Constants.KEY_RECENT_CHATS).child(chatId).updateChildren(lastMessageInfo));
     }
 
     private String dateBeautifulizer(LocalDateTime localDateTime){

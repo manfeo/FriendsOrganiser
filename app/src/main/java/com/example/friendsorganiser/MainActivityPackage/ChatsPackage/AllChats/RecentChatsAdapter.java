@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.AllChats;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -7,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendsorganiser.Models.RecentChat;
+import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemRecentConversationBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,7 +39,11 @@ public class RecentChatsAdapter extends RecyclerView.Adapter<RecentChatsAdapter.
                 binding.tvChatSentTime.setText(null);
             else
                 binding.tvChatSentTime.setText(recentChat.getMessageSentTime());
-
+            Uri chatPhoto = recentChat.getChatPhoto();
+            if (chatPhoto != null)
+                Picasso.get().load(chatPhoto).noFade().into(binding.ivChatPhoto);
+            else
+                binding.ivChatPhoto.setImageResource(R.drawable.avatar);
             binding.getRoot().setOnClickListener(v -> {
                 String recentChatId = recentChat.getChatId();
                 onChatClickedListener.onChatCLicked(recentChatId);

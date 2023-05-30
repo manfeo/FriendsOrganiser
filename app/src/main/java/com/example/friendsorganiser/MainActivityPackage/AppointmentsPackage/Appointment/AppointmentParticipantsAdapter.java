@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.Appointment;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -7,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendsorganiser.Models.UserInfo;
+import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemFriendBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -29,6 +32,11 @@ public class AppointmentParticipantsAdapter extends RecyclerView.Adapter<Appoint
 
         private void setBinding(UserInfo userInfo) {
             String fullName = userInfo.getFullName();
+            Uri friendPhoto = userInfo.getPhoto();
+            if (friendPhoto != null)
+                Picasso.get().load(friendPhoto).noFade().into(binding.ivFriendPhoto);
+            else
+                binding.ivFriendPhoto.setImageResource(R.drawable.avatar);
             binding.tvFriendName.setText(fullName);
         }
     }

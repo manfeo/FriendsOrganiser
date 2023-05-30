@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.Notifications;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,10 @@ public class NotificationsActivityRepository {
             String newFriendName = anotherSnapshot.child(Constants.KEY_NAME).getValue().toString();
             String newFriendSurname = anotherSnapshot.child(Constants.KEY_SURNAME).getValue().toString();
             String newFriendId = anotherSnapshot.getKey();
-            UserInfo anotherFriendRequest = new UserInfo(newFriendName, newFriendSurname, newFriendId);
+            Uri newFriendImage = null;
+            if (anotherSnapshot.hasChild(Constants.KEY_IMAGE))
+                newFriendImage = Uri.parse(anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
+            UserInfo anotherFriendRequest = new UserInfo(newFriendName, newFriendSurname, newFriendImage, newFriendId);
             notifications.add(anotherFriendRequest);
         }
     }
