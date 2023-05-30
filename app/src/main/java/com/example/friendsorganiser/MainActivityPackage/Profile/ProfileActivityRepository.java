@@ -2,6 +2,7 @@ package com.example.friendsorganiser.MainActivityPackage.Profile;
 
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -63,7 +64,25 @@ public class ProfileActivityRepository {
             if (task.isSuccessful()) {
                 Uri downloadUri = task.getResult();
                 String stringUri = downloadUri.toString();
+                //Updating current user image
                 databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
+                //Updating all friends' "image" field
+                databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_FRIENDS).
+                        addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    String friendId = dataSnapshot.getRef().getKey();
+                                    databaseReference.child(Constants.KEY_DATABASE_USERS).child(friendId).child(Constants.KEY_FRIENDS).
+                                            child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
             } else {
                 Log.d("image", "Unable to get image URI");
             }
