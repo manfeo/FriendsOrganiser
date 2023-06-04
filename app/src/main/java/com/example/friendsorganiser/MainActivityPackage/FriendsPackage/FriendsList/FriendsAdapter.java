@@ -7,9 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.Models.UserInfo;
+import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemFriendBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsH
             binding.tvFriendName.setText(fullName);
             Uri friendPhoto = userInfo.getPhoto();
             if (friendPhoto != null)
-                Picasso.get().load(friendPhoto).noFade().into(binding.ivFriendPhoto);
+                Glide.with(binding.getRoot()).load(friendPhoto).into(binding.ivFriendPhoto);
+            else
+                binding.ivFriendPhoto.setImageResource(R.drawable.avatar);
             binding.getRoot().setOnClickListener(v -> {
                 String friendId = userInfo.getId();
                 onFriendClickedListener.onFriendCLicked(friendId);

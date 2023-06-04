@@ -1,26 +1,38 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
 
-import android.app.Activity;
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AddressPicker.AddressPickerActivity;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
 import com.example.friendsorganiser.Models.AddressModel;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.CreateNewAppointmentBinding;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class NewAppointmentDialog extends DialogFragment {
@@ -28,6 +40,7 @@ public class NewAppointmentDialog extends DialogFragment {
     private NewAppointmentDialogViewModel newAppointmentDialogViewModel;
     private FriendsPickerAdapter friendsPickerAdapter;
     private AddressModel setAddress;
+    private Uri appointmentPhoto = null;
 
     @Nullable
     @Override
@@ -39,13 +52,46 @@ public class NewAppointmentDialog extends DialogFragment {
     ActivityResultLauncher<Intent> startActivityForResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
+                if (result.getResultCode() == RESULT_OK) {
                     Intent data = result.getData();
                     Bundle extras = data.getExtras();
                     setAddress = (AddressModel) extras.get(Constants.KEY_SET_ADDRESS);
                     binding.etNewAppointmentManualAddress.setText(setAddress.getAddress());
                 }
             });
+
+    ActivityResultLauncher<Intent> startActivityForImageCropping = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK){
+                    Intent intent = result.getData();
+                    appointmentPhoto = UCrop.getOutput(intent);
+                    Glide.with(binding.getRoot()).load(appointmentPhoto).into(binding.ibNewAppointmentPhoto);
+                } else {
+                    Toast.makeText(getActivity(), "Выберете другое изображение", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+    ActivityResultLauncher<Intent> startActivityForImagePicking = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK){
+                    Intent intent = result.getData();
+                    Uri sourceUri = intent.getData();
+                    File destinationFile = getImageFile();
+                    Uri destinationUri = Uri.fromFile(destinationFile);
+                    UCrop.Options options = new UCrop.Options();
+                    options.setCircleDimmedLayer(true);
+                    Intent cropIntent = UCrop.of(sourceUri, destinationUri).withOptions(options).
+                            withAspectRatio(1, 1).getIntent(getContext());
+                    startActivityForImageCropping.launch(cropIntent);
+                }
+            });
+
+    ActivityResultLauncher<String[]> onRequestPermissionResult = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                if (!result.containsValue(false))
+                    openImagesDocument();
+            }
+    );
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -85,7 +131,7 @@ public class NewAppointmentDialog extends DialogFragment {
             double longitude = setAddress.getLongitude();
 
             newAppointmentDialogViewModel.createNewAppointment(appointmentTitle, appointmentAddress,
-                    appointmentDate, appointmentTime, latitude, longitude);
+                    appointmentDate, appointmentTime, latitude, longitude, appointmentPhoto);
         });
 
         newAppointmentDialogViewModel.getFriends().observe(getViewLifecycleOwner(), friends -> {
@@ -97,6 +143,15 @@ public class NewAppointmentDialog extends DialogFragment {
                 binding.rvNewAppointmentFriends.setVisibility(View.VISIBLE);
                 binding.tvNewAppointmentNoFriends.setVisibility(View.GONE);
             }
+        });
+
+        binding.ibNewAppointmentPhoto.setOnClickListener(v -> {
+            int readExternalStorageGranted = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+            int writeExternalStorageGranted = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (readExternalStorageGranted != PackageManager.PERMISSION_GRANTED || writeExternalStorageGranted != PackageManager.PERMISSION_GRANTED)
+                onRequestPermissionResult.launch(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            else
+                openImagesDocument();
         });
 
         newAppointmentDialogViewModel.isFriendsListLoading().observe(getViewLifecycleOwner(), this::friendsLoading);
@@ -136,5 +191,20 @@ public class NewAppointmentDialog extends DialogFragment {
             binding.btNewAppointmentCreate.setVisibility(View.VISIBLE);
             binding.pbNewAppointmentCreateLoading.setVisibility(View.GONE);
         }
+    }
+
+    private void openImagesDocument() {
+        Intent pictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForImagePicking.launch(Intent.createChooser(pictureIntent, "Выберете изображение"));
+    }
+
+    private File getImageFile() {
+        String imageFileName = "JPEG_" + System.currentTimeMillis() + "_";
+        try {
+            return File.createTempFile(imageFileName, ".jpg", getActivity().getCacheDir());
+        } catch (IOException e){
+            Log.d("photo", "Unable to make temp file");
+        }
+        return null;
     }
 }

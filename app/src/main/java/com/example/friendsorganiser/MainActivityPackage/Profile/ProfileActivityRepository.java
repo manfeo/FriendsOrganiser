@@ -1,5 +1,7 @@
 package com.example.friendsorganiser.MainActivityPackage.Profile;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
@@ -17,6 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ProfileActivityRepository {
     private static ProfileActivityRepository instance;
@@ -40,8 +47,11 @@ public class ProfileActivityRepository {
     }
 
     public void uploadImage(Uri newImage){
-        StorageReference ref = storageReference.child(Constants.KEY_FIRESTORE_PROFILE_IMAGES).child(userId);
+        //Uploading qualitative image to firebase to show this image in profile activity
+        StorageReference ref = storageReference.child(Constants.KEY_FIRESTORE_PROFILE_IMAGES).
+                child(Constants.KEY_FIRESTORE_PROFILE_NORMAL_IMAGES).child(userId);
         UploadTask uploadTask = ref.putFile(newImage);
+        //Another callback to get uri after uploading
         Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful())
                 Log.d("image", "Unable to load profile image");
@@ -50,27 +60,25 @@ public class ProfileActivityRepository {
             if (task.isSuccessful()) {
                 Uri downloadUri = task.getResult();
                 String stringUri = downloadUri.toString();
-                //Updating preference manager
-                preferenceManager.putString(Constants.KEY_IMAGE, stringUri);
                 //Updating current user image
                 databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
-                //Updating all friends' "image" field
+
                 databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_FRIENDS).
-                        addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                    String friendId = dataSnapshot.getRef().getKey();
-                                    databaseReference.child(Constants.KEY_DATABASE_USERS).child(friendId).child(Constants.KEY_FRIENDS).
-                                            child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
-                                }
-                            }
+                                addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                            String friendId = dataSnapshot.getRef().getKey();
+                                            databaseReference.child(Constants.KEY_DATABASE_USERS).child(friendId).child(Constants.KEY_FRIENDS).
+                                                    child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
+                                        }
+                                    }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Log.d("Image", "Unable to load image to friends");
+                                    }
+                                });
             } else {
                 Log.d("image", "Unable to get image URI");
             }

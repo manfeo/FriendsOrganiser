@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10sp">
@@ -11,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jenna Ortega"
-        android:layout_toRightOf="@+id/iv_chatPhoto"
+        android:layout_toRightOf="@+id/cv_chatPhotoHolder"
         android:layout_marginLeft="3sp"/>
 
     <TextView
@@ -20,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="Can we hang out sometime?"
         android:textSize="15sp"
-        android:layout_toRightOf="@+id/iv_chatPhoto"
+        android:layout_toRightOf="@+id/cv_chatPhotoHolder"
         android:layout_marginTop="30sp"/>
 
     <TextView
@@ -32,10 +31,19 @@
         android:layout_marginTop="33sp"
         android:layout_marginRight="7sp"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_chatPhoto"
-        android:layout_width="60sp"
-        android:layout_height="60sp"
-        android:src="@drawable/avatar" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_chatPhotoHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="100sp"
+        app:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/iv_chatPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/avatar"
+            android:scaleType="centerInside" />
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

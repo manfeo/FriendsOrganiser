@@ -19,36 +19,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.Chatting.ChattingActivity;
-import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
-import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
-import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.example.friendsorganiser.databinding.CreateNewChatBinding;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class NewChat extends DialogFragment {
     private CreateNewChatBinding binding;
@@ -68,7 +54,7 @@ public class NewChat extends DialogFragment {
                 if (result.getResultCode() == RESULT_OK){
                     Intent intent = result.getData();
                     chatImage = UCrop.getOutput(intent);
-                    Picasso.get().load(chatImage).noFade().into(binding.ibNewChatPicture);
+                    Glide.with(binding.getRoot()).load(chatImage).into(binding.ibNewChatPicture);
                 } else {
                     Toast.makeText(getContext(), "Выберете другое изображение", Toast.LENGTH_SHORT).show();
                 }
@@ -83,7 +69,8 @@ public class NewChat extends DialogFragment {
                     Uri destinationUri = Uri.fromFile(destinationFile);
                     UCrop.Options options = new UCrop.Options();
                     options.setCircleDimmedLayer(true);
-                    Intent cropIntent = UCrop.of(sourceUri, destinationUri).withOptions(options).getIntent(getContext());
+                    options.setCompressionQuality(20);
+                    Intent cropIntent = UCrop.of(sourceUri, destinationUri).withAspectRatio(1, 1).withOptions(options).getIntent(getContext());
                     startActivityForImageCropping.launch(cropIntent);
                 }
             });

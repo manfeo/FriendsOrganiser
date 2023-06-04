@@ -56,7 +56,7 @@ public class AppointmentRepository {
     private List<UserInfo> collectParticipants(DataSnapshot snapshot){
         List<UserInfo> participants = new ArrayList<>();
         for (DataSnapshot anotherSnapshot : snapshot.child(Constants.KEY_APPOINTMENT_PARTICIPANTS).getChildren()){
-            String fullName = anotherSnapshot.getValue().toString();
+            String fullName = anotherSnapshot.child(Constants.KEY_NAME).getValue().toString();
             Uri friendPhoto = null;
             if (anotherSnapshot.hasChild(Constants.KEY_IMAGE))
                 friendPhoto = Uri.parse(anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
@@ -74,8 +74,7 @@ public class AppointmentRepository {
         String appointmentAddress = snapshot.child(Constants.KEY_APPOINTMENT_ADDRESS).getValue().toString();
         double latitude = snapshot.child(Constants.KEY_APPOINTMENT_GEO_POINT).child(Constants.KEY_APPOINTMENT_LATITUDE).getValue(Double.class);
         double longitude = snapshot.child(Constants.KEY_APPOINTMENT_GEO_POINT).child(Constants.KEY_APPOINTMENT_LONGITUDE).getValue(Double.class);
-        return new AppointmentModel(appointmentTitle, dateBeautifulizer(localDateTime), "",
-                appointmentAddress, latitude, longitude);
+        return new AppointmentModel(appointmentTitle, dateBeautifulizer(localDateTime), appointmentAddress, latitude, longitude);
     }
 
     private String dateBeautifulizer(LocalDateTime setDate){

@@ -1,7 +1,5 @@
 package com.example.friendsorganiser.MainActivityPackage.Profile;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -9,38 +7,26 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.friendsorganiser.Models.AddressModel;
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.ActivityProfileBinding;
-import com.google.firebase.database.core.Context;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassoProvider;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
-
-import kotlin.ContextFunctionTypeParams;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -80,7 +66,8 @@ public class ProfileActivity extends AppCompatActivity {
                     Uri destinationUri = Uri.fromFile(destinationFile);
                     UCrop.Options options = new UCrop.Options();
                     options.setCircleDimmedLayer(true);
-                    Intent cropIntent = UCrop.of(sourceUri, destinationUri).withOptions(options).getIntent(this);
+                    Intent cropIntent = UCrop.of(sourceUri, destinationUri).withOptions(options).
+                            withAspectRatio(1, 1).getIntent(this);
                     startActivityForImageCropping.launch(cropIntent);
                 }
             });
@@ -110,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             binding.tvProfileEmail.setText(userInfo.getEmail());
             Uri userPhoto = userInfo.getPhoto();
             if (userPhoto != null)
-                Picasso.get().load(userPhoto).noFade().into(binding.ciProfileImage);
+                Glide.with(binding.getRoot()).load(userPhoto).into(binding.ciProfileImage);
         });
         boolean isMyProfile = profileActivityViewModel.isMyProfile().getValue();
         if (isMyProfile) {

@@ -128,12 +128,12 @@ public class NewChatDialogRepository {
 
             String name = anotherSnapshot.child(Constants.KEY_NAME).getValue().toString();
             String surname = anotherSnapshot.child(Constants.KEY_SURNAME).getValue().toString();
-            String image = "";
+            Uri friendPhoto = null;
             if (anotherSnapshot.hasChild(Constants.KEY_IMAGE)) {
-                image = anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString();
+                friendPhoto = Uri.parse(anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
             }
 
-            UserInfo anotherUser = new UserInfo(name, surname, image, anotherFriendId);
+            UserInfo anotherUser = new UserInfo(name, surname, friendPhoto, anotherFriendId);
             friends.add(anotherUser);
         }
     }

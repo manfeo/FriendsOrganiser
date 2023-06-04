@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.Models.RecentChat;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemRecentConversationBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class RecentChatsAdapter extends RecyclerView.Adapter<RecentChatsAdapter.
                 binding.tvChatSentTime.setText(recentChat.getMessageSentTime());
             Uri chatPhoto = recentChat.getChatPhoto();
             if (chatPhoto != null)
-                Picasso.get().load(chatPhoto).noFade().into(binding.ivChatPhoto);
+                Glide.with(binding.getRoot()).load(chatPhoto).into(binding.ivChatPhoto);
             else
                 binding.ivChatPhoto.setImageResource(R.drawable.avatar);
             binding.getRoot().setOnClickListener(v -> {
@@ -71,5 +71,10 @@ public class RecentChatsAdapter extends RecyclerView.Adapter<RecentChatsAdapter.
     @Override
     public int getItemCount() {
         return recentChatList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.R;
-import com.example.friendsorganiser.databinding.ItemUserBinding;
-import com.squareup.picasso.Picasso;
+import com.example.friendsorganiser.databinding.ItemUserPickerBinding;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ public class FriendsPickerAdapter extends RecyclerView.Adapter<FriendsPickerAdap
 
     class FriendsPickerHolder extends RecyclerView.ViewHolder{
 
-        public ItemUserBinding binding;
+        public ItemUserPickerBinding binding;
 
-        public FriendsPickerHolder(ItemUserBinding itemUserBinding) {
+        public FriendsPickerHolder(ItemUserPickerBinding itemUserBinding) {
             super(itemUserBinding.getRoot());
             binding = itemUserBinding;
         }
@@ -35,14 +35,16 @@ public class FriendsPickerAdapter extends RecyclerView.Adapter<FriendsPickerAdap
             binding.tvUserName.setText(fullName);
             Uri userPhoto = userInfo.getPhoto();
             if (userPhoto != null)
-                Picasso.get().load(userPhoto).noFade().into(binding.ivUserPhoto);
+                Glide.with(binding.getRoot()).load(userPhoto).into(binding.ivUserPhoto);
+            else
+                binding.ivUserPhoto.setImageResource(R.drawable.avatar);
         }
     }
 
     @NonNull
     @Override
     public FriendsPickerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemUserBinding itemUserBinding = ItemUserBinding.inflate(
+        ItemUserPickerBinding itemUserBinding = ItemUserPickerBinding.inflate(
                 LayoutInflater.from(parent.getContext()),
                 parent,
                 false

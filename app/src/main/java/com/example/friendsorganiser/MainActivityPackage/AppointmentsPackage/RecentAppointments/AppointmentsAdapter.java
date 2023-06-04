@@ -1,12 +1,15 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.RecentAppointments;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.Models.AppointmentModel;
+import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemAppointmentBinding;
 
 import java.util.List;
@@ -33,7 +36,11 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
         public void setBinding(AppointmentModel appointmentModel){
             binding.tvAppointmentTitle.setText(appointmentModel.getAppointmentTitle());
             binding.tvAppointmentDate.setText(appointmentModel.getAppointmentDate());
-
+            Uri appointmentPhoto = appointmentModel.getAppointmentPhoto();
+            if (appointmentPhoto != null)
+                Glide.with(binding.getRoot()).load(appointmentPhoto).into(binding.ivAppointmentPhoto);
+            else
+                binding.ivAppointmentPhoto.setImageResource(R.drawable.avatar);
             binding.getRoot().setOnClickListener(v -> {
                 String appointmentId = appointmentModel.getAppointmentId();
                 onAppointmentClick.onAppointmentClick(appointmentId);

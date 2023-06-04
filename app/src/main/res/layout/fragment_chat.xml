@@ -33,9 +33,7 @@
         android:id="@+id/rv_allChatsDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
         android:orientation="vertical"
-        android:overScrollMode="never"
         android:padding="20sp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:visibility="gone"/>

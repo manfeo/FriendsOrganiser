@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.ItemNewFriendNotificationBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             binding.tvNewFriendName.setText(notificationText);
             Uri userPhoto = userInfo.getPhoto();
             if (userPhoto != null)
-                Picasso.get().load(userPhoto).noFade().into(binding.ivNewFriendPhoto);
+                Glide.with(binding.getRoot()).load(userPhoto).into(binding.ivNewFriendPhoto);
             binding.btAcceptNewFriend.setOnClickListener(v -> onNotificationAnswer.onNotificationAnswer(userInfo, Constants.KEY_ACCEPT_FRIENDSHIP));
             binding.btRejectNewFriend.setOnClickListener(v -> onNotificationAnswer.onNotificationAnswer(userInfo, Constants.KEY_REJECT_FRIENDSHIP));
         }

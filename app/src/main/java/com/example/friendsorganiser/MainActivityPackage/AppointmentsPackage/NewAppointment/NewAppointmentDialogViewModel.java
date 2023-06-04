@@ -1,5 +1,7 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.NewAppointment;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -50,9 +52,9 @@ public class NewAppointmentDialogViewModel extends ViewModel implements OnFriend
     }
 
     public void createNewAppointment(String appointmentTitle, String appointmentAddress, String appointmentDate,
-                                     String appointmentTime, double latitude, double longitude){
+                                     String appointmentTime, double latitude, double longitude, Uri appointmentPhoto){
         newAppointmentDialogRepository.createNewAppointment(appointmentTitle, appointmentAddress, appointmentDate,
-                appointmentTime, latitude, longitude, allFriends, this);
+                appointmentTime, latitude, longitude, allFriends, appointmentPhoto, this);
     }
 
     @Override

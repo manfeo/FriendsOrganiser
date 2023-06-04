@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,14 +24,22 @@
         app:srcCompat="@drawable/avatar"
         android:contentDescription="@string/no_image_found"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ib_newChatPicture"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_newChatPhotoHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20sp"
-        android:contentDescription="@string/no_image_found"
-        android:src="@drawable/avatar"/>
+        app:cardCornerRadius="100sp"
+        app:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/ib_newChatPicture"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:contentDescription="@string/no_image_found"
+            android:src="@drawable/avatar"/>
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/et_newChatName"
@@ -41,7 +48,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="15sp"
-        android:layout_below="@+id/ib_newChatPicture"
+        android:layout_below="@+id/cv_newChatPhotoHolder"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
         android:hint="Введите название чата" />

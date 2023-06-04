@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.R;
-import com.example.friendsorganiser.databinding.ItemUserBinding;
+import com.example.friendsorganiser.databinding.ItemUserPickerBinding;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class AddNewFriendsAdapter extends RecyclerView.Adapter<AddNewFriendsAdap
     }
 
     class AddNewFriendsHolder extends RecyclerView.ViewHolder{
-        public ItemUserBinding binding;
+        public ItemUserPickerBinding binding;
 
-        public AddNewFriendsHolder(ItemUserBinding itemUserBinding) {
+        public AddNewFriendsHolder(ItemUserPickerBinding itemUserBinding) {
             super(itemUserBinding.getRoot());
             binding = itemUserBinding;
         }
@@ -52,7 +52,7 @@ public class AddNewFriendsAdapter extends RecyclerView.Adapter<AddNewFriendsAdap
     @NonNull
     @Override
     public AddNewFriendsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemUserBinding itemUserBinding = ItemUserBinding.inflate(
+        ItemUserPickerBinding itemUserBinding = ItemUserPickerBinding.inflate(
                 LayoutInflater.from(parent.getContext()),
                 parent,
                 false

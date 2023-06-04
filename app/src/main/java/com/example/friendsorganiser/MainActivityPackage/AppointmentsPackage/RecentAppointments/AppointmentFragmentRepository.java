@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.RecentAppointments;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -62,8 +63,11 @@ public class AppointmentFragmentRepository {
             LocalDateTime localDateTime = Instant.ofEpochMilli(appointmentDateMillis).
                     atZone(ZoneId.systemDefault()).toLocalDateTime();
             String appointmentId = anotherSnapshot.getKey();
+            Uri appointmentPhoto = null;
+            if (anotherSnapshot.hasChild(Constants.KEY_IMAGE))
+                appointmentPhoto = Uri.parse(anotherSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
             AppointmentModel anotherAppointmentModel = new AppointmentModel(appointmentTitle, dateBeautifulizer(localDateTime),
-                     " ", localDateTime, appointmentId);
+                    localDateTime, appointmentId, appointmentPhoto);
             appointmentModelList.add(anotherAppointmentModel);
         }
     }

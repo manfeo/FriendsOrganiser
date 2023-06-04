@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="10sp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/iv_newFriendPhoto"
         android:layout_width="48sp"
         android:layout_height="48sp"

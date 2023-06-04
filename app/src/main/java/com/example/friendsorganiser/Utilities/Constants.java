@@ -6,6 +6,8 @@ public class Constants {
     public static final String KEY_DATABASE_APPOINTMENTS = "Appointments";
     public static final String KEY_DATABASE_NOTIFICATIONS = "Notifications";
     public static final String KEY_FIRESTORE_PROFILE_IMAGES = "ProfileImages";
+    public static final String KEY_FIRESTORE_PROFILE_COMPRESSED_IMAGES = "CompressedImages";
+    public static final String KEY_FIRESTORE_PROFILE_NORMAL_IMAGES = "NormalImages";
     public static final String KEY_FIRESTORE_APPOINTMENTS_IMAGES = "AppointmentsImages";
     public static final String KEY_FIRESTORE_CHATS_IMAGES = "ChatsImages";
     public static final String KEY_NAME = "name";

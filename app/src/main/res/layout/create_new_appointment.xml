@@ -14,15 +14,23 @@
         android:contentDescription="@string/no_image_found"
         app:srcCompat="@drawable/avatar" />
 
-    <ImageButton
-        android:id="@+id/ib_newAppointmentPhoto"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
-        app:srcCompat="@drawable/avatar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_newAppointmentPhotoHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/no_image_found"
-        android:layout_marginTop="20sp"/>
+        app:cardCornerRadius="100sp"
+        app:cardPreventCornerOverlap="false"
+        android:layout_marginTop="20sp">
+
+        <ImageView
+            android:id="@+id/ib_newAppointmentPhoto"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            app:srcCompat="@drawable/avatar"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/no_image_found" />
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/et_newAppointmentTitle"
@@ -30,7 +38,7 @@
         android:layout_height="48sp"
         android:inputType="textPersonName"
         android:textSize="15sp"
-        android:layout_below="@+id/ib_newAppointmentPhoto"
+        android:layout_below="@+id/cv_newAppointmentPhotoHolder"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
         android:hint="Введите название встречи"/>
