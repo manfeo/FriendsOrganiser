@@ -2,9 +2,12 @@ package com.example.friendsorganiser.RegistrationLogin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -94,10 +97,16 @@ public class RegisterLoginActivity extends AppCompatActivity implements Register
         ObjectAnimator animator;
 
         if (key.equals("Вход")){
-            animator = ObjectAnimator.ofFloat(binding.llMovingBar, "translationY",0f);
+            ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) binding.vSwitcherBackground.getLayoutParams();
+            constraintLayoutParams.verticalBias = (float)0.07;
+            AutoTransition autoTransition = new AutoTransition();
+            autoTransition.setDuration(1000);
+            TransitionManager.beginDelayedTransition(binding.vSwitcherBackground, autoTransition);
+            binding.vSwitcherBackground.setLayoutParams(constraintLayoutParams);
             binding.btMovingButton.setText("Регистрация");
             binding.tvAlreadyHaveAccount.setText("Ещё нет аккаунта в\nприложении");
             ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
             ft.replace(R.id.fl_registerLogin, new LoginFragment(), "LoginFragment");
             ft.commit();
             /*
@@ -109,10 +118,16 @@ public class RegisterLoginActivity extends AppCompatActivity implements Register
              */
 
         } else{
-            animator = ObjectAnimator.ofFloat(binding.llMovingBar, "translationY",1375f);
+            ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) binding.vSwitcherBackground.getLayoutParams();
+            constraintLayoutParams.verticalBias = (float)0.9;
+            AutoTransition autoTransition = new AutoTransition();
+            autoTransition.setDuration(1000);
+            TransitionManager.beginDelayedTransition(binding.vSwitcherBackground, autoTransition);
+            binding.vSwitcherBackground.setLayoutParams(constraintLayoutParams);
             binding.btMovingButton.setText("Вход");
             binding.tvAlreadyHaveAccount.setText("Уже есть аккаунт в\nприложении?");
             ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
             ft.replace(R.id.fl_registerLogin, new RegisterFragment(), "RegisterFragment");
             ft.commit();
             /*
@@ -123,8 +138,10 @@ public class RegisterLoginActivity extends AppCompatActivity implements Register
             }, 1000);
              */
         }
+        /*
         animator.setDuration(1000);
         animator.start();
+         */
     }
 
     private void loadingRegistration(boolean isLoading){

@@ -1,105 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/myFragment"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistrationLogin.RegisterFragment">
 
-    <LinearLayout
-        android:id="@+id/user_info_area"
+    <ImageView
+        android:id="@+id/iv_registerRepeatPasswordIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/password"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <ImageView
+        android:id="@+id/iv_registerPasswordIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/password"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerPassword"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerPassword"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <ImageView
+        android:id="@+id/iv_registerEmailIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/email"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerEmail"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerEmail"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <ImageView
+        android:id="@+id/iv_registerBirthDateIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/calendar"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerBirthDate"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerBirthDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerBirthDate"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <ImageView
+        android:id="@+id/iv_registerSurnameIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_text_icon_size"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerSurname"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerSurname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerSurname"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <ImageView
+        android:id="@+id/iv_registerNameIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_text_icon_size"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerName"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerName"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <TextView
+        android:id="@+id/tv_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="35sp"
-        android:layout_marginTop="115sp"
-        >
+        android:text="Регистрация"
+        android:textSize="25sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/et_registerName"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.45"
+        />
 
-        <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Регистрация"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:layout_marginBottom="15sp"
-            />
+    <EditText
+        android:id="@+id/et_registerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48sp"
+        android:ems="12"
+        android:inputType="textPersonName"
+        android:hint="Введите своё имя"
+        android:layout_marginTop="50sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_register"
+        app:layout_constraintBottom_toTopOf="@+id/et_registerSurname"
+        />
 
-        <EditText
-            android:id="@+id/et_registerName"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Введите своё имя"
-            android:drawableLeft="@drawable/edit_text_icon_size"
-            />
+    <EditText
+        android:id="@+id/et_registerSurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48sp"
+        android:ems="12"
+        android:inputType="textPersonName"
+        android:hint="Введите свою фамилию"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerName"
+        app:layout_constraintBottom_toTopOf="@+id/et_registerBirthDate"/>
 
-        <EditText
-            android:id="@+id/et_registerSurname"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Введите свою фамилию"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <EditText
+        android:id="@+id/et_registerBirthDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48sp"
+        android:ems="12"
+        android:hint="Введите дату рождения"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerSurname"
+        app:layout_constraintBottom_toTopOf="@+id/et_registerEmail"/>
 
-        <EditText
-            android:id="@+id/et_registerBirthDate"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:ems="10"
-            android:inputType="date"
-            android:hint="Введите дату рождения"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <EditText
+        android:id="@+id/et_registerEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48sp"
+        android:ems="12"
+        android:inputType="textEmailAddress"
+        android:hint="Введите email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerBirthDate"
+        app:layout_constraintBottom_toTopOf="@+id/et_registerPassword"
+        />
 
-        <EditText
-            android:id="@+id/et_registerEmail"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="Введите email"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <EditText
+        android:id="@+id/et_registerPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48sp"
+        android:ems="12"
+        android:inputType="numberPassword|textPassword"
+        android:hint="Введите пароль"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerEmail"
+        app:layout_constraintBottom_toTopOf="@+id/et_registerRepeatPassword"
+        />
 
-        <EditText
-            android:id="@+id/et_registerPassword"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:ems="10"
-            android:inputType="numberPassword|textPassword"
-            android:hint="Введите пароль"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <EditText
+        android:id="@+id/et_registerRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48sp"
+        android:ems="12"
+        android:inputType="numberPassword|textPassword"
+        android:hint="Повторите пароль"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerPassword"
+        app:layout_constraintBottom_toTopOf="@+id/bt_register"
+        />
 
-        <EditText
-            android:id="@+id/et_registerRepeatPassword"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:ems="10"
-            android:inputType="numberPassword|textPassword"
-            android:hint="Повторите пароль"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="Зарегестрироваться"
+        android:layout_marginTop="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <FrameLayout
-            android:id="@+id/fl_registerButtonHolder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:layout_marginHorizontal="30sp">
-
-            <Button
-                android:id="@+id/bt_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Зарегестрироваться" />
-
-            <ProgressBar
-                android:id="@+id/pb_loadingRegistration"
-                android:layout_width="25sp"
-                android:layout_height="25sp"
-                android:layout_gravity="center"
-                android:visibility="invisible">
-            </ProgressBar>
-        </FrameLayout>
-    </LinearLayout>
-</RelativeLayout>
+    <ProgressBar
+        android:id="@+id/pb_loadingRegistration"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintVertical_bias="0.05"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
