@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,69 +8,144 @@
 
     <include
         android:id="@+id/toolbar_profile"
-        layout="@layout/upper_toolbar">
+        layout="@layout/profile_activity_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
     </include>
 
-    <LinearLayout
-        android:id="@+id/ll_profile"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_profileImageHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="100sp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_profileName"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.35">
+
+        <ImageView
+            android:id="@+id/ci_profileImage"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:src="@drawable/avatar"
+            android:contentDescription="@string/no_image_found" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_profileDataAlignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/toolbar_profile"
-        android:layout_marginHorizontal="35sp"
+        app:layout_constraintGuide_begin="90sp"
+        />
+    
+    <TextView
+        android:id="@+id/tv_profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Имя"
         android:gravity="center_horizontal"
-        android:layout_marginTop="50sp">
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_nameIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_profileImageHolder"
+        app:layout_constraintBottom_toTopOf="@+id/tv_profileSurname"/>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_profileImageHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="100sp"
-            app:cardPreventCornerOverlap="false">
+    <ImageView
+        android:id="@+id/iv_nameIcon"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        app:srcCompat="@drawable/profile"
+        app:layout_constraintStart_toStartOf="@+id/g_profileDataAlignment"
+        app:layout_constraintEnd_toStartOf="@+id/tv_profileName"
+        app:layout_constraintTop_toTopOf="@+id/tv_profileName"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_profileName"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        android:contentDescription="@string/no_image_found" />
 
-            <ImageView
-                android:id="@+id/ci_profileImage"
-                android:layout_width="200sp"
-                android:layout_height="200sp"
-                android:src="@drawable/avatar"
-                android:contentDescription="@string/no_image_found" />
-        </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tv_profileSurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Фамилия"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/iv_surnameIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profileName"
+        app:layout_constraintBottom_toTopOf="@+id/tv_profileBirthDate"/>
 
-        <TextView
-            android:id="@+id/tv_profileName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Имя"
-            android:layout_marginTop="30sp"
-            android:layout_marginLeft="15sp"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <ImageView
+        android:id="@+id/iv_surnameIcon"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        app:srcCompat="@drawable/profile"
+        app:layout_constraintStart_toStartOf="@+id/g_profileDataAlignment"
+        app:layout_constraintEnd_toStartOf="@+id/tv_profileSurname"
+        app:layout_constraintTop_toTopOf="@+id/tv_profileSurname"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_profileSurname"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        android:contentDescription="@string/no_image_found" />
 
-        <TextView
-            android:id="@+id/tv_profileSurname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Фамилия"
-            android:layout_marginTop="30sp"
-            android:layout_marginLeft="15sp"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <TextView
+        android:id="@+id/tv_profileBirthDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Дата рождения"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/iv_calendarIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profileSurname"
+        app:layout_constraintBottom_toTopOf="@+id/tv_profileEmail"/>
 
-        <TextView
-            android:id="@+id/tv_profileBirthDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Дата рождения"
-            android:layout_marginTop="30sp"
-            android:layout_marginLeft="15sp"
-            android:drawableLeft="@drawable/edit_text_icon_size"/>
+    <ImageView
+        android:id="@+id/iv_calendarIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/calendar"
+        app:layout_constraintStart_toStartOf="@+id/g_profileDataAlignment"
+        app:layout_constraintEnd_toStartOf="@+id/tv_profileBirthDate"
+        app:layout_constraintTop_toTopOf="@+id/tv_profileBirthDate"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_profileBirthDate"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        android:contentDescription="@string/no_image_found" />
 
-        <TextView
-            android:id="@+id/tv_profileEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Почта"
-            android:layout_marginTop="30sp"
-            android:layout_marginLeft="15sp"
-            android:drawableLeft="@drawable/edit_text_icon_size" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_profileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Почта"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/iv_emailIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profileBirthDate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_emailIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/email"
+        app:layout_constraintStart_toStartOf="@+id/g_profileDataAlignment"
+        app:layout_constraintEnd_toStartOf="@+id/tv_profileEmail"
+        app:layout_constraintTop_toTopOf="@+id/tv_profileEmail"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_profileEmail"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        android:contentDescription="@string/no_image_found" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

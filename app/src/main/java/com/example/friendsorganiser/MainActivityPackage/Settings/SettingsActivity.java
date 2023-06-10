@@ -41,19 +41,12 @@ public class SettingsActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbarSettings = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbarSettings);
 
-        binding.toolbarSettings.ibSettings.setVisibility(View.INVISIBLE);
-        binding.toolbarSettings.tvPageDefiner.setText("Настройки");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.toolbarSettings.tvSettingsTitle.setText("Настройки");
     }
 
     private void setListeners(){
-        binding.toolbarSettings.ibProfile.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra(Constants.KEY_USER_ID, settingsActivityViewModel.getCurrentUserId().getValue());
-            startActivity(intent);
-        });
         binding.btSignOut.setOnClickListener(v -> signOut());
+        binding.toolbarSettings.ibBackButton.setOnClickListener(v -> onBackPressed());
     }
 
     private void signOut(){
@@ -61,15 +54,5 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent registerLoginIntent = new Intent(this, RegisterLoginActivity.class);
         startActivity(registerLoginIntent);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

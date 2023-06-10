@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/purple_200"
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rl_mainToolbarHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profileImageHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100sp"
+            android:layout_marginStart="10sp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_pageDefiner"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_profileImage"
+                android:layout_width="48sp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/no_image_found"
+                android:scaleType="centerInside"
+                android:src="@drawable/avatar" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_pageDefiner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/page_definer_text"
+            android:textSize="16sp"
+            android:layout_marginStart="7sp"
+            app:layout_constraintStart_toEndOf="@+id/cv_profileImageHolder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
+
+        <ImageButton
+            android:id="@+id/ib_notifications"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:adjustViewBounds="true"
+            android:padding="7sp"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/no_image_found"
+            app:srcCompat="@drawable/no_notifications"
+            app:layout_constraintEnd_toStartOf="@+id/ib_settings"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/ib_settings"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:adjustViewBounds="true"
+            android:padding="7sp"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="10sp"
+            android:contentDescription="@string/no_image_found"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/settings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.Toolbar>

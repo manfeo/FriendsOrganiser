@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbar_chatToolbar"
-        layout="@layout/upper_toolbar">
+        layout="@layout/main_activity_toolbar">
     </include>
 
     <androidx.recyclerview.widget.RecyclerView

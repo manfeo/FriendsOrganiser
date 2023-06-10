@@ -1,11 +1,14 @@
 package com.example.friendsorganiser.MainActivityPackage.MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.MainActivityPackage.Notifications.NotificationsActivity;
 import com.example.friendsorganiser.MainActivityPackage.Profile.ProfileActivity;
 import com.example.friendsorganiser.MainActivityPackage.Settings.SettingsActivity;
@@ -46,21 +49,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void setListeners(){
         //Setting listener to profile activity
-        binding.toolbarMainPage.ibProfile.setOnClickListener(view -> {
+        binding.toolbarMainPage.ivProfileImage.setOnClickListener(view -> {
             Intent profileIntent = new Intent(this, ProfileActivity.class);
             profileIntent.putExtra(Constants.KEY_USER_ID, mainActivityViewModel.getCurrentUserId().getValue());
             startActivity(profileIntent);
         });
-
         //Setting listener to settings activity
         binding.toolbarMainPage.ibSettings.setOnClickListener(view -> {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
         });
         //Setting listener to notifications activity
-        binding.toolbarMainPage.ibFriendsRequest.setOnClickListener(view -> {
+        binding.toolbarMainPage.ibNotifications.setOnClickListener(view -> {
             Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
             startActivity(notificationsIntent);
+        });
+        mainActivityViewModel.getCurrentUserPhoto().observe(this, uri -> {
+            if (uri != null)
+                Glide.with(binding.getRoot()).load(uri).into(binding.toolbarMainPage.ivProfileImage);
+        });
+        mainActivityViewModel.getIsNotifications().observe(this, isNotifications -> {
+            if (isNotifications)
+                binding.toolbarMainPage.ibNotifications.setImageResource(R.drawable.notification);
+            else
+                binding.toolbarMainPage.ibNotifications.setImageResource(R.drawable.no_notifications);
         });
     }
 

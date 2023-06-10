@@ -1,21 +1,14 @@
 package com.example.friendsorganiser.MainActivityPackage.Notifications;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ActivityNotificationsBinding;
-
-import java.util.List;
 
 public class NotificationsActivity extends AppCompatActivity implements OnNotificationAnswer{
     private ActivityNotificationsBinding binding;
@@ -28,23 +21,24 @@ public class NotificationsActivity extends AppCompatActivity implements OnNotifi
         binding = ActivityNotificationsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        androidx.appcompat.widget.Toolbar toolbarNotifications = findViewById(R.id.toolbar_notifications);
-        setSupportActionBar(toolbarNotifications);
-
-        ActionBar toolbar = getSupportActionBar();
-        toolbar.setDisplayHomeAsUpEnabled(true);
-
-
         notificationsActivityViewModel = new ViewModelProvider(this).get(NotificationsActivityViewModel.class);
         notificationsActivityViewModel.init();
 
         init();
+        setBinding();
         setListeners();
     }
 
     private void init(){
         notificationsAdapter = new NotificationsAdapter(notificationsActivityViewModel.getNotifications().getValue(), this);
         binding.rvAllNotifications.setAdapter(notificationsAdapter);
+    }
+
+    private void setBinding(){
+        androidx.appcompat.widget.Toolbar toolbarNotifications = findViewById(R.id.toolbar_notifications);
+        setSupportActionBar(toolbarNotifications);
+
+        binding.toolbarNotifications.tvNotificationsTitle.setText("Уведомления");
     }
 
     private void setListeners(){
@@ -58,20 +52,11 @@ public class NotificationsActivity extends AppCompatActivity implements OnNotifi
                 binding.tvNoNotifications.setVisibility(View.GONE);
             }
         });
+        binding.toolbarNotifications.ibBackButton.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
     public void onNotificationAnswer(UserInfo notificationUser, String answer) {
         notificationsActivityViewModel.onNotificationAnswer(notificationUser, answer);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -4,14 +4,14 @@
     <item
     android:id="@+id/item_appointments"
     android:title="Мероприятия"
-    android:icon="@drawable/avatar"/>
+    android:icon="@drawable/party"/>
     <item
     android:id="@+id/item_chats"
     android:title="Сообщения"
-    android:icon="@drawable/avatar"/>
+    android:icon="@drawable/messages"/>
     <item
     android:id="@+id/item_friends"
     android:title="Друзья"
-    android:icon="@drawable/avatar"/>
+    android:icon="@drawable/friends"/>
 
 </menu>

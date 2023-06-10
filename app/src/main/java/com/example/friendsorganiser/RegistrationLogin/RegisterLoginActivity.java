@@ -1,15 +1,12 @@
 package com.example.friendsorganiser.RegistrationLogin;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -18,17 +15,7 @@ import com.example.friendsorganiser.MainActivityPackage.MainActivity.MainActivit
 import com.example.friendsorganiser.Models.LoginModel;
 import com.example.friendsorganiser.Models.RegisterModel;
 import com.example.friendsorganiser.R;
-import com.example.friendsorganiser.Utilities.Constants;
-import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.example.friendsorganiser.databinding.ActivityRegisterLoginBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 
 public class RegisterLoginActivity extends AppCompatActivity implements RegisterFragment.OnDataPass, LoginFragment.OnDataPass{
 
@@ -93,55 +80,39 @@ public class RegisterLoginActivity extends AppCompatActivity implements Register
     }
 
     private void switchLoginRegistration(String key){
-
-        ObjectAnimator animator;
-
-        if (key.equals("Вход")){
-            ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) binding.vSwitcherBackground.getLayoutParams();
-            constraintLayoutParams.verticalBias = (float)0.07;
-            AutoTransition autoTransition = new AutoTransition();
-            autoTransition.setDuration(1000);
-            TransitionManager.beginDelayedTransition(binding.vSwitcherBackground, autoTransition);
-            binding.vSwitcherBackground.setLayoutParams(constraintLayoutParams);
-            binding.btMovingButton.setText("Регистрация");
-            binding.tvAlreadyHaveAccount.setText("Ещё нет аккаунта в\nприложении");
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            ft.replace(R.id.fl_registerLogin, new LoginFragment(), "LoginFragment");
-            ft.commit();
-            /*
-            new Handler().postDelayed(() -> {
-                ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.register_login_frame_layout, new LoginFragment());
-                ft.commit();
-            }, 1000);
-             */
-
-        } else{
+        //Load registration fragment
+        if (key.equals("Регистрация")){
+            //Moving button to bottom of screen
             ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) binding.vSwitcherBackground.getLayoutParams();
             constraintLayoutParams.verticalBias = (float)0.9;
             AutoTransition autoTransition = new AutoTransition();
             autoTransition.setDuration(1000);
             TransitionManager.beginDelayedTransition(binding.vSwitcherBackground, autoTransition);
             binding.vSwitcherBackground.setLayoutParams(constraintLayoutParams);
+            //Changing fragment and text on layout
             binding.btMovingButton.setText("Вход");
             binding.tvAlreadyHaveAccount.setText("Уже есть аккаунт в\nприложении?");
             ft = getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
             ft.replace(R.id.fl_registerLogin, new RegisterFragment(), "RegisterFragment");
             ft.commit();
-            /*
-            new Handler().postDelayed(() -> {
-                ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.register_login_frame_layout, new RegisterFragment());
-                ft.commit();
-            }, 1000);
-             */
+        //Load login fragment
+        } else{
+            //Moving button to top of screen
+            ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) binding.vSwitcherBackground.getLayoutParams();
+            constraintLayoutParams.verticalBias = (float)0.07;
+            AutoTransition autoTransition = new AutoTransition();
+            autoTransition.setDuration(1000);
+            TransitionManager.beginDelayedTransition(binding.vSwitcherBackground, autoTransition);
+            binding.vSwitcherBackground.setLayoutParams(constraintLayoutParams);
+            //Changin fragment and text on layout
+            binding.btMovingButton.setText("Регистрация");
+            binding.tvAlreadyHaveAccount.setText("Ещё нет аккаунта в\nприложении");
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            ft.replace(R.id.fl_registerLogin, new LoginFragment(), "LoginFragment");
+            ft.commit();
         }
-        /*
-        animator.setDuration(1000);
-        animator.start();
-         */
     }
 
     private void loadingRegistration(boolean isLoading){

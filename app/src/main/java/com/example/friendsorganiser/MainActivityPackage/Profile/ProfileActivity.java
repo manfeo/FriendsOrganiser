@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -76,11 +78,8 @@ public class ProfileActivity extends AppCompatActivity {
         Toolbar toolbarProfile = findViewById(R.id.toolbar_profile);
         setSupportActionBar(toolbarProfile);
 
-        ActionBar toolbar = getSupportActionBar();
-        toolbar.setDisplayHomeAsUpEnabled(true);
-
         //Setting upper toolbar text to "Your profile"
-        binding.toolbarProfile.tvPageDefiner.setText("Ваш профиль");
+        binding.toolbarProfile.tvProfileTitle.setText("Ваш профиль");
     }
 
     private void loadData(){
@@ -110,6 +109,9 @@ public class ProfileActivity extends AppCompatActivity {
                     openImagesDocument();
             });
         }
+        binding.toolbarProfile.ibBackButton.setOnClickListener(v -> {
+            onBackPressed();
+        });
     }
 
     @Override
@@ -135,15 +137,5 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d("photo", "Unable to make temp file");
         }
         return null;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

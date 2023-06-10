@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/toolbar_notifications"
-        layout="@layout/upper_toolbar">
+        layout="@layout/notifications_activity_toolbar">
     </include>
 
     <TextView
