@@ -1,5 +1,6 @@
 package com.example.friendsorganiser.MainActivityPackage.FriendsPackage.AddNewFriendsDialog;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -58,16 +59,12 @@ public class AddNewFriendsRepository {
                 continue;
             String name = dataSnapshot.child(Constants.KEY_NAME).getValue().toString();
             String surname = dataSnapshot.child(Constants.KEY_SURNAME).getValue().toString();
-            String image = "";
+            Uri friendPhoto = null;
             if (dataSnapshot.hasChild(Constants.KEY_IMAGE)) {
-                image = dataSnapshot.child(Constants.KEY_IMAGE).getValue().toString();
-            }
-            String token = "";
-            if (dataSnapshot.hasChild(Constants.KEY_FCM_TOKEN)) {
-                token = dataSnapshot.child(Constants.KEY_FCM_TOKEN).getValue().toString();
+                friendPhoto = Uri.parse(dataSnapshot.child(Constants.KEY_IMAGE).getValue().toString());
             }
             String id = dataSnapshot.getKey();
-            UserInfo anotherUser = new UserInfo(name, surname, null, token, id);
+            UserInfo anotherUser = new UserInfo(name, surname, friendPhoto, id);
             users.add(anotherUser);
         }
     }

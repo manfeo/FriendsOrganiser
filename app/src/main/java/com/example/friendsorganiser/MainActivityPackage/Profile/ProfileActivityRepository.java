@@ -1,7 +1,5 @@
 package com.example.friendsorganiser.MainActivityPackage.Profile;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
@@ -19,11 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.io.ByteArrayOutputStream;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ProfileActivityRepository {
     private static ProfileActivityRepository instance;
@@ -47,9 +40,8 @@ public class ProfileActivityRepository {
     }
 
     public void uploadImage(Uri newImage){
-        //Uploading qualitative image to firebase to show this image in profile activity
-        StorageReference ref = storageReference.child(Constants.KEY_FIRESTORE_PROFILE_IMAGES).
-                child(Constants.KEY_FIRESTORE_PROFILE_NORMAL_IMAGES).child(userId);
+        //Uploading image to storage and then to database
+        StorageReference ref = storageReference.child(Constants.KEY_FIRESTORE_PROFILE_IMAGES).child(userId);
         UploadTask uploadTask = ref.putFile(newImage);
         //Another callback to get uri after uploading
         Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
@@ -60,9 +52,10 @@ public class ProfileActivityRepository {
             if (task.isSuccessful()) {
                 Uri downloadUri = task.getResult();
                 String stringUri = downloadUri.toString();
+                preferenceManager.putString(Constants.KEY_IMAGE, stringUri);
                 //Updating current user image
                 databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
-
+                //Updating uploaded photo to all friends
                 databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_FRIENDS).
                                 addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -79,6 +72,22 @@ public class ProfileActivityRepository {
                                         Log.d("Image", "Unable to load image to friends");
                                     }
                                 });
+                //Updating uploaded photo to all appointments
+                databaseReference.child(Constants.KEY_DATABASE_USERS).child(userId).child(Constants.KEY_RECENT_APPOINTMENTS).
+                        addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot anotherSnapshot : snapshot.getChildren()){
+                                    String appointmentId = anotherSnapshot.getKey();
+                                    databaseReference.child(Constants.KEY_DATABASE_APPOINTMENTS).child(appointmentId).child(Constants.KEY_APPOINTMENT_PARTICIPANTS).
+                                            child(userId).child(Constants.KEY_IMAGE).setValue(stringUri);
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.d("image", "Unable to load image to appointments");
+                            }
+                        });
             } else {
                 Log.d("image", "Unable to get image URI");
             }

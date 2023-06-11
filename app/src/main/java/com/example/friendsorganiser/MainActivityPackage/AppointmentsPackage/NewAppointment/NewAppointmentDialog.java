@@ -6,13 +6,18 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.MainActivityPackage.AppointmentsPackage.AddressPicker.AddressPickerActivity;
 import com.example.friendsorganiser.MainActivityPackage.ChatsPackage.NewChatDialog.FriendsPickerAdapter;
 import com.example.friendsorganiser.Models.AddressModel;
+import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.databinding.CreateNewAppointmentBinding;
 import com.yalantis.ucrop.UCrop;
@@ -206,5 +212,14 @@ public class NewAppointmentDialog extends DialogFragment {
             Log.d("photo", "Unable to make temp file");
         }
         return null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        int width = (int)(getResources().getDisplayMetrics().widthPixels);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels);
+
+        getDialog().getWindow().setLayout(width, height);
     }
 }

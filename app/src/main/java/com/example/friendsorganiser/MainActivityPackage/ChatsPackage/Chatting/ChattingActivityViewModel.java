@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.friendsorganiser.Models.ChatMessage;
+import com.example.friendsorganiser.Models.ChattingInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class ChattingActivityViewModel extends ViewModel implements OnMessageSen
     private ChattingActivityRepository chattingActivityRepository;
     private MutableLiveData<List<ChatMessage>> messageList;
     private MutableLiveData<String> currentUserId;
-    private MutableLiveData<String> chatName;
+    private MutableLiveData<ChattingInfo> chattingInfo;
     private List<ChatMessage> allMessages;
 
     public void init(String chatId){
@@ -28,7 +29,7 @@ public class ChattingActivityViewModel extends ViewModel implements OnMessageSen
         messageList = new MutableLiveData<>();
         messageList.setValue(allMessages);
 
-        chatName = new MutableLiveData<>();
+        chattingInfo = new MutableLiveData<>();
 
         chattingActivityRepository.setMessagesListener(allMessages, this);
     }
@@ -41,8 +42,8 @@ public class ChattingActivityViewModel extends ViewModel implements OnMessageSen
         return messageList;
     }
 
-    public LiveData<String> getChatName(){
-        return chatName;
+    public LiveData<ChattingInfo> getChattingInfo(){
+        return chattingInfo;
     }
 
     public void sendMessage(String message){
@@ -55,7 +56,7 @@ public class ChattingActivityViewModel extends ViewModel implements OnMessageSen
     }
 
     @Override
-    public void onChatLoadedCallback(String currentChatName) {
-        chatName.setValue(currentChatName);
+    public void onChatLoadedCallback(ChattingInfo loadedChattingInfo) {
+        chattingInfo.setValue(loadedChattingInfo);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -95,5 +96,14 @@ public class AddNewFriends extends DialogFragment {
             binding.btSendFriendsRequests.setVisibility(View.VISIBLE);
             binding.pbLoadingFriendsRequests.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        int width = (int)(getResources().getDisplayMetrics().widthPixels);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels);
+
+        getDialog().getWindow().setLayout(width, height);
     }
 }

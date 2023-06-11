@@ -5,18 +5,27 @@
     android:layout_height="wrap_content"
     android:padding="10sp">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/iv_newFriendPhoto"
-        android:layout_width="48sp"
-        android:layout_height="48sp"
-        android:src="@drawable/avatar"
-        android:contentDescription="@string/no_image_found" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_profileImageHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="100sp"
+        app:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/iv_newFriendPhoto"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:src="@drawable/avatar"
+            android:contentDescription="@string/no_image_found" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tv_newFriendName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_newFriendPhoto"
+        android:layout_toRightOf="@+id/cv_profileImageHolder"
         android:padding="5sp"
         android:layout_marginLeft="5sp"
         android:text="TextView" />

@@ -1,10 +1,12 @@
 package com.example.friendsorganiser.MainActivityPackage.ChatsPackage.Chatting;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.friendsorganiser.Models.ChatMessage;
+import com.example.friendsorganiser.Models.ChattingInfo;
 import com.example.friendsorganiser.Utilities.Constants;
 import com.example.friendsorganiser.Utilities.PreferenceManager;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
 
 public class ChattingActivityRepository {
 
@@ -60,12 +61,16 @@ public class ChattingActivityRepository {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         chatName = snapshot.child(Constants.KEY_CHAT_NAME).getValue().toString();
+                        Uri chatPhoto = null;
+                        if (snapshot.hasChild(Constants.KEY_IMAGE))
+                            chatPhoto = Uri.parse(snapshot.child(Constants.KEY_IMAGE).getValue().toString());
 
                         for (DataSnapshot dataSnapshot : snapshot.child(Constants.KEY_CHAT_PARTICIPANTS).getChildren()){
                             participants.add(dataSnapshot.getValue().toString());
                         }
 
-                        onChatLoadedCallback.onChatLoadedCallback(chatName);
+                        ChattingInfo chattingInfo = new ChattingInfo(chatName, chatPhoto);
+                        onChatLoadedCallback.onChatLoadedCallback(chattingInfo);
                     }
 
                     @Override

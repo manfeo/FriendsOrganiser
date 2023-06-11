@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,63 +9,100 @@
 
     <org.osmdroid.views.MapView
         android:id="@+id/mv_appointmentPlace"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ll_appointmentData"/>
+        android:layout_width="wrap_content"
+        android:layout_height="0sp"
+        app:layout_constraintBottom_toTopOf="@+id/g_mapLimit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_mapLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
 
     <ImageButton
         android:id="@+id/ib_createdAppointmentClose"
         android:layout_width="48sp"
         android:layout_height="48sp"
         android:scaleType="fitCenter"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10sp"
+        android:layout_margin="5sp"
+        android:adjustViewBounds="true"
+        android:padding="10sp"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/no_image_found"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/ll_appointmentData"
+    <TextView
+        android:id="@+id/tv_createdAppointmentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="5sp"
+        android:text="Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_createdAppointmentAddress"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.7"/>
+
+    <TextView
+        android:id="@+id/tv_createdAppointmentAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="Address"
+        android:layout_marginTop="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_createdAppointmentTime"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createdAppointmentTitle"/>
+
+    <TextView
+        android:id="@+id/tv_createdAppointmentTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="Time"
+        android:layout_marginTop="5sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_createdAppointmentParticipantsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createdAppointmentAddress"/>
+
+    <TextView
+        android:id="@+id/tv_createdAppointmentParticipantsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5sp"
+        android:text="Участники"
+        android:layout_marginTop="5sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_createdAppointmentTime"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_participantsLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.77" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_createdAppointmentParticipants"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:padding="10sp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_createdAppointmentTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5sp"
-            android:text="Title" />
-
-        <TextView
-            android:id="@+id/tv_createdAppointmentAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:text="Address" />
-
-        <TextView
-            android:id="@+id/tv_createdAppointmentTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:text="Time" />
-
-        <TextView
-            android:id="@+id/tv_createdAppointmentParticipantsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5sp"
-            android:text="Участники" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_createdAppointmentParticipants"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:padding="10sp"/>
-    </LinearLayout>
-</RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@id/g_participantsLimit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

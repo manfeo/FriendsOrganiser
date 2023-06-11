@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private void setBindings(){
         mainActivityViewModel.setToken();
 
-        androidx.appcompat.widget.Toolbar toolbarMainPage = findViewById(R.id.toolbar_mainPage);
-        setSupportActionBar(toolbarMainPage);
+        setSupportActionBar(binding.toolbarMainPage.getRoot());
 
         //Setting text to upper toolbar
         binding.toolbarMainPage.tvPageDefiner.setText("Мероприятия");

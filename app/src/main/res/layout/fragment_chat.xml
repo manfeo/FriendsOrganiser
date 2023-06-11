@@ -21,12 +21,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:src="@drawable/avatar"
+        android:src="@drawable/add_chat"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10sp"
         android:layout_marginRight="10sp"
         android:contentDescription="@string/no_image_found"
+        app:tint="@color/white"
         android:visibility="invisible"/>
 
     <androidx.recyclerview.widget.RecyclerView

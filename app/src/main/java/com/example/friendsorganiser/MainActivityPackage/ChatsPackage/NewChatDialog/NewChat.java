@@ -5,17 +5,13 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -157,13 +153,11 @@ public class NewChat extends DialogFragment {
     }
 
     @Override
-    public void onResume() {
-        Window window = getDialog().getWindow();
-        Point size = new Point();
-        Display display = window.getWindowManager().getDefaultDisplay();
-        display.getSize(size);
-        window.setLayout((int) (size.x * 0.95), WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setGravity(Gravity.CENTER);
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        int width = (int)(getResources().getDisplayMetrics().widthPixels);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels);
+
+        getDialog().getWindow().setLayout(width, height);
     }
 }

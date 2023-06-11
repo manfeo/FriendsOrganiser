@@ -1,11 +1,13 @@
 package com.example.friendsorganiser.MainActivityPackage.FriendsPackage.AddNewFriendsDialog;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.friendsorganiser.Models.UserInfo;
 import com.example.friendsorganiser.R;
 import com.example.friendsorganiser.databinding.ItemUserPickerBinding;
@@ -30,6 +32,11 @@ public class AddNewFriendsAdapter extends RecyclerView.Adapter<AddNewFriendsAdap
         private void setBinding(UserInfo userInfo) {
             String fullName = userInfo.getName() + userInfo.getSurname();
             binding.tvUserName.setText(fullName);
+            Uri friendPhoto = userInfo.getPhoto();
+            if (friendPhoto != null)
+                Glide.with(binding.getRoot()).load(friendPhoto).into(binding.ivUserPhoto);
+            else
+                binding.ivUserPhoto.setImageResource(R.drawable.avatar);
         }
     }
 

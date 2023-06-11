@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,25 +8,33 @@
         android:id="@+id/ib_newAppointmentCancel"
         android:layout_width="48sp"
         android:layout_height="48sp"
+        android:adjustViewBounds="true"
+        android:padding="7sp"
         android:scaleType="fitCenter"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10sp"
+        android:background="@android:color/transparent"
+        android:layout_margin="5sp"
         android:contentDescription="@string/no_image_found"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_newAppointmentPhotoHolder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         app:cardCornerRadius="100sp"
         app:cardPreventCornerOverlap="false"
-        android:layout_marginTop="20sp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/et_newAppointmentTitle"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.2">
 
         <ImageView
             android:id="@+id/ib_newAppointmentPhoto"
-            android:layout_width="100sp"
-            android:layout_height="100sp"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
             app:srcCompat="@drawable/avatar"
             android:scaleType="fitCenter"
             android:contentDescription="@string/no_image_found" />
@@ -38,175 +46,134 @@
         android:layout_height="48sp"
         android:inputType="textPersonName"
         android:textSize="15sp"
-        android:layout_below="@+id/cv_newAppointmentPhotoHolder"
-        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
         android:background="@android:color/transparent"
-        android:hint="Введите название встречи"/>
+        android:hint="Введите название встречи"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_newAppointmentPhotoHolder"
+        app:layout_constraintBottom_toTopOf="@+id/et_newAppointmentManualAddress"/>
 
+    <EditText
+        android:id="@+id/et_newAppointmentManualAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="48sp"
+        android:maxWidth="130sp"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:background="@android:color/transparent"
+        android:hint="Место встречи"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bt_newAppointmentOpenMap"
+        app:layout_constraintTop_toBottomOf="@+id/et_newAppointmentTitle"
+        app:layout_constraintBottom_toTopOf="@+id/et_newAppointmentDate"/>
 
-    <LinearLayout
-        android:id="@+id/ll_newAppointmentAddressHolder"
+    <Button
+        android:id="@+id/bt_newAppointmentOpenMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Карта"
+        app:layout_constraintStart_toEndOf="@+id/et_newAppointmentManualAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_newAppointmentManualAddress"
+        app:layout_constraintBottom_toBottomOf="@+id/et_newAppointmentManualAddress"/>
+
+    <EditText
+        android:id="@+id/et_newAppointmentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="48sp"
+        android:minWidth="48sp"
+        android:inputType="date"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:background="@android:color/transparent"
+        android:hint="Дата"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/et_newAppointmentTime"
+        app:layout_constraintTop_toBottomOf="@+id/et_newAppointmentManualAddress"
+        app:layout_constraintBottom_toTopOf="@+id/rv_newAppointmentFriends"/>
+
+    <EditText
+        android:id="@+id/et_newAppointmentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="48sp"
+        android:minWidth="48sp"
+        android:inputType="time"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:background="@android:color/transparent"
+        android:hint="Время"
+        app:layout_constraintStart_toEndOf="@+id/et_newAppointmentDate"
+        app:layout_constraintEnd_toStartOf="@+id/bt_newAppointmentDateDialog"
+        app:layout_constraintTop_toTopOf="@+id/et_newAppointmentDate"
+        app:layout_constraintBottom_toBottomOf="@+id/et_newAppointmentDate"/>
+
+    <Button
+        android:id="@+id/bt_newAppointmentDateDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Календарь"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_newAppointmentTime"
+        app:layout_constraintBottom_toBottomOf="@+id/et_newAppointmentTime"
+        app:layout_constraintTop_toTopOf="@+id/et_newAppointmentTime"/>
+
+    <TextView
+        android:id="@+id/tv_newAppointmentNoFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="У вас нет друзей("
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_newAppointmentDate"
+        android:layout_marginTop="10sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_newAppointmentFriends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="20sp"
-        android:layout_below="@+id/et_newAppointmentTitle">
+        android:scrollbars="vertical"
+        android:padding="10sp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_newAppointmentDate"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+    <ProgressBar
+        android:id="@+id/pb_newAppointmentFriendsLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
 
-        <EditText
-            android:id="@+id/et_newAppointmentManualAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="48sp"
-            android:maxWidth="130sp"
-            android:inputType="text"
-            android:textSize="15sp"
-            android:background="@android:color/transparent"
-            android:hint="Место встречи" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/bt_newAppointmentOpenMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Карта"
-            />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_newAppointmentDateHolder"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/bt_newAppointmentCreate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="20sp"
-        android:layout_below="@+id/ll_newAppointmentAddressHolder">
+        android:text="Создать"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"/>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+    <ProgressBar
+        android:id="@+id/pb_newAppointmentCreateLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <EditText
-            android:id="@+id/et_newAppointmentDate"
-            android:layout_width="wrap_content"
-            android:layout_height="48sp"
-            android:minWidth="48sp"
-            android:inputType="date"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:background="@android:color/transparent"
-            android:hint="Дата" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <EditText
-            android:id="@+id/et_newAppointmentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="48sp"
-            android:minWidth="48sp"
-            android:inputType="time"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:background="@android:color/transparent"
-            android:hint="Время" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/bt_newAppointmentDateDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Календарь" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/fl_newAppointmentFriendsHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_newAppointmentDateHolder"
-        android:layout_above="@+id/fl_newAppointmentCreateHolder">
-
-        <TextView
-            android:id="@+id/tv_newAppointmentNoFriends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20sp"
-            android:text="У вас нет друзей("
-            android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_newAppointmentFriends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:padding="10sp"
-            android:layout_marginHorizontal="10sp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:visibility="gone"/>
-
-        <ProgressBar
-            android:id="@+id/pb_newAppointmentFriendsLoading"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="48sp"
-            android:layout_height="48sp"
-            android:layout_gravity="center"/>
-
-    </FrameLayout>
-
-    <CalendarView
-        android:id="@+id/cv_newAppointmentCalendar"
-        android:layout_width="200sp"
-        android:layout_height="200sp"
-        android:visibility="gone"/>
-
-    <FrameLayout
-        android:id="@+id/fl_newAppointmentCreateHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10sp">
-
-        <ProgressBar
-            android:id="@+id/pb_newAppointmentCreateLoading"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="48sp"
-            android:layout_height="48sp"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/bt_newAppointmentCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Создать"
-            android:layout_gravity="center_horizontal" />
-
-    </FrameLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

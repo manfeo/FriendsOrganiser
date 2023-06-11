@@ -67,23 +67,34 @@ public class NotificationsActivityRepository {
     }
 
     public void acceptFriendship(UserInfo acceptedFriend){
+        //Adding info of current user to accepted friend
         String myName = preferenceManager.getString(Constants.KEY_NAME);
         String mySurname = preferenceManager.getString(Constants.KEY_SURNAME);
 
         Map<String, Object> toFriendMap = new HashMap<>();
         toFriendMap.put(Constants.KEY_NAME, myName);
         toFriendMap.put(Constants.KEY_SURNAME, mySurname);
+        if (preferenceManager.contains(Constants.KEY_IMAGE)) {
+            String myPhoto = preferenceManager.getString(Constants.KEY_IMAGE);
+            toFriendMap.put(Constants.KEY_IMAGE, myPhoto);
+        }
 
         String acceptedFriendId = acceptedFriend.getId();
 
         databaseReference.child(Constants.KEY_DATABASE_USERS).child(acceptedFriendId).
                 child(Constants.KEY_FRIENDS).child(currentUserId).setValue(toFriendMap);
 
+        //Adding info of accepted friend to current user
         String friendName = acceptedFriend.getName();
         String friendSurname = acceptedFriend.getSurname();
         Map<String, Object> toMeMap = new HashMap<>();
         toMeMap.put(Constants.KEY_NAME, friendName);
         toMeMap.put(Constants.KEY_SURNAME, friendSurname);
+        Uri friendPhoto = acceptedFriend.getPhoto();
+        if (friendPhoto != null) {
+            String rawFriendPhoto = friendPhoto.toString();
+            toMeMap.put(Constants.KEY_IMAGE, rawFriendPhoto);
+        }
 
         databaseReference.child(Constants.KEY_DATABASE_USERS).child(currentUserId).
                 child(Constants.KEY_FRIENDS).child(acceptedFriendId).setValue(toMeMap);
