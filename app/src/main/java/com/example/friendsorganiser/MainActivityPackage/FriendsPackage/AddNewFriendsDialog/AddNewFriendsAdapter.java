@@ -20,7 +20,6 @@ public class AddNewFriendsAdapter extends RecyclerView.Adapter<AddNewFriendsAdap
     public AddNewFriendsAdapter(List<UserInfo> users){
         this.users = users;
     }
-
     class AddNewFriendsHolder extends RecyclerView.ViewHolder{
         public ItemUserPickerBinding binding;
 
@@ -48,10 +47,10 @@ public class AddNewFriendsAdapter extends RecyclerView.Adapter<AddNewFriendsAdap
         holder.binding.ctvUserChecked.setOnClickListener(v -> {
             if (anotherUser.getIsChecked()){
                 anotherUser.setChecked(false);
-                holder.binding.ctvUserChecked.setCheckMarkDrawable(R.drawable.checked);
+                holder.binding.ctvUserChecked.toggle();
             } else {
                 anotherUser.setChecked(true);
-                holder.binding.ctvUserChecked.setCheckMarkDrawable(R.drawable.check);
+                holder.binding.ctvUserChecked.toggle();
             }
         });
     }

@@ -13,5 +13,4 @@
     android:id="@+id/item_friends"
     android:title="Друзья"
     android:icon="@drawable/friends"/>
-
 </menu>

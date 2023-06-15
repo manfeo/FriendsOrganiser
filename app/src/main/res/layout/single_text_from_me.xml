@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -9,13 +9,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_send_message"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="8dp"
         android:maxWidth="260dp"
         android:text="a;sdklas;lkdfj"
         android:padding="12sp"
-        android:layout_margin="10sp"
-        android:textSize="13sp"/>
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"/>
 
     <TextView
         android:id="@+id/tv_messageFromMeTime"
@@ -23,10 +24,7 @@
         android:layout_height="wrap_content"
         android:text="20:35"
         android:textSize="11sp"
-        android:layout_toLeftOf="@+id/tv_messageFromMe"
-        android:layout_marginTop="30sp"
-        android:layout_marginRight="3sp"/>
-
-
-
-</RelativeLayout>
+        app:layout_constraintEnd_toStartOf="@+id/tv_messageFromMe"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_messageFromMe"
+        android:layout_marginEnd="10sp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

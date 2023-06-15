@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/tv_newChatNoFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10sp"
-        android:visibility="gone"
-        android:text="У вас нет друзей("
-        android:layout_below="@+id/tv_newChatChooseFriends"/>
 
     <ImageButton
         android:id="@+id/ib_newChatCloseDialog"
         android:layout_width="50sp"
         android:layout_height="50sp"
+        android:adjustViewBounds="true"
+        android:padding="7sp"
+        android:layout_margin="5sp"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"
-        android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/avatar"
-        android:contentDescription="@string/no_image_found"/>
+        app:srcCompat="@drawable/cancel"
+        android:contentDescription="@string/no_image_found"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_newChatPhotoHolder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20sp"
         app:cardCornerRadius="100sp"
-        app:cardPreventCornerOverlap="false">
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/et_newChatName"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.7">
 
         <ImageView
             android:id="@+id/ib_newChatPicture"
@@ -48,51 +47,84 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="15sp"
-        android:layout_below="@+id/cv_newChatPhotoHolder"
-        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
         android:background="@android:color/transparent"
-        android:hint="Введите название чата" />
+        android:hint="Введите название чата"
+        android:imeOptions="actionDone"
+        app:layout_constraintTop_toBottomOf="@+id/cv_newChatPhotoHolder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_newChatChooseFriends"/>
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="0sp"
+        android:layout_height="0sp"
+        app:layout_constraintTop_toBottomOf="@+id/et_newChatName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_newChatChooseFriends"/>
 
     <TextView
         android:id="@+id/tv_newChatChooseFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выберите друзей"
-        android:layout_below="@+id/et_newChatName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20sp"/>
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/space"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/g_friendsListLimit"
+        android:layout_marginBottom="5sp"/>
 
-    <FrameLayout
-        android:id="@+id/fl_newChatAllFriendsHolder"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_newChatNoFriends"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_newChatChooseFriends"
-        android:layout_marginVertical="10sp"
-        android:layout_marginHorizontal="10sp"
-        android:layout_above="@+id/bt_newChatCreate">
+        android:visibility="invisible"
+        android:textSize="15sp"
+        android:text="У вас нет друзей("
+        android:layout_marginTop="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rv_newChatDisplayFriends"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_newChatDisplayFriends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:padding="10sp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:visibility="gone"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g_friendsListLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45"/>
 
-        <ProgressBar
-            android:id="@+id/pb_newChatLoadingFriends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-    </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_newChatDisplayFriends"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:scrollbars="vertical"
+        android:padding="10sp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/g_friendsListLimit"
+        app:layout_constraintBottom_toTopOf="@+id/bt_newChatCreate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/pb_newChatLoadingFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/g_friendsListLimit"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/bt_newChatCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10sp"
-        android:text="Создать" />
-</RelativeLayout>
+        android:text="Создать"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

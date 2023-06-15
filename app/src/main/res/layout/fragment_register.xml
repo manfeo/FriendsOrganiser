@@ -8,72 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationLogin.RegisterFragment">
 
-    <ImageView
-        android:id="@+id/iv_registerRepeatPasswordIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/password"
-        app:layout_constraintBottom_toBottomOf="@+id/et_registerRepeatPassword"
-        app:layout_constraintEnd_toStartOf="@+id/et_registerRepeatPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_registerRepeatPassword"
-        app:layout_constraintHorizontal_bias="1"/>
-
-    <ImageView
-        android:id="@+id/iv_registerPasswordIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/password"
-        app:layout_constraintBottom_toBottomOf="@+id/et_registerPassword"
-        app:layout_constraintEnd_toStartOf="@+id/et_registerPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_registerPassword"
-        app:layout_constraintHorizontal_bias="1"/>
-
-    <ImageView
-        android:id="@+id/iv_registerEmailIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/email"
-        app:layout_constraintBottom_toBottomOf="@+id/et_registerEmail"
-        app:layout_constraintEnd_toStartOf="@+id/et_registerEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_registerEmail"
-        app:layout_constraintHorizontal_bias="1"/>
-
-    <ImageView
-        android:id="@+id/iv_registerBirthDateIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/calendar"
-        app:layout_constraintBottom_toBottomOf="@+id/et_registerBirthDate"
-        app:layout_constraintEnd_toStartOf="@+id/et_registerBirthDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_registerBirthDate"
-        app:layout_constraintHorizontal_bias="1"/>
-
-    <ImageView
-        android:id="@+id/iv_registerSurnameIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/edit_text_icon_size"
-        app:layout_constraintBottom_toBottomOf="@+id/et_registerSurname"
-        app:layout_constraintEnd_toStartOf="@+id/et_registerSurname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_registerSurname"
-        app:layout_constraintHorizontal_bias="1"/>
-
-    <ImageView
-        android:id="@+id/iv_registerNameIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/edit_text_icon_size"
-        app:layout_constraintBottom_toBottomOf="@+id/et_registerName"
-        app:layout_constraintEnd_toStartOf="@+id/et_registerName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_registerName"
-        app:layout_constraintHorizontal_bias="1"/>
-
     <TextView
         android:id="@+id/tv_register"
         android:layout_width="match_parent"
@@ -95,6 +29,7 @@
         android:layout_height="wrap_content"
         android:minHeight="48sp"
         android:ems="12"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName"
         android:hint="Введите своё имя"
         android:layout_marginTop="50sp"
@@ -104,12 +39,24 @@
         app:layout_constraintBottom_toTopOf="@+id/et_registerSurname"
         />
 
+    <ImageView
+        android:id="@+id/iv_registerNameIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_text_icon_size"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerName"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerName"
+        app:layout_constraintHorizontal_bias="1"/>
+
     <EditText
         android:id="@+id/et_registerSurname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48sp"
         android:ems="12"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName"
         android:hint="Введите свою фамилию"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,12 +64,24 @@
         app:layout_constraintTop_toBottomOf="@+id/et_registerName"
         app:layout_constraintBottom_toTopOf="@+id/et_registerBirthDate"/>
 
+    <ImageView
+        android:id="@+id/iv_registerSurnameIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_text_icon_size"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerSurname"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerSurname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerSurname"
+        app:layout_constraintHorizontal_bias="1"/>
+
     <EditText
         android:id="@+id/et_registerBirthDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48sp"
         android:ems="12"
+        android:imeOptions="actionNext"
         android:hint="Введите дату рождения"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,12 +89,24 @@
         app:layout_constraintTop_toBottomOf="@+id/et_registerSurname"
         app:layout_constraintBottom_toTopOf="@+id/et_registerEmail"/>
 
+    <ImageView
+        android:id="@+id/iv_registerBirthDateIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/calendar"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerBirthDate"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerBirthDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerBirthDate"
+        app:layout_constraintHorizontal_bias="1"/>
+
     <EditText
         android:id="@+id/et_registerEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48sp"
         android:ems="12"
+        android:imeOptions="actionNext"
         android:inputType="textEmailAddress"
         android:hint="Введите email"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,12 +115,24 @@
         app:layout_constraintBottom_toTopOf="@+id/et_registerPassword"
         />
 
+    <ImageView
+        android:id="@+id/iv_registerEmailIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/email"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerEmail"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerEmail"
+        app:layout_constraintHorizontal_bias="1"/>
+
     <EditText
         android:id="@+id/et_registerPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48sp"
         android:ems="12"
+        android:imeOptions="actionNext"
         android:inputType="numberPassword|textPassword"
         android:hint="Введите пароль"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,19 +141,41 @@
         app:layout_constraintBottom_toTopOf="@+id/et_registerRepeatPassword"
         />
 
+    <ImageView
+        android:id="@+id/iv_registerPasswordIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/password"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerPassword"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerPassword"
+        app:layout_constraintHorizontal_bias="1"/>
+
     <EditText
         android:id="@+id/et_registerRepeatPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48sp"
         android:ems="12"
+        android:imeOptions="actionDone"
         android:inputType="numberPassword|textPassword"
         android:hint="Повторите пароль"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_registerPassword"
-        app:layout_constraintBottom_toTopOf="@+id/bt_register"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/bt_register" />
+
+    <ImageView
+        android:id="@+id/iv_registerRepeatPasswordIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/password"
+        app:layout_constraintBottom_toBottomOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintEnd_toStartOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_registerRepeatPassword"
+        app:layout_constraintHorizontal_bias="1"/>
 
     <Button
         android:id="@+id/bt_register"

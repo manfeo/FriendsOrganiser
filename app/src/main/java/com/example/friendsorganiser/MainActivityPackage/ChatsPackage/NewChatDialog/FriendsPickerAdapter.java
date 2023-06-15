@@ -58,14 +58,12 @@ public class FriendsPickerAdapter extends RecyclerView.Adapter<FriendsPickerAdap
         holder.setBinding(anotherFriend);
 
         holder.binding.ctvUserChecked.setOnClickListener(v -> {
-
             if (anotherFriend.getIsChecked()){
                 anotherFriend.setChecked(false);
-                holder.binding.ctvUserChecked.setCheckMarkDrawable(R.drawable.checked);
-
+                holder.binding.ctvUserChecked.toggle();
             } else {
                 anotherFriend.setChecked(true);
-                holder.binding.ctvUserChecked.setCheckMarkDrawable(R.drawable.check);
+                holder.binding.ctvUserChecked.toggle();
             }
         });
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Здесь будут отображаться ваши друзья"
-        android:gravity="center_horizontal"
         android:textSize="17sp"
+        android:visibility="invisible"
+        android:gravity="center_horizontal"
         android:layout_marginTop="20sp"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fb_addNewFriend"
@@ -22,25 +25,32 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:src="@drawable/add_friend"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10sp"
-        android:layout_marginRight="10sp"
         app:tint="@color/white"
         android:contentDescription="@string/no_image_found"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:layout_margin="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_allFriendsDisplay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0sp"
         android:visibility="invisible"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:padding="20sp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/pb_loadingFriendsList"
-        android:layout_width="25sp"
-        android:layout_height="25sp"
-        android:layout_centerInParent="true">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
     </ProgressBar>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
