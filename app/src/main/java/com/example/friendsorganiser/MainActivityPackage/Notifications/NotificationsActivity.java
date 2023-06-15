@@ -35,8 +35,7 @@ public class NotificationsActivity extends AppCompatActivity implements OnNotifi
     }
 
     private void setBinding(){
-        androidx.appcompat.widget.Toolbar toolbarNotifications = findViewById(R.id.toolbar_notifications);
-        setSupportActionBar(toolbarNotifications);
+        setSupportActionBar(binding.toolbarNotifications.getRoot());
 
         binding.toolbarNotifications.tvNotificationsTitle.setText("Уведомления");
     }

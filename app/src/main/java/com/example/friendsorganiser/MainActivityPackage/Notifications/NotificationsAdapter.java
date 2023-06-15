@@ -34,11 +34,13 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         public void setBinding(UserInfo userInfo){
             String notificationText = userInfo.getName() + " " + userInfo.getSurname() + " хочет быть другом";
             binding.tvNewFriendName.setText(notificationText);
+
             Uri userPhoto = userInfo.getPhoto();
             if (userPhoto != null)
                 Glide.with(binding.getRoot()).load(userPhoto).into(binding.ivNewFriendPhoto);
-            binding.btAcceptNewFriend.setOnClickListener(v -> onNotificationAnswer.onNotificationAnswer(userInfo, Constants.KEY_ACCEPT_FRIENDSHIP));
-            binding.btRejectNewFriend.setOnClickListener(v -> onNotificationAnswer.onNotificationAnswer(userInfo, Constants.KEY_REJECT_FRIENDSHIP));
+
+            binding.tvAcceptNewFriend.setOnClickListener(v -> onNotificationAnswer.onNotificationAnswer(userInfo, Constants.KEY_ACCEPT_FRIENDSHIP));
+            binding.tvRejectNewFriend.setOnClickListener(v -> onNotificationAnswer.onNotificationAnswer(userInfo, Constants.KEY_REJECT_FRIENDSHIP));
         }
     }
 
